@@ -1,0 +1,261 @@
+[gd_scene format=3 uid="uid://qx48mjewu30k"]
+
+[ext_resource type="Script" uid="uid://d1j35qtdnu5b8" path="res://scenes/main_scene.gd" id="1_rt2n2"]
+[ext_resource type="Script" uid="uid://dn0is7wn483bm" path="res://scripts/main_menu.gd" id="1_w2twt"]
+[ext_resource type="StyleBox" uid="uid://b1n8m862a3s5g" path="res://assets/UI/styles/button_normal.tres" id="2_gubc5"]
+[ext_resource type="StyleBox" uid="uid://uqp7hqdkw7tt" path="res://assets/UI/styles/button_presses.tres" id="3_rt2n2"]
+[ext_resource type="StyleBox" uid="uid://dalv5jygmefjm" path="res://assets/UI/styles/button_hovered.tres" id="4_c16ls"]
+[ext_resource type="Script" uid="uid://c2d6o5j6anxhx" path="res://scripts/lobby.gd" id="5_18nlu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bg6pd"]
+font_size = 50
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_und3l"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1pb6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.30980393, 0.30980393, 0.30980393, 0.44705883)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.06666667)
+shadow_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktux3"]
+font_size = 27
+
+[node name="MainScene" type="Node3D" unique_id=159987791]
+script = ExtResource("1_rt2n2")
+
+[node name="MainMenu" type="Control" parent="." unique_id=514220405]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("1_w2twt")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu" unique_id=703173359]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -26.5
+offset_right = 163.84497
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="HostButton" type="Button" parent="MainMenu/VBoxContainer" unique_id=535083148]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Create Room"
+
+[node name="JoinButton" type="Button" parent="MainMenu/VBoxContainer" unique_id=149672858]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Join Room"
+
+[node name="ExitButton" type="Button" parent="MainMenu/VBoxContainer" unique_id=1137922929]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Exit"
+
+[node name="Tiitle" type="Label" parent="MainMenu" unique_id=1955559723]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.71997
+offset_top = -208.88501
+offset_right = 219.28015
+offset_bottom = -139.88501
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game"
+label_settings = SubResource("LabelSettings_bg6pd")
+
+[node name="HSeparator" type="HSeparator" parent="MainMenu" unique_id=1067377011]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 133.0
+offset_right = 910.0
+offset_bottom = 257.0
+theme_override_constants/separation = 121
+theme_override_styles/separator = SubResource("StyleBoxLine_und3l")
+
+[node name="Level" type="Node3D" parent="." unique_id=1808122177]
+visible = false
+
+[node name="testfloor" type="CSGBox3D" parent="Level" unique_id=354373488]
+size = Vector3(50, 1, 50)
+
+[node name="Lobby" type="Control" parent="." unique_id=1303273016]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_18nlu")
+
+[node name="HostLobby" type="Panel" parent="Lobby" unique_id=1673327797]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1pb6")
+
+[node name="RoomCodeDisplay" type="Label" parent="Lobby/HostLobby" unique_id=742707673]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -86.0
+offset_right = 86.0
+offset_bottom = 45.0
+grow_horizontal = 2
+text = "Room code"
+label_settings = SubResource("LabelSettings_ktux3")
+
+[node name="RoomCodeCopy" type="Button" parent="Lobby/HostLobby" unique_id=1582953980]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 77.0
+offset_top = 3.0
+offset_right = 124.0
+offset_bottom = 34.0
+grow_horizontal = 2
+text = "Copy"
+
+[node name="JoinButton" type="Button" parent="Lobby/HostLobby" unique_id=200611416]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.5
+offset_top = 63.0
+offset_right = 43.5
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Join Game"
+
+[node name="ClientLobby" type="Panel" parent="Lobby" unique_id=427131122]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1pb6")
+
+[node name="ClientRoomCode" type="LineEdit" parent="Lobby/ClientLobby" unique_id=1880437148]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -94.0
+offset_top = 6.0
+offset_right = 112.0
+offset_bottom = 51.0
+grow_horizontal = 2
+placeholder_text = "Enter Your Room Code"
+max_length = 6
+
+[node name="ClientJoinbutton" type="Button" parent="Lobby/ClientLobby" unique_id=924156480]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.5
+offset_top = 63.0
+offset_right = 43.5
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Join Game"
+
+[node name="BackToMenu" type="Button" parent="Lobby" unique_id=327374028]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.5
+offset_top = 284.0
+offset_right = 58.5
+offset_bottom = 315.0
+grow_horizontal = 2
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Back To Menu"
+
+[node name="WaitTimer" type="Timer" parent="." unique_id=1990932666]
+wait_time = 0.5
+
+[connection signal="pressed" from="MainMenu/VBoxContainer/HostButton" to="MainMenu" method="_on_host_button_pressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/JoinButton" to="MainMenu" method="_on_join_button_pressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Lobby/HostLobby/RoomCodeCopy" to="Lobby" method="_on_room_code_copy_pressed"]
+[connection signal="pressed" from="Lobby/HostLobby/JoinButton" to="Lobby" method="_on_join_button_pressed"]
+[connection signal="pressed" from="Lobby/ClientLobby/ClientJoinbutton" to="Lobby" method="_on_client_joinbutton_pressed"]
+[connection signal="pressed" from="Lobby/BackToMenu" to="Lobby" method="_on_back_to_menu_pressed"]
+[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
