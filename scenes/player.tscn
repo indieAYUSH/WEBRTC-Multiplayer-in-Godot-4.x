@@ -1,0 +1,844 @@
+[gd_scene format=3 uid="uid://5ym40qt2aau8"]
+
+[ext_resource type="Script" uid="uid://bcqieithuf66l" path="res://player/scripts/player.gd" id="1_qvlqn"]
+[ext_resource type="Script" uid="uid://boivvjeleq8ja" path="res://player/scripts/Components/camera_controller_component.gd" id="2_8p4p3"]
+[ext_resource type="Script" uid="uid://bmpd60tvtu81a" path="res://player/scripts/Components/mouse_controller_component.gd" id="3_4eyqk"]
+[ext_resource type="Script" uid="uid://c8jv7ncgkeitl" path="res://player/scripts/camera_juice.gd" id="3_iqofo"]
+[ext_resource type="Script" uid="uid://2ykdhxibejv1" path="res://player/StateMachine/StateMachine.gd" id="4_gp3q6"]
+[ext_resource type="PackedScene" uid="uid://cenwygddxwytv" path="res://weapons/weapon_manager.tscn" id="5_d1ki0"]
+[ext_resource type="Script" uid="uid://drihlu2omkt26" path="res://player/states/IdleState.gd" id="5_tblmv"]
+[ext_resource type="Script" uid="uid://lvw0vibdw22k" path="res://player/states/walk_state.gd" id="6_tblmv"]
+[ext_resource type="Script" uid="uid://ddvfv5vhdy10b" path="res://player/states/jump_state.gd" id="9_hu6bb"]
+[ext_resource type="Script" uid="uid://crxjj3fe1x0vl" path="res://player/states/slide_state.gd" id="10_nfsas"]
+[ext_resource type="Script" uid="uid://dbavcwgvqyiyg" path="res://player/states/sprint_state.gd" id="12_d1ki0"]
+[ext_resource type="Script" uid="uid://c333aph4jx7b3" path="res://player/states/falling_state.gd" id="13_xsu4s"]
+[ext_resource type="Script" uid="uid://clyumisqx0i7s" path="res://player/states/dash_state.gd" id="14_w2vqi"]
+[ext_resource type="FontFile" uid="uid://3op67rxtj0f6" path="res://weapons/Bullets/Roboto-Black.ttf" id="17_xkm3v"]
+[ext_resource type="Script" uid="uid://41krvxlxp32v" path="res://player/UI/ui.gd" id="18_ygc1f"]
+[ext_resource type="Script" uid="uid://bl2ivftgwyuxf" path="res://player/UI/context_component.gd" id="20_t4wwt"]
+[ext_resource type="Script" uid="uid://nr0k8pums4yn" path="res://player/states/crouch_state.gd" id="24_d7dwe"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fmnqm"]
+frequency = 0.0353
+offset = Vector3(145.45, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s4tvy"]
+noise = SubResource("FastNoiseLite_fmnqm")
+seamless = true
+seamless_blend_skirt = 0.89
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hu6bb"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_d7dwe"]
+radius = 0.4
+
+[sub_resource type="Animation" id="Animation_iqofo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/obstacle_checker/ShapeCast3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -0.0815711, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice/weapon_holder:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nfsas"]
+resource_name = "crouch"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/obstacle_checker/ShapeCast3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.35367805, 0), Vector3(0, -0.14959788, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k202j"]
+resource_name = "damage"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.005, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.06666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.05235988, -0.017453292, 0.017453292), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_w2vqi"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.17049819, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.05235988, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17049819, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.1, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ojh3p"]
+resource_name = "land"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.17049819, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.05235988, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.17049819, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.1, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rhr6c"]
+resource_name = "lean_left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.8, -0.32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.2617994)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice/weapon_holder:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.08726646)]
+}
+
+[sub_resource type="Animation" id="Animation_3x4x4"]
+resource_name = "lean_left_collision"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.13962634)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice/weapon_holder:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.08726646)]
+}
+
+[sub_resource type="Animation" id="Animation_d7dwe"]
+resource_name = "lean_reset"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_e0dtg"]
+resource_name = "lean_right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.8, -0.32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.2617994)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice/weapon_holder:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.08726646)]
+}
+
+[sub_resource type="Animation" id="Animation_j2dof"]
+resource_name = "learn_right_collision"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.13962634)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager/WeaponJuice/weapon_holder:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.08726646)]
+}
+
+[sub_resource type="Animation" id="Animation_hu6bb"]
+resource_name = "standing"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_h4jra"]
+resource_name = "uncrouch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/CameraControllerComponent:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.5, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("head/CameraControllerComponent/obstacle_checker/ShapeCast3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, -0.0815711, 0), Vector3(0, -0.35367805, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h4jra"]
+_data = {
+&"RESET": SubResource("Animation_iqofo"),
+&"crouch": SubResource("Animation_nfsas"),
+&"damage": SubResource("Animation_k202j"),
+&"jump": SubResource("Animation_w2vqi"),
+&"land": SubResource("Animation_ojh3p"),
+&"lean_left": SubResource("Animation_rhr6c"),
+&"lean_left_collision": SubResource("Animation_3x4x4"),
+&"lean_reset": SubResource("Animation_d7dwe"),
+&"lean_right": SubResource("Animation_e0dtg"),
+&"learn_right_collision": SubResource("Animation_j2dof"),
+&"standing": SubResource("Animation_hu6bb"),
+&"uncrouch": SubResource("Animation_h4jra")
+}
+
+[sub_resource type="Resource" id="Resource_4r5pv"]
+metadata/__load_path__ = "res://addons/Assests/keyboard_e.svg"
+
+[sub_resource type="LabelSettings" id="LabelSettings_xsu4s"]
+font = ExtResource("17_xkm3v")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t4wwt"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.27450982)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_44c10"]
+font = ExtResource("17_xkm3v")
+font_size = 14
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_sp8cr"]
+content_margin_left = 0.0
+content_margin_top = 4.0
+content_margin_right = 0.0
+content_margin_bottom = 4.0
+color = Color(1, 1, 1, 1)
+vertical = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mbkfo"]
+height = 1.7
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qvlqn"]
+height = 1.1
+
+[sub_resource type="AnimationNodeBlend3" id="AnimationNodeBlend3_d7dwe"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rhr6c"]
+animation = &"lean_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e0dtg"]
+animation = &"lean_left_collision"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_j2dof"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3x4x4"]
+animation = &"lean_reset"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nylnn"]
+animation = &"lean_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lm6dr"]
+animation = &"learn_right_collision"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_3xh5d"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_gobxe"]
+nodes/output/position = Vector2(700, 340)
+nodes/lean_blend/node = SubResource("AnimationNodeBlend3_d7dwe")
+nodes/lean_blend/position = Vector2(160, 720)
+nodes/lean_left_collison/node = SubResource("AnimationNodeBlend2_j2dof")
+nodes/lean_left_collison/position = Vector2(-160, 620)
+nodes/lean_right/node = SubResource("AnimationNodeAnimation_nylnn")
+nodes/lean_right/position = Vector2(-520, 1180)
+nodes/lean_left/node = SubResource("AnimationNodeAnimation_rhr6c")
+nodes/lean_left/position = Vector2(-520, 580)
+nodes/lean_left_colision/node = SubResource("AnimationNodeAnimation_e0dtg")
+nodes/lean_left_colision/position = Vector2(-540, 760)
+nodes/lean_rest/node = SubResource("AnimationNodeAnimation_3x4x4")
+nodes/lean_rest/position = Vector2(-400, 960)
+"nodes/lean_right_collsion 2/node" = SubResource("AnimationNodeAnimation_lm6dr")
+"nodes/lean_right_collsion 2/position" = Vector2(-300, 1220)
+nodes/lesn_r_col/node = SubResource("AnimationNodeBlend2_3xh5d")
+nodes/lesn_r_col/position = Vector2(-80, 980)
+node_connections = [&"output", 0, &"lean_blend", &"lean_blend", 0, &"lean_left_collison", &"lean_blend", 1, &"lean_rest", &"lean_blend", 2, &"lesn_r_col", &"lean_left_collison", 0, &"lean_left", &"lean_left_collison", 1, &"lean_left_colision", &"lesn_r_col", 0, &"lean_right", &"lesn_r_col", 1, &"lean_right_collsion 2"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1364051561 node_paths=PackedStringArray("player_statemachine", "CameraJuice_Component", "UiComponent", "WPM", "left_lean_collision", "right_lean_collision")]
+script = ExtResource("1_qvlqn")
+player_statemachine = NodePath("PlayerStateMachine")
+CameraJuice_Component = NodePath("head/CameraControllerComponent/CameraJuice")
+UiComponent = NodePath("UI")
+WPM = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager")
+left_lean_collision = NodePath("head/CameraControllerComponent/obstacle_checker/lean_collision_checker_left")
+right_lean_collision = NodePath("head/CameraControllerComponent/obstacle_checker/lean_collision_checker_right")
+
+[node name="head" type="Node3D" parent="." unique_id=683099968]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75757813, 0)
+
+[node name="CameraControllerComponent" type="Node3D" parent="head" unique_id=65740326 node_paths=PackedStringArray("mouse_controller_component", "Player_controller")]
+unique_name_in_owner = true
+script = ExtResource("2_8p4p3")
+mouse_controller_component = NodePath("../../Components/MouseControllerComponent")
+Player_controller = NodePath("../..")
+
+[node name="CameraJuice" type="Node3D" parent="head/CameraControllerComponent" unique_id=956331218 node_paths=PackedStringArray("camera", "Player")]
+script = ExtResource("3_iqofo")
+camera = NodePath("lean_pivot/screen_shake/Camera3D")
+Camera_tilt = true
+Head_bob = true
+camer_fov_changes = true
+camera_shake = true
+Player = NodePath("../../..")
+bob_pitch = 0.04
+bob_roll = 0.03
+bob_up = 0.003
+bob_frequncy = 5.0
+noise_texture = SubResource("NoiseTexture2D_s4tvy")
+
+[node name="lean_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice" unique_id=582210401]
+unique_name_in_owner = true
+
+[node name="screen_shake" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot" unique_id=775759092]
+unique_name_in_owner = true
+
+[node name="WeaponManager" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake" unique_id=1251594148 node_paths=PackedStringArray("PlayerContr") instance=ExtResource("5_d1ki0")]
+unique_name_in_owner = true
+PlayerContr = NodePath("../../../../../..")
+
+[node name="Camera3D" type="Camera3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake" unique_id=506334004]
+unique_name_in_owner = true
+
+[node name="obstacle_checker" type="Node3D" parent="head/CameraControllerComponent" unique_id=950315987]
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="head/CameraControllerComponent/obstacle_checker" unique_id=2111367987]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0815711, 0)
+shape = SubResource("SphereShape3D_hu6bb")
+target_position = Vector3(0, 0, 0)
+debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="lean_collision_checker_left" type="ShapeCast3D" parent="head/CameraControllerComponent/obstacle_checker" unique_id=128747574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27435434, 0)
+shape = SubResource("SphereShape3D_d7dwe")
+target_position = Vector3(-0.85, 0, 0)
+collide_with_areas = true
+
+[node name="lean_collision_checker_right" type="ShapeCast3D" parent="head/CameraControllerComponent/obstacle_checker" unique_id=593118787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27435434, 0)
+shape = SubResource("SphereShape3D_d7dwe")
+target_position = Vector3(0.85, 0, 0)
+collide_with_areas = true
+
+[node name="Components" type="Node" parent="." unique_id=514318104]
+
+[node name="MouseControllerComponent" type="Node" parent="Components" unique_id=476853623 node_paths=PackedStringArray("camera_controller", "weapon_manager")]
+script = ExtResource("3_4eyqk")
+mouse_senstivity = 0.003
+camera_controller = NodePath("../../head/CameraControllerComponent")
+weapon_manager = NodePath("../../head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/WeaponManager")
+
+[node name="PlayerStateMachine" type="Node" parent="." unique_id=372558448 node_paths=PackedStringArray("current_state")]
+script = ExtResource("4_gp3q6")
+current_state = NodePath("IdleState")
+metadata/_custom_type_script = "uid://2ykdhxibejv1"
+
+[node name="IdleState" type="Node" parent="PlayerStateMachine" unique_id=388473914]
+script = ExtResource("5_tblmv")
+metadata/_custom_type_script = "uid://drihlu2omkt26"
+
+[node name="WalkState" type="Node" parent="PlayerStateMachine" unique_id=549957397]
+script = ExtResource("6_tblmv")
+metadata/_custom_type_script = "uid://lvw0vibdw22k"
+
+[node name="CrouchState" type="Node" parent="PlayerStateMachine" unique_id=1657820856]
+script = ExtResource("24_d7dwe")
+metadata/_custom_type_script = "uid://nr0k8pums4yn"
+
+[node name="SprintState" type="Node" parent="PlayerStateMachine" unique_id=658818730]
+script = ExtResource("12_d1ki0")
+metadata/_custom_type_script = "uid://dbavcwgvqyiyg"
+
+[node name="DashState" type="Node" parent="PlayerStateMachine" unique_id=1651213161 node_paths=PackedStringArray("camera")]
+script = ExtResource("14_w2vqi")
+camera = NodePath("../../head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D")
+metadata/_custom_type_script = "uid://clyumisqx0i7s"
+
+[node name="SlideState" type="Node" parent="PlayerStateMachine" unique_id=1544521751]
+script = ExtResource("10_nfsas")
+metadata/_custom_type_script = "uid://crxjj3fe1x0vl"
+
+[node name="FallingState" type="Node" parent="PlayerStateMachine" unique_id=1935232371]
+script = ExtResource("13_xsu4s")
+metadata/_custom_type_script = "uid://c333aph4jx7b3"
+
+[node name="JumpState" type="Node" parent="PlayerStateMachine" unique_id=1035982876]
+script = ExtResource("9_hu6bb")
+jump_force = 4.4
+metadata/_custom_type_script = "uid://ddvfv5vhdy10b"
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="." unique_id=1049199401]
+libraries/ = SubResource("AnimationLibrary_h4jra")
+
+[node name="UI" type="Control" parent="." unique_id=889765279]
+z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("18_ygc1f")
+metadata/_edit_lock_ = true
+
+[node name="UICrosshair" type="TextureRect" parent="UI" unique_id=875291090]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -72.0
+offset_right = 72.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContextComponent" type="CenterContainer" parent="UI" unique_id=323057691 node_paths=PackedStringArray("input_promt_icon", "input_prompt")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.013020833
+anchor_top = 0.055555556
+anchor_right = 0.9895833
+anchor_bottom = 1.0324074
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("20_t4wwt")
+input_promt_icon = NodePath("HBoxContainer/InputTex")
+input_prompt = NodePath("HBoxContainer/InputPrompt")
+default_icon = SubResource("Resource_4r5pv")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/ContextComponent" unique_id=883036993]
+layout_mode = 2
+
+[node name="InputTex" type="TextureRect" parent="UI/ContextComponent/HBoxContainer" unique_id=917390484]
+z_index = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 0
+expand_mode = 1
+
+[node name="InputPrompt" type="Label" parent="UI/ContextComponent/HBoxContainer" unique_id=1158118589]
+layout_mode = 2
+text = "THIS IA A BOX HEEH"
+label_settings = SubResource("LabelSettings_xsu4s")
+horizontal_alignment = 2
+
+[node name="weaponhud" type="PanelContainer" parent="UI" unique_id=1251340896]
+visible = false
+custom_minimum_size = Vector2(319, 85)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -159.5
+offset_top = -85.0
+offset_right = 159.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_t4wwt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/weaponhud" unique_id=364247198]
+layout_mode = 2
+
+[node name="slot1" type="Control" parent="UI/weaponhud/HBoxContainer" unique_id=608892764]
+custom_minimum_size = Vector2(100, 85)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/weaponhud/HBoxContainer/slot1" unique_id=1856167684]
+layout_mode = 0
+offset_right = 89.5
+offset_bottom = 80.0
+expand_mode = 1
+
+[node name="ammo_counter_holder" type="Label" parent="UI/weaponhud/HBoxContainer/slot1" unique_id=870971491]
+layout_mode = 0
+offset_left = 1.5
+offset_top = 1.0
+offset_right = 39.5
+offset_bottom = 18.0
+text = "20/20"
+label_settings = SubResource("LabelSettings_44c10")
+
+[node name="VSeparator" type="VSeparator" parent="UI/weaponhud/HBoxContainer/slot1" unique_id=1464681357]
+layout_mode = 0
+offset_left = 94.5
+offset_top = 2.0
+offset_right = 107.5
+offset_bottom = 84.0
+theme_override_styles/separator = SubResource("StyleBoxLine_sp8cr")
+
+[node name="slot2" type="Control" parent="UI/weaponhud/HBoxContainer" unique_id=7450659]
+custom_minimum_size = Vector2(100, 85)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/weaponhud/HBoxContainer/slot2" unique_id=1995401857]
+layout_mode = 0
+offset_right = 89.5
+offset_bottom = 80.0
+expand_mode = 1
+
+[node name="ammo_counter_holder" type="Label" parent="UI/weaponhud/HBoxContainer/slot2" unique_id=44049003]
+layout_mode = 0
+offset_left = 1.5
+offset_top = 1.0
+offset_right = 39.5
+offset_bottom = 18.0
+text = "20/20"
+label_settings = SubResource("LabelSettings_44c10")
+
+[node name="VSeparator" type="VSeparator" parent="UI/weaponhud/HBoxContainer/slot2" unique_id=972054690]
+layout_mode = 0
+offset_left = 94.5
+offset_top = 2.0
+offset_right = 107.5
+offset_bottom = 84.0
+theme_override_styles/separator = SubResource("StyleBoxLine_sp8cr")
+
+[node name="uncrouched_collision_shape" type="CollisionShape3D" parent="." unique_id=485210119]
+shape = SubResource("CapsuleShape3D_mbkfo")
+
+[node name="crouched_collsion_shape" type="CollisionShape3D" parent="." unique_id=795220548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2991699, 0)
+shape = SubResource("CapsuleShape3D_qvlqn")
+disabled = true
+
+[node name="PlayerAnimationTree" type="AnimationTree" parent="." unique_id=1324901273]
+tree_root = SubResource("AnimationNodeBlendTree_gobxe")
+anim_player = NodePath("../PlayerAnimation")
+parameters/lean_blend/blend_amount = 0.0
+parameters/lean_left_collison/blend_amount = 0.0
+parameters/lesn_r_col/blend_amount = 0.0
+
+[connection signal="recieved_damage" from="." to="head/CameraControllerComponent/CameraJuice" method="damage_anim"]

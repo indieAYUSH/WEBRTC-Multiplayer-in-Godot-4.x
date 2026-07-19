@@ -21,7 +21,7 @@ var last_state = -1
 signal stop_polling 
 var host_guest_connected : bool = false
 
-var channels = {}
+signal start_game(_peer_id)
 
 
 func _ready() -> void:
@@ -33,19 +33,6 @@ func _ready() -> void:
 func _process(_delta):
 	for peer in peers.values():
 		peer.poll()
-	
-	if my_roll == "guest" and channels.has(1):
-		var channel: WebRTCDataChannel = channels[1]
-
-		while channel.get_available_packet_count() > 0:
-			var msg = channel.get_packet().get_string_from_utf8()
-			print("Guest received:", msg)
-	if my_roll == "host" and channels.has(1):
-		var channel: WebRTCDataChannel = channels[1]
-
-		while channel.get_available_packet_count() > 0:
-			var msg = channel.get_packet().get_string_from_utf8()
-			print("Host received:", msg)
 	
 	if host_guest_connected:
 		return
@@ -60,12 +47,8 @@ func _process(_delta):
 	if state == 2:
 		host_guest_connected = true
 		stop_polling.emit()
-		var channel = channels[1]
-		#=================--------testing and place holder only---===
-		if is_host:
-			send_hello_packet()
 
-	
+
 
 func genrate_room_code(length : = 6)->String:
 	var code : = ""
@@ -101,14 +84,13 @@ func create_new_peer_connection(peer_id:int) -> WebRTCPeerConnection:
 	
 	peer.session_description_created.connect(_on_session_description_created.bind(peer_id))
 	peer.ice_candidate_created.connect(_on_ice_candidate_created.bind(peer_id))
-	peer.data_channel_received.connect(_on_data_channel_received.bind(peer_id))
-	
-	if is_host:
-		var channel = peer.create_data_channel("game")
-		channels[peer_id] = channel
-	
 	
 	peers[peer_id] = peer
+	
+	if is_host:
+			create_host_multiplayer_peer()
+	else:
+			create_client_multiplayer_peer()
 	return peer
 
 func _on_session_description_created(type:String , sdp:String , _peer_id ):
@@ -146,15 +128,25 @@ func _on_ice_candidate_recieved(sender, media, index, candidate):
 	recieved_candidate.push_back(candidate)
 	peer.add_ice_candidate(media , index , candidate)
 
-func _on_data_channel_received(channel: WebRTCDataChannel, peer_id):
-	channels[peer_id] = channel
-	print(channels)
 
-#PLACE HOLDER U CAN USE THIS FOR TESTING WETHER DATA CHANNELS ARE OPENED OR NOT
 
-func send_hello_packet():
-	var channel: WebRTCDataChannel = channels[1]
 
-	if channel.get_ready_state() == WebRTCDataChannel.STATE_OPEN:
-		var err = channel.put_packet("Hello from Host".to_utf8_buffer())
-		print("Send result:", err)
+
+func create_host_multiplayer_peer():
+	var mp = WebRTCMultiplayerPeer.new()
+	mp.create_server()
+	var err = mp.add_peer(peers[1], 2)
+	print("add_peer:", err)
+	multiplayer.multiplayer_peer = mp
+	_start_game(multiplayer.get_unique_id())
+	mp.peer_connected.connect(start_game , multiplayer.get_unique_id())
+
+func create_client_multiplayer_peer():
+	var mp = WebRTCMultiplayerPeer.new()
+	mp.create_client(2)
+	var err = mp.add_peer(peers[1], 1)
+	print("add_peer:", err)
+	multiplayer.multiplayer_peer = mp
+
+func _start_game(_peer_id):
+	start_game.emit(_peer_id)

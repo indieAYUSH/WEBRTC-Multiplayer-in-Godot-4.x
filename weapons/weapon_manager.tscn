@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cenwygddxwytv"]
+
+[ext_resource type="Script" uid="uid://glvwd42co48c" path="res://weapons/Scripts/core logics/weapon_manager.gd" id="1_7gan4"]
+[ext_resource type="Script" uid="uid://b808s2vhuelg3" path="res://weapons/Scripts/core logics/weapon_juice_component.gd" id="9_dc3hj"]
+[ext_resource type="Script" uid="uid://cja465j0ptsdy" path="res://weapons/Scripts/core logics/AmmunationManager.gd" id="11_hskht"]
+
+[node name="WeaponManager" type="Node3D" unique_id=612236211 node_paths=PackedStringArray("weapon_juice_component", "ammunation_manager")]
+script = ExtResource("1_7gan4")
+weapon_juice_component = NodePath("WeaponJuice")
+ammunation_manager = NodePath("AmmunationManager")
+
+[node name="WeaponJuice" type="Node3D" parent="." unique_id=534345895 node_paths=PackedStringArray("weapon_holder")]
+unique_name_in_owner = true
+script = ExtResource("9_dc3hj")
+weapon_holder = NodePath("weapon_holder")
+weapon_tilt = true
+weapon_bob = true
+roll_pitch = 0.028
+roll_side_rot = 0.3
+frequency = 1.6
+amplitude = 0.035
+lerp_speed = 10.0
+
+[node name="weapon_holder" type="Node3D" parent="WeaponJuice" unique_id=1648145669]
+
+[node name="AmmunationManager" type="Node3D" parent="." unique_id=230372493]
+script = ExtResource("11_hskht")
+metadata/_custom_type_script = "uid://cja465j0ptsdy"

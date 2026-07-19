@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bcwxd24ylts21"]
+
+[ext_resource type="Script" uid="uid://b8j6df87xii68" path="res://weapons/Scripts/core logics/GunManager.gd" id="1_ffldk"]
+
+[sub_resource type="Animation" id="Animation_ffldk"]
+resource_name = "no_ammo"
+
+[sub_resource type="Animation" id="Animation_nnouu"]
+resource_name = "pull_away"
+
+[sub_resource type="Animation" id="Animation_7qgv5"]
+resource_name = "pull_out"
+
+[sub_resource type="Animation" id="Animation_50c2x"]
+resource_name = "reload"
+
+[sub_resource type="Animation" id="Animation_kcktm"]
+resource_name = "shoot"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5nemf"]
+_data = {
+&"no_ammo": SubResource("Animation_ffldk"),
+&"pull_away": SubResource("Animation_nnouu"),
+&"pull_out": SubResource("Animation_7qgv5"),
+&"reload": SubResource("Animation_50c2x"),
+&"shoot": SubResource("Animation_kcktm")
+}
+
+[node name="Gun" type="Node3D" unique_id=1195640954]
+script = ExtResource("1_ffldk")
+Damage = 22.0
+GunRange = 2000.0
+current_ammo = 30
+magzine = 30
+reserved_ammo = 120
+max_ammo = 120
+ammo_type = "riffle"
+pull_out_anim = "pull_out"
+pull_away_anim = "pull_away"
+shooting_anim = "shoot"
+reload_anim = "reload"
+out_of_ammo_anim = "no_ammo"
+metadata/_custom_type_script = "uid://b8j6df87xii68"
+
+[node name="shoot" type="AudioStreamPlayer" parent="." unique_id=866091968]
+
+[node name="reload" type="AudioStreamPlayer" parent="." unique_id=900729899]
+
+[node name="pull_out" type="AudioStreamPlayer" parent="." unique_id=80938787]
+
+[node name="pull_away" type="AudioStreamPlayer" parent="." unique_id=573051874]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1320690095]
+libraries/ = SubResource("AnimationLibrary_5nemf")
