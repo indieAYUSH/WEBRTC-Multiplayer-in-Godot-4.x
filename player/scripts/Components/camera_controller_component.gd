@@ -19,6 +19,8 @@ var _rotation : Vector3
 
 
 func _update_rotation(input:Vector2)-> void :
+	if !is_multiplayer_authority():
+		return
 	_rotation.x += input.y
 	_rotation.y += input.x
 	
@@ -28,9 +30,6 @@ func _update_rotation(input:Vector2)-> void :
 	var camera_rotation  = Vector3(_rotation.x , 0.0 , 0.0)
 	var player_rotation = Vector3(0.0 , _rotation.y , 0.0)
 	var _free_look_rotation = Vector3(_rotation.x , _rotation.y ,0.0)
-	
-	
-
 	transform.basis = Basis.from_euler(camera_rotation)
 	Player_controller._update_rotation(player_rotation)
 	

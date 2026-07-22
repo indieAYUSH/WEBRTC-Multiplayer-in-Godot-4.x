@@ -11,13 +11,12 @@ const gravity : float = 11.5
 @onready var uncrouched_collision_shape = $uncrouched_collision_shape
 @onready var obstacle_checker = %ShapeCast3D
 @onready var player_animation = $PlayerAnimation
-@onready var player_animation_tree : AnimationTree= $PlayerAnimationTree
 
 @export_category("Component Refrences")
 @export var player_statemachine : StateMachine
 @export var CameraJuice_Component : CameraJuiceComponent
 @export var UiComponent : PlayerUiComponent
-@export var WPM : WeaponManager 
+@onready var camera : Camera3D = %Camera3D
 
 
 
@@ -35,35 +34,39 @@ var lean_tween
 
 signal  UpdateWeaponHud
 
+@export var health : float = 200
+signal update_health(amount : float)
 
 var input_dir
 @onready var camera_3d = %Camera3D
 var can_lean : bool = true
 #Signals
 signal recieved_damage
+signal died
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
+	
 
 func _ready():
+	position.y+= 4.0
+	var local = is_multiplayer_authority()
+	set_process(local)
+	set_physics_process(local)
+	set_process_input(local)
+	set_process_unhandled_input(local)
+	set_process_shortcut_input(local)
+	if !is_multiplayer_authority(): return
+	camera.current= true
+	
 	obstacle_checker.add_exception(self)
 	left_lean_collision.add_exception(self)
 	right_lean_collision.add_exception(self)
 	Global.Player = self
-	
+	$head/Player_model.visible = false
+
 func _physics_process(delta):
-	
-	# Add the gravity.
-	
-
-	# Handle jump.
-
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	lean_collision()
 	move_and_slide()
-	if  !can_lean:
-		Lean(CENTER)
-
 
 
 
@@ -73,21 +76,11 @@ func _update_rotation(rot_value : Vector3) -> void :
 	transform.basis = Basis.from_euler(rot_value)
 
 
-func _input(event):
-	
-	if Input.is_action_just_released("lean_left") or  Input.is_action_just_released("lean_right"):
-		if (!Input.is_action_pressed("lean_left") or !Input.is_action_pressed("lean_right")):
-			Lean(CENTER)
-	if Input.is_action_just_pressed("lean_left") and can_lean:
-		Lean(LEFT)
-	if Input.is_action_just_pressed("lean_right") and can_lean:
-		Lean(RIGHT)
+
 
 func update_movement(_speed : float , _acceleration : float , Deacceleration :float ):
+	if !is_multiplayer_authority(): return
 	input_dir = Input.get_vector("left", "right", "forward", "backward")
-	
-	
-	
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		velocity.x = lerp(velocity.x , direction.x * _speed , _acceleration)
@@ -122,17 +115,10 @@ func dash(direction: Vector3, speed: float) -> void:
 	_direction.y = 0  
 	velocity = _direction * speed  
 
-func Lean(blend_amount):
-
-	if lean_tween:
-		lean_tween.kill()
-	lean_tween = get_tree().create_tween()
-	lean_tween.tween_property(player_animation_tree,"parameters/lean_blend/blend_amount" , blend_amount , lean_speed)
-
-func lean_collision():
-	player_animation_tree["parameters/lean_left_collison/blend_amount"] = lerp(
-		float(player_animation_tree["parameters/lean_left_collison/blend_amount"]) , float(left_lean_collision.is_colliding()) , lean_speed
-	)
-	player_animation_tree["parameters/lesn_r_col/blend_amount"] = lerp(
-		float(player_animation_tree["parameters/lesn_r_col/blend_amount"]) , float(right_lean_collision.is_colliding()) , lean_speed
-	)
+@rpc("any_peer")
+func damage(amount):
+	health -= min(health , amount)
+	update_health.emit(health)
+	player_animation.play("damage")
+	if health <= 0:
+		print("died")

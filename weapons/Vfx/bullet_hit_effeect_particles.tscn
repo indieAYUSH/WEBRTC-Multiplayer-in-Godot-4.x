@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cub0ce102843a"]
+[gd_scene format=3 uid="uid://cub0ce102843a"]
 
-[ext_resource type="Script" uid="uid://ceqc7x1l2lswi" path="res://addons/weapons/Vfx/scripts/bullet_hit_effeect_particles.gd" id="1_h2ekw"]
+[ext_resource type="Script" uid="uid://ceqc7x1l2lswi" path="res://weapons/Vfx/scripts/bullet_hit_effeect_particles.gd" id="1_h2ekw"]
 
 [sub_resource type="Gradient" id="Gradient_d87dy"]
 colors = PackedColorArray(0.8509804, 0.6901961, 0, 1, 0.85490197, 0.9411765, 0.0627451, 1)
@@ -41,7 +41,7 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_n7iin")
 size = Vector2(0.1, 0.1)
 
-[node name="BulletHitEffeectParticles" type="GPUParticles3D"]
+[node name="BulletHitEffeectParticles" type="GPUParticles3D" unique_id=1733145610]
 cast_shadow = 0
 emitting = false
 lifetime = 0.4

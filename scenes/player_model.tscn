@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b84i8xno3gjn1"]
+
+[ext_resource type="ArrayMesh" uid="uid://b0wwje613cp3s" path="res://assets/3d models/wwew.tres" id="1_fr7j6"]
+
+[node name="Player_model" type="Node3D" unique_id=1250964393]
+transform = Transform3D(-0.012, 0, -1.1364961e-09, 0, 0.011, 0, 1.0490733e-09, 0, -0.013, 0, 0, 0)
+
+[node name="Sketchfab_model" type="Node3D" parent="." unique_id=1927855867]
+transform = Transform3D(1, 0, 0, 0, 2.220446e-16, 1, 0, -1, 2.220446e-16, 0, 0, 0)
+
+[node name="model_New Qlone_20220408_082039699_obj_cleaner_materialmerger_gles" type="Node3D" parent="Sketchfab_model" unique_id=1817403209]
+
+[node name="Object_2" type="MeshInstance3D" parent="Sketchfab_model/model_New Qlone_20220408_082039699_obj_cleaner_materialmerger_gles" unique_id=103501509]
+lod_bias = 0.7
+mesh = ExtResource("1_fr7j6")

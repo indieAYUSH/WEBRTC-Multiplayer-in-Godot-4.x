@@ -8,6 +8,12 @@ var States : Dictionary = {}
 
 
 func _ready():
+	var local := is_multiplayer_authority()
+	set_process(local)
+	set_physics_process(local)
+	set_process_input(local)
+	set_process_unhandled_input(local)
+	set_process_shortcut_input(local)
 	for child in get_children():
 		if child is State:
 			States[child.name] = child

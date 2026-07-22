@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cenwygddxwytv"]
 
 [ext_resource type="Script" uid="uid://glvwd42co48c" path="res://weapons/Scripts/core logics/weapon_manager.gd" id="1_7gan4"]
+[ext_resource type="Script" uid="uid://bttf06c46xd3g" path="res://weapons/Scripts/core logics/weapon_resource.gd" id="2_5xdec"]
+[ext_resource type="Resource" uid="uid://dd7ywfs2hs32s" path="res://weapons/weapon_res/akm.tres" id="3_kmhu0"]
 [ext_resource type="Script" uid="uid://b808s2vhuelg3" path="res://weapons/Scripts/core logics/weapon_juice_component.gd" id="9_dc3hj"]
 [ext_resource type="Script" uid="uid://cja465j0ptsdy" path="res://weapons/Scripts/core logics/AmmunationManager.gd" id="11_hskht"]
 
@@ -8,6 +10,8 @@
 script = ExtResource("1_7gan4")
 weapon_juice_component = NodePath("WeaponJuice")
 ammunation_manager = NodePath("AmmunationManager")
+weapon_resources = Array[ExtResource("2_5xdec")]([ExtResource("3_kmhu0")])
+load_out = Array[String](["AKM"])
 
 [node name="WeaponJuice" type="Node3D" parent="." unique_id=534345895 node_paths=PackedStringArray("weapon_holder")]
 unique_name_in_owner = true

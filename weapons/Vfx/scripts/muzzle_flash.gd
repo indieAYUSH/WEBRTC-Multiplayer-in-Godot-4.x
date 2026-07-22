@@ -4,7 +4,7 @@ extends Node3D
 
 
 func _show_muzzle_flash() ->void:
-	flash.emitting = true
+	flash.restart()
 	$light.visible = true
 	await get_tree().create_timer(flash.lifetime) .timeout
 	$light.visible = false

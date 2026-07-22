@@ -24,6 +24,8 @@ var host_guest_connected : bool = false
 signal start_game(_peer_id)
 
 
+
+
 func _ready() -> void:
 	FirebaseManager.room_recieved.connect(on_room_recieved)
 	FirebaseManager.offer_answered.connect(on_offer_recieved)
@@ -45,6 +47,7 @@ func _process(_delta):
 		print("State:", state)
 	
 	if state == 2:
+		print("starting game")
 		host_guest_connected = true
 		stop_polling.emit()
 
@@ -131,7 +134,6 @@ func _on_ice_candidate_recieved(sender, media, index, candidate):
 
 
 
-
 func create_host_multiplayer_peer():
 	var mp = WebRTCMultiplayerPeer.new()
 	mp.create_server()
@@ -139,7 +141,7 @@ func create_host_multiplayer_peer():
 	print("add_peer:", err)
 	multiplayer.multiplayer_peer = mp
 	_start_game(multiplayer.get_unique_id())
-	mp.peer_connected.connect(start_game , multiplayer.get_unique_id())
+	mp.peer_connected.connect(_start_game , multiplayer.get_unique_id())
 
 func create_client_multiplayer_peer():
 	var mp = WebRTCMultiplayerPeer.new()
@@ -149,4 +151,5 @@ func create_client_multiplayer_peer():
 	multiplayer.multiplayer_peer = mp
 
 func _start_game(_peer_id):
+	print(_peer_id)
 	start_game.emit(_peer_id)

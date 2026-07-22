@@ -2,10 +2,22 @@
 
 [ext_resource type="Script" uid="uid://d1j35qtdnu5b8" path="res://scenes/main_scene.gd" id="1_rt2n2"]
 [ext_resource type="Script" uid="uid://dn0is7wn483bm" path="res://scripts/main_menu.gd" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://5ym40qt2aau8" path="res://scenes/player.tscn" id="2_c16ls"]
 [ext_resource type="StyleBox" uid="uid://b1n8m862a3s5g" path="res://assets/UI/styles/button_normal.tres" id="2_gubc5"]
 [ext_resource type="StyleBox" uid="uid://uqp7hqdkw7tt" path="res://assets/UI/styles/button_presses.tres" id="3_rt2n2"]
 [ext_resource type="StyleBox" uid="uid://dalv5jygmefjm" path="res://assets/UI/styles/button_hovered.tres" id="4_c16ls"]
 [ext_resource type="Script" uid="uid://c2d6o5j6anxhx" path="res://scripts/lobby.gd" id="5_18nlu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c16ls"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_18nlu"]
+sky_material = SubResource("ProceduralSkyMaterial_c16ls")
+
+[sub_resource type="Environment" id="Environment_c1pb6"]
+background_mode = 2
+sky = SubResource("Sky_18nlu")
 
 [sub_resource type="LabelSettings" id="LabelSettings_bg6pd"]
 font_size = 50
@@ -51,7 +63,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_c16ls"]
@@ -78,6 +90,14 @@ _data = {
 
 [node name="MainScene" type="Node3D" unique_id=159987791]
 script = ExtResource("1_rt2n2")
+player_scene = ExtResource("2_c16ls")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1830182950]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=615054340]
+environment = SubResource("Environment_c1pb6")
 
 [node name="MainMenu" type="Control" parent="." unique_id=514220405]
 layout_mode = 3
@@ -157,6 +177,8 @@ theme_override_styles/separator = SubResource("StyleBoxLine_und3l")
 [node name="Level" type="Node3D" parent="." unique_id=1808122177]
 
 [node name="testfloor" type="CSGBox3D" parent="Level" unique_id=354373488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17672825, -0.048294067, 0.00961113)
+use_collision = true
 size = Vector3(50, 1, 50)
 
 [node name="Lobby" type="Control" parent="." unique_id=1303273016]
@@ -223,7 +245,7 @@ grow_horizontal = 2
 theme_override_styles/normal = ExtResource("2_gubc5")
 theme_override_styles/pressed = ExtResource("3_rt2n2")
 theme_override_styles/hover = ExtResource("4_c16ls")
-text = "Join Game"
+text = "Start Game"
 
 [node name="ClientLobby" type="Panel" parent="Lobby" unique_id=427131122]
 visible = false
@@ -291,6 +313,7 @@ wait_time = 0.5
 libraries/ = SubResource("AnimationLibrary_18nlu")
 
 [node name="transition_pannel2" type="Panel" parent="." unique_id=240805928]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -302,6 +325,14 @@ mouse_filter = 2
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1323395658]
 _spawnable_scenes = PackedStringArray("uid://5ym40qt2aau8")
 spawn_path = NodePath("..")
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=1935870562]
+
+[node name="SpawnPoint1" type="Node3D" parent="SpawnPoints" unique_id=1904892197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, -20.686954)
+
+[node name="SpawnPoint2" type="Node3D" parent="SpawnPoints" unique_id=1406535042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, 18.41209)
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/HostButton" to="MainMenu" method="_on_host_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/JoinButton" to="MainMenu" method="_on_join_button_pressed"]

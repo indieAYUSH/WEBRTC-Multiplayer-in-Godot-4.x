@@ -11,6 +11,8 @@ var http_requested : bool = false
 var offer_uploaded : bool = false
 var ice_uploaded : bool = false
 
+var ic_http_requested : bool = false
+
 enum RequestTYPE{
 	NONE,
 	GET_ROOM,
@@ -58,8 +60,10 @@ func _on_request_completed(result, response_code, headers, body):
 func on_ice_http_req_completed(result, response_code, headers, body):
 	match current_ic_request_type:
 		ICRequestTYPE.GET_ICE:
+			ic_http_requested = false
 			handle_recieved_ice(body)
 		ICRequestTYPE.UPLOAD_ICE:
+			ic_http_requested = false
 			ice_uploaded = true
 
 
@@ -154,6 +158,8 @@ func handle_recieved_answer(_body):
 	
 
 func upload_ice_candidates(_room_code : String , _media : String , _candidates : String , _index : int , _sender : String):
+	if ic_http_requested:
+		return
 	var body = {
 		"fields": {
 			"sender":{
@@ -176,14 +182,17 @@ func upload_ice_candidates(_room_code : String , _media : String , _candidates :
 	var url = BASE_URL + "/rooms/%s/candidates" % _room_code
 	current_ic_request_type  = ICRequestTYPE.UPLOAD_ICE
 	var err = http_ic.request(url, headers, HTTPClient.METHOD_POST, body_json)
+	ic_http_requested = true
 
 
 func get_ice_candidates(room_code : String):
+	if ic_http_requested: return
 	if !ice_uploaded:
 		return
 	var url = BASE_URL + "/rooms/" + room_code + "/candidates"
 	current_ic_request_type = ICRequestTYPE.GET_ICE
 	var err = http_ic.request(url , [] , HTTPClient.METHOD_GET)
+	ic_http_requested = true
 	if err != OK:
 		return
 

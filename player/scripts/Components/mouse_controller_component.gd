@@ -13,16 +13,17 @@ var capture_mouse : bool
 var mouse_input : Vector2
 
 func _unhandled_input(event):
+	#if !is_multiplayer_authority(): return
 	capture_mouse = event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED
 	if capture_mouse:
 		mouse_input.x += -event.relative.x * mouse_senstivity
 		mouse_input.y += -event.relative.y * mouse_senstivity
 		camera_controller._update_rotation(mouse_input)
-		weapon_manager.weapon_juice_component._sway(mouse_input)
 
 func _ready():
 	Input.mouse_mode = mouse_capture_mode
 
 
 func _process(delta):
+	#if !is_multiplayer_authority(): return
 	mouse_input = Vector2.ZERO

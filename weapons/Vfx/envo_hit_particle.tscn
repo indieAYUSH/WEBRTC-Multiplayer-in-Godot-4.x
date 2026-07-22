@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://di2fwlirbhjuy"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5nemf"]
+angle_min = 234.60002
+angle_max = 234.60002
+velocity_pivot = Vector3(0, 0, 3.035)
+direction = Vector3(0, 1, 1)
+spread = 40.194
+flatness = 0.11
+initial_velocity_min = 6.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -3, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ksuw"]
+roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_frekk"]
+material = SubResource("StandardMaterial3D_4ksuw")
+radius = 0.075
+height = 0.108
+radial_segments = 5
+rings = 6
+
+[node name="envo_hit_particle" type="GPUParticles3D" unique_id=1312103136]
+cast_shadow = 0
+emitting = false
+amount = 20
+lifetime = 0.77
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_5nemf")
+draw_pass_1 = SubResource("SphereMesh_frekk")
