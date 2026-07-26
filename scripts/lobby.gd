@@ -11,21 +11,11 @@ extends Control
 var is_host : bool = false
 
 
-func _on_room_code_copy_pressed() -> void:
-	DisplayServer.clipboard_set(Network.room_code)
 
-
-func _on_join_button_pressed() -> void:
-	pass
 
 
 func _on_back_to_menu_pressed() -> void:
-	main_menu.visible = true
-	lobby.visible = false
-	if is_host:
-		host_lobby.visible = false
-	else:
-		client_lobby.visible = false
+	get_tree().reload_current_scene()
 
 
 func _on_client_joinbutton_pressed() -> void:

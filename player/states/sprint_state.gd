@@ -31,9 +31,7 @@ func _update(delta : float) -> void:
 	
 	if Player.velocity.y < -3.0 :
 		change_state.emit("FallingState")
-	
-	if  Input.is_action_just_pressed("Dash") and Player.can_dash :
-		change_state.emit("DashState")
+
 
 func exit()-> void:
 	Player.CameraJuice_Component.fov_manager(-fov_change)

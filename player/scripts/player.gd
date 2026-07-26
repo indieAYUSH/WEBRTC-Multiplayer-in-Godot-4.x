@@ -17,8 +17,10 @@ const gravity : float = 11.5
 @export var CameraJuice_Component : CameraJuiceComponent
 @export var UiComponent : PlayerUiComponent
 @onready var camera : Camera3D = %Camera3D
+@onready var respawn_timer: Timer = $respawn_timer
+@onready var death_particle: GPUParticles3D = $death_particle
 
-
+var spawn_point  : Vector3
 
 @export_category("Movement Bools")
 @export var can_dash : bool = true
@@ -43,6 +45,11 @@ var can_lean : bool = true
 #Signals
 signal recieved_damage
 signal died
+signal respawned
+
+var player_died: bool = false
+
+var parent 
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -57,13 +64,15 @@ func _ready():
 	set_process_unhandled_input(local)
 	set_process_shortcut_input(local)
 	if !is_multiplayer_authority(): return
+	spawn_point = position
 	camera.current= true
-	
+	parent = get_parent()
 	obstacle_checker.add_exception(self)
 	left_lean_collision.add_exception(self)
 	right_lean_collision.add_exception(self)
 	Global.Player = self
 	$head/Player_model.visible = false
+	
 
 func _physics_process(delta):
 	move_and_slide()
@@ -117,8 +126,43 @@ func dash(direction: Vector3, speed: float) -> void:
 
 @rpc("any_peer")
 func damage(amount):
+	if player_died: return
 	health -= min(health , amount)
 	update_health.emit(health)
 	player_animation.play("damage")
 	if health <= 0:
-		print("died")
+		parent.check_player_death.rpc_id(1, multiplayer.get_unique_id())
+		death()
+
+func _on_ui_game_pause() -> void:
+	player_statemachine.current_state.change_state.emit("PausedState")
+
+
+func _on_ui_game_resumed() -> void:
+	player_statemachine.current_state.change_state.emit("IdleState")
+
+func death():
+	player_died = true
+	player_statemachine.current_state.change_state.emit("PausedState")
+	death_fx.rpc()
+	head.visible = false
+	respawn_timer.start()
+	died.emit()
+
+@rpc("call_local")
+func death_fx():
+	death_particle.restart()
+
+
+func respawn_player():
+	health = 200.0
+	player_died = false
+	head.visible = true
+	position = spawn_point
+	update_health.emit(health)
+	respawned.emit()
+	player_statemachine.current_state.change_state.emit("IdleState")
+
+
+func _on_respawn_timer_timeout() -> void:
+	respawn_player()

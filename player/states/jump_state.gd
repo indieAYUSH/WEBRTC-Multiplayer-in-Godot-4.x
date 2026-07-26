@@ -18,8 +18,6 @@ func _update(delta : float) -> void:
 	if Player.is_on_floor():
 		change_state.emit("IdleState")
 	
-	if  Input.is_action_just_pressed("Dash") and Player.can_dash :
-		change_state.emit("DashState")
 
 func physics_update(delta : float)-> void:
 	Player.update_gravity(delta)

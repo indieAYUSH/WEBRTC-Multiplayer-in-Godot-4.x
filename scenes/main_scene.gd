@@ -5,11 +5,34 @@ extends Node3D
 @onready var lobby: Control = $Lobby
 @onready var spawn_point_1: Node3D = $SpawnPoints/SpawnPoint1
 @onready var spawn_point_2: Node3D = $SpawnPoints/SpawnPoint2
+@onready var red_team_score_label: Label = $UI/score_board/red_team/red_team_score
+@onready var blue_team_score_label: Label = $UI/score_board/blue_team/blue_team_score
+@onready var score_board: CanvasGroup = $UI/score_board
 
 @export var player_scene : PackedScene
 var spawn_count : int = 0     # u can use more scalable way like sending role direct from netwrok manager i am using this just for speed
 
 var current_spawn_node : Node3D
+
+var red_team_score : int = 0
+var blue_team_score : int = 0 
+var max_score : int = 2
+
+
+
+#----============Player profile ----------============#
+@onready var name_field: LineEdit = $MainMenu/player_profile/name_edit/name_field
+@onready var button: Button = $MainMenu/player_profile/name_edit/Button
+var my_name : String
+@onready var looser_prompt: Label = $UI/winning_Screen/looser_prompt
+@onready var winner_prompt: Label = $UI/winning_Screen/winner_prompt
+@onready var returning_label: Label = $UI/winning_Screen/returning_label
+@onready var winning_screen: Panel = $UI/winning_Screen
+
+var host_name : String
+var gues_name : String
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,13 +56,8 @@ func _on_wait_timer_timeout() -> void:
 func stop_polling():
 	wait_timer.stop()
 	main_menu.visible = false
-	lobby.visible = false	
-
-
-@rpc("any_peer" , "call_remote")
-func print_hello():
-	print("Hello its ur host speaking")
-
+	lobby.visible = false
+	score_board.visible = true
 
 
 func start_game(peer_id):
@@ -47,6 +65,7 @@ func start_game(peer_id):
 	spawn_count += 1
 	main_menu.visible = false
 	lobby.visible = false
+	score_board.visible = true
 	spawn_player(peer_id)
 
 
@@ -57,10 +76,61 @@ func spawn_player(mp_peer_id):
 	var p = player_scene.instantiate()
 	p.name = (str(mp_peer_id))
 	p.global_position = current_spawn_node.global_position
-	add_child(p)
-	print(Network.my_roll , "spawning player:" , p.get_multiplayer_authority() , p.global_position)
+	add_child(p) 
+
 func set_spawn_point():
 	if spawn_count == 0:
 		current_spawn_node = spawn_point_1
 	elif spawn_count == 1:
 		current_spawn_node = spawn_point_2
+
+@rpc("any_peer" , "call_local")
+func check_player_death(peer_id : int) -> void:
+	inc_score_count.rpc(peer_id)
+
+@rpc("call_local")
+func inc_score_count(_peer_id : int) -> void:
+	if _peer_id  == 1:
+		blue_team_score += 1
+	elif _peer_id == 2:
+		red_team_score += 1
+	red_team_score_label.text = str(red_team_score)
+	blue_team_score_label.text = str(blue_team_score)
+	check_winner.rpc_id(1)
+
+
+func _on_close_button_pressed() -> void:
+	pass # Replace with function body.
+
+
+
+@rpc("any_peer" , "call_local")
+func check_winner():
+	if red_team_score >= max_score or blue_team_score >= max_score:
+		if red_team_score > blue_team_score:
+			declare_host_winner.rpc()
+		else:
+			declare_guest_winner.rpc()
+
+@rpc("any_peer" , "call_local")
+func declare_host_winner():
+	$lobby_return_timer.start()
+	winning_screen.visible = true
+	if Network.is_host:
+		winner_prompt.visible = true
+	else:
+		looser_prompt.visible = true
+
+
+@rpc("any_peer" , "call_local")
+func declare_guest_winner():
+	$lobby_return_timer.start()
+	winning_screen.visible = true
+	if Network.is_host:
+		looser_prompt.visible = true
+	else:
+		winner_prompt.visible = true
+
+
+func _on_lobby_return_timer_timeout() -> void:
+	get_tree().reload_current_scene()

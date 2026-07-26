@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://tep0d7umemgt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l71n6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.25882354)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke2ow"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+skew = Vector2(0.1, 0)
+border_width_left = 1
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+anti_aliasing_size = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_o187k"]
+font_size = 32
+
+[node name="pause_menu" type="Panel" unique_id=397566373]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l71n6")
+
+[node name="Panel" type="Panel" parent="." unique_id=840054773]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ke2ow")
+
+[node name="Label" type="Label" parent="Panel" unique_id=1169702301]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_right = 28.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_o187k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1247912061]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -39.5
+offset_right = 113.0
+offset_bottom = 39.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 7
+
+[node name="resume_button" type="Button" parent="Panel/VBoxContainer" unique_id=853647065]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Resume"
+
+[node name="quit_button" type="Button" parent="Panel/VBoxContainer" unique_id=2044387687]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Quit"

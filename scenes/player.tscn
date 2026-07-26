@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://clyumisqx0i7s" path="res://player/states/dash_state.gd" id="14_w2vqi"]
 [ext_resource type="Shader" uid="uid://d4ekgn6ntg6rm" path="res://scenes/vign.gdshader" id="18_4r5pv"]
 [ext_resource type="Script" uid="uid://41krvxlxp32v" path="res://player/UI/ui.gd" id="18_ygc1f"]
+[ext_resource type="Script" uid="uid://csjc26x1ogl0v" path="res://scenes/paused_state.gd" id="21_4ni07"]
 [ext_resource type="Script" uid="uid://nr0k8pums4yn" path="res://player/states/crouch_state.gd" id="24_d7dwe"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fmnqm"]
@@ -172,19 +173,19 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:position")
+tracks/7/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.12, -0.17, -0.415)]
+"values": [Vector3(0, 0, 0)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:rotation")
+tracks/8/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -200,19 +201,19 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:position")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.033333335, 1.4, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.12, -0.17, -0.415), Vector3(0.12, -0.17, -0.26), Vector3(0.12, -0.17, -0.415)]
+"values": [Vector3(0, 0, 0), Vector3(0.12, -0.17, -0.26), Vector3(0.12, -0.17, -0.26), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:rotation")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -240,19 +241,19 @@ length = 0.08
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:position")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.033333335, 0.08),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0.12, -0.17, -0.415), Vector3(0.12, -0.17, -0.26), Vector3(0.12, -0.17, -0.415)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.065), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM:rotation")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -644,6 +645,58 @@ shader_parameter/vignette_intensity = 1.47
 shader_parameter/vignette_opacity = 0.2210000104975
 shader_parameter/vignette_rgb = Color(0.92941177, 0, 0, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a38lo"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.105882354, 0.105882354, 0.105882354, 0.14901961)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktux3"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_4ni07"]
+font_size = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l71n6"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.25882354)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke2ow"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+skew = Vector2(0.1, 0)
+border_width_left = 1
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+anti_aliasing_size = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_o187k"]
+font_size = 32
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mbkfo"]
 height = 1.7
 
@@ -660,6 +713,43 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("head:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("head:visible")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[sub_resource type="Curve" id="Curve_4ni07"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9701492, 0.2053572), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l71n6"]
+curve = SubResource("Curve_4ni07")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o187k"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 66.316
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_curve = SubResource("CurveTexture_l71n6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ke2ow"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0, 0.14509805, 1)
+roughness = 0.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bg6pd"]
+material = SubResource("StandardMaterial3D_ke2ow")
+top_radius = 0.08
+bottom_radius = 0.0
+height = 1.0
+radial_segments = 16
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ktux3"]
+streams_count = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=1364051561 node_paths=PackedStringArray("player_statemachine", "CameraJuice_Component", "UiComponent", "left_lean_collision", "right_lean_collision")]
 collision_layer = 2
@@ -707,11 +797,17 @@ unique_name_in_owner = true
 target_position = Vector3(0, 0, -200)
 collision_mask = 2
 
-[node name="AKM" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D" unique_id=1969051408 node_paths=PackedStringArray("animation_player", "weapon_ray_cast")]
-transform = Transform3D(-7.8680495e-10, 0, -0.018, 0, 0.018, 0, 0.018, 0, -7.8680495e-10, 0.12, -0.17, -0.415)
+[node name="weapon_holder" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake" unique_id=551316734]
+transform = Transform3D(0.89, 0, 0, 0, 0.89, 0, 0, 0, 0.89, 0.16, -0.20999998, -0.495)
+
+[node name="weapon_juic_rig" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder" unique_id=1223682224]
+
+[node name="AKM" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig" unique_id=1969051408 node_paths=PackedStringArray("animation_player", "weapon_ray_cast", "player_controller")]
+unique_name_in_owner = true
+transform = Transform3D(-1.136496e-09, 0, -0.025999997, 0, 0.025999997, 0, 0.025999997, 0, -1.136496e-09, 0, 0, 0)
 script = ExtResource("4_fulsm")
-animation_player = NodePath("../../../../../../../PlayerAnimation")
-weapon_ray_cast = NodePath("../RayCast3D")
+animation_player = NodePath("../../../../../../../../PlayerAnimation")
+weapon_ray_cast = NodePath("../../../Camera3D/RayCast3D")
 envo_hit_particles = ExtResource("5_a38lo")
 blood_splatter_particle = ExtResource("6_4ni07")
 bullet_tracer = ExtResource("7_l71n6")
@@ -719,23 +815,31 @@ shootin_anim = "akm_shoot"
 reloading_anim = "akm_reload"
 ads_pos = Vector3(0, -0.125, -0.28)
 default_pos = Vector3(0.12, -0.17, -0.415)
+player_controller = NodePath("../../../../../../../..")
+weapon_tilt = true
+weapon_bob = true
+roll_pitch = 0.028
+roll_side_rot = 0.25
+frequency = 2.0
+amplitude = 0.011
+lerp_speed = 10.0
 
-[node name="Sketchfab_model" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM" unique_id=860187183]
-transform = Transform3D(1, 0, 0, 0, 2.220446e-16, 1, 0, -1, 2.220446e-16, 0, 0, 0)
+[node name="sway_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM" unique_id=860187183]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
 
-[node name="Collada visual scene group" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM/Sketchfab_model" unique_id=1226796749]
+[node name="Collada visual scene group" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot" unique_id=1226796749]
 transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, -1, 0, 1, -4.3711392e-08, 0, 0, 0)
 
-[node name="automatic_rifle" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM/Sketchfab_model/Collada visual scene group" unique_id=1638153046]
+[node name="automatic_rifle" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot/Collada visual scene group" unique_id=1638153046]
 transform = Transform3D(100, 0, 0, 0, -1.6e-05, 100, 0, -100, -1.6e-05, 0, 0, 0)
 
-[node name="defaultMaterial" type="MeshInstance3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM/Sketchfab_model/Collada visual scene group/automatic_rifle" unique_id=80435628]
+[node name="defaultMaterial" type="MeshInstance3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot/Collada visual scene group/automatic_rifle" unique_id=80435628]
 mesh = SubResource("ArrayMesh_xnaiv")
 
-[node name="Barrel_node" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM" unique_id=914771921]
+[node name="Barrel_node" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM" unique_id=914771921]
 transform = Transform3D(0.9999999, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.9999999, -29.13869, 1.4400406, 0.16720772)
 
-[node name="MuzzleFlash" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D/AKM/Barrel_node" unique_id=219939041 instance=ExtResource("6_4r5pv")]
+[node name="MuzzleFlash" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/Barrel_node" unique_id=219939041 instance=ExtResource("6_4r5pv")]
 
 [node name="obstacle_checker" type="Node3D" parent="head/CameraControllerComponent" unique_id=950315987]
 
@@ -806,6 +910,13 @@ metadata/_custom_type_script = "uid://c333aph4jx7b3"
 script = ExtResource("9_hu6bb")
 jump_force = 4.4
 metadata/_custom_type_script = "uid://ddvfv5vhdy10b"
+
+[node name="PausedState" type="Node" parent="PlayerStateMachine" unique_id=315488886]
+script = ExtResource("21_4ni07")
+speed = 0.0
+acceleration = 0.0
+deacceleration = 0.0
+metadata/_custom_type_script = "uid://bdb24wwkuvnvt"
 
 [node name="PlayerAnimation" type="AnimationPlayer" parent="." unique_id=1049199401]
 libraries/ = SubResource("AnimationLibrary_h4jra")
@@ -889,6 +1000,156 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="death_menu" type="Panel" parent="UI" unique_id=425403227]
+visible = false
+custom_minimum_size = Vector2(400, 500)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a38lo")
+
+[node name="spawn_level" type="Label" parent="UI/death_menu" unique_id=1768389286]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = -101.0
+offset_right = 182.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Respawning in ..............."
+label_settings = SubResource("LabelSettings_ktux3")
+
+[node name="spawn_timer" type="Label" parent="UI/death_menu" unique_id=1643614740]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -41.5
+offset_right = 17.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_4ni07")
+
+[node name="result_menu" type="Panel" parent="UI" unique_id=1310591719]
+visible = false
+custom_minimum_size = Vector2(400, 500)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a38lo")
+
+[node name="menu_label" type="Label" parent="UI/result_menu" unique_id=861044832]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = -101.0
+offset_right = 182.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Returning to Lobby........"
+label_settings = SubResource("LabelSettings_ktux3")
+
+[node name="loby_return_timer" type="Label" parent="UI/result_menu" unique_id=1066682892]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -41.5
+offset_right = 17.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_4ni07")
+
+[node name="pause_menu" type="Panel" parent="UI" unique_id=397566373]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l71n6")
+
+[node name="Panel" type="Panel" parent="UI/pause_menu" unique_id=840054773]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ke2ow")
+
+[node name="Label" type="Label" parent="UI/pause_menu/Panel" unique_id=1169702301]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.5
+offset_right = 28.5
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_o187k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/pause_menu/Panel" unique_id=1247912061]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -39.5
+offset_right = 113.0
+offset_bottom = 39.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 7
+
+[node name="resume_button" type="Button" parent="UI/pause_menu/Panel/VBoxContainer" unique_id=853647065]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Resume"
+
+[node name="quit_button" type="Button" parent="UI/pause_menu/Panel/VBoxContainer" unique_id=2044387687]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Quit"
+
 [node name="uncrouched_collision_shape" type="CollisionShape3D" parent="." unique_id=485210119]
 shape = SubResource("CapsuleShape3D_mbkfo")
 
@@ -900,5 +1161,57 @@ disabled = true
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1409541841]
 replication_config = SubResource("SceneReplicationConfig_qfm1y")
 
+[node name="Timer" type="Timer" parent="." unique_id=1198242156]
+
+[node name="respawn_timer" type="Timer" parent="." unique_id=960374003]
+wait_time = 3.0
+one_shot = true
+
+[node name="waith_timer" type="Timer" parent="." unique_id=575511578]
+
+[node name="death_particle" type="GPUParticles3D" parent="." unique_id=59496676]
+cast_shadow = 0
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_o187k")
+draw_pass_1 = SubResource("CylinderMesh_bg6pd")
+
+[node name="weapon_Sound" type="Node3D" parent="." unique_id=402950593]
+
+[node name="shoot_sound" type="AudioStreamPlayer3D" parent="weapon_Sound" unique_id=958443258]
+stream = SubResource("AudioStreamRandomizer_ktux3")
+
+[node name="reload_sound" type="AudioStreamPlayer3D" parent="weapon_Sound" unique_id=863490366]
+
+[node name="movment_sfx" type="Node3D" parent="." unique_id=195755182]
+
+[node name="walking_foot_step" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=769145233]
+
+[node name="crouch" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1438786825]
+
+[node name="uncrouch" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1167315685]
+
+[node name="jump" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=723005357]
+
+[node name="land" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1183127108]
+
+[node name="slide" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1754655490]
+
+[node name="dash" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1487309956]
+
+[node name="death_sfx" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1650016217]
+
+[connection signal="died" from="." to="UI" method="_on_player_died"]
 [connection signal="recieved_damage" from="." to="UI" method="_on_player_recieved_damage"]
+[connection signal="respawned" from="." to="UI" method="_on_player_respawned"]
 [connection signal="update_health" from="." to="UI" method="_on_player_update_health"]
+[connection signal="game_pause" from="UI" to="." method="_on_ui_game_pause"]
+[connection signal="game_pause" from="UI" to="Components/MouseControllerComponent" method="_on_ui_game_pause"]
+[connection signal="game_resumed" from="UI" to="." method="_on_ui_game_resumed"]
+[connection signal="game_resumed" from="UI" to="Components/MouseControllerComponent" method="_on_ui_game_resumed"]
+[connection signal="pressed" from="UI/pause_menu/Panel/VBoxContainer/resume_button" to="Components/MouseControllerComponent" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/pause_menu/Panel/VBoxContainer/resume_button" to="UI" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/pause_menu/Panel/VBoxContainer/quit_button" to="UI" method="_on_quit_button_pressed"]
+[connection signal="timeout" from="respawn_timer" to="." method="_on_respawn_timer_timeout"]

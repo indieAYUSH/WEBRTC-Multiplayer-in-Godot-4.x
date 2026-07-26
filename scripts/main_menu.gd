@@ -6,6 +6,9 @@ extends Control
 @onready var lobby: Control = $"../Lobby"
 @onready var room_code_display: Label = $"../Lobby/HostLobby/RoomCodeDisplay"
 @onready var wait_timer: Timer = $"../WaitTimer"
+@onready var name_edit: Panel = $player_profile/name_edit
+@onready var entered_name: LineEdit = $player_profile/name_edit/name
+@onready var button: Button = $player_profile/name_edit/Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,3 +39,12 @@ func _on_join_button_pressed() -> void:
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_name_change_button_pressed() -> void:
+	name_edit.visible = true
+
+
+
+func _on_close_button_pressed() -> void:
+	name_edit.visible  = false

@@ -26,7 +26,3 @@ func physics_update(delta : float)-> void:
 	Player.update_gravity(delta)
 	Player.update_movement(speed , acceleration , deacceleration)
 	
-
-func _input_update(event ):
-	if  event.is_action_pressed("ability") and Player.can_dash :
-		change_state.emit("DashState")

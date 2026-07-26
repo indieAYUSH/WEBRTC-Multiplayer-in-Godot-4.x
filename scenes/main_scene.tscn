@@ -29,16 +29,40 @@ content_margin_right = 4.0
 content_margin_bottom = 0.0
 color = Color(1, 1, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_55en2"]
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wevv"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+draw_center = false
+border_color = Color(0.8, 0.8, 0.8, 0.007843138)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktux3"]
+font_size = 27
+
+[sub_resource type="LabelSettings" id="LabelSettings_tsotg"]
+font_size = 35
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1pb6"]
 content_margin_left = 0.0
 content_margin_top = 0.0
 content_margin_right = 0.0
 content_margin_bottom = 0.0
-bg_color = Color(0.30980393, 0.30980393, 0.30980393, 0.44705883)
+bg_color = Color(0.30980393, 0.30980393, 0.30980393, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
 border_blend = true
 corner_radius_top_left = 3
 corner_radius_top_right = 3
@@ -47,9 +71,6 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.06666667)
 shadow_size = 1
-
-[sub_resource type="LabelSettings" id="LabelSettings_ktux3"]
-font_size = 27
 
 [sub_resource type="Animation" id="Animation_rt2n2"]
 length = 0.001
@@ -88,6 +109,70 @@ _data = {
 &"scene_transition": SubResource("Animation_c16ls")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c16ls"]
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1.0657526, 0.2706585, 0.21034952, 1)
+skew = Vector2(0.405, 0.015)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_o187k"]
+font_size = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18nlu"]
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.53526896, 0.53068167, 1.066, 1)
+skew = Vector2(0.405, 0.015)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_2kjuj"]
+font_size = 35
+
+[sub_resource type="LabelSettings" id="LabelSettings_yu7b5"]
+font_size = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1cbu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.06666667)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_smmdo"]
+font_size = 65
+font_color = Color(0.96151835, 4.4520943e-06, 9.62615e-07, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mngbo"]
+font_size = 65
+font_color = Color(1.0107458e-06, 0.78933257, 0.27365085, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_g1chr"]
+font_size = 38
+
 [node name="MainScene" type="Node3D" unique_id=159987791]
 script = ExtResource("1_rt2n2")
 player_scene = ExtResource("2_c16ls")
@@ -107,7 +192,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("1_w2twt")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu" unique_id=703173359]
@@ -174,6 +259,59 @@ offset_bottom = 257.0
 theme_override_constants/separation = 121
 theme_override_styles/separator = SubResource("StyleBoxLine_und3l")
 
+[node name="player_profile" type="Control" parent="MainMenu" unique_id=72226289]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+
+[node name="name_edit" type="Panel" parent="MainMenu/player_profile" unique_id=1029080534]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 52.0
+offset_right = 235.0
+offset_bottom = 212.0
+
+[node name="name_field" type="LineEdit" parent="MainMenu/player_profile/name_edit" unique_id=514853320]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 232.0
+offset_bottom = 37.0
+placeholder_text = "ENTER YOUR NAME"
+
+[node name="Button" type="Button" parent="MainMenu/player_profile/name_edit" unique_id=352660560]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 57.0
+offset_right = 151.0
+offset_bottom = 88.0
+text = "Save"
+
+[node name="close_button" type="Button" parent="MainMenu/player_profile/name_edit" unique_id=1597274304]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 57.0
+offset_right = 151.0
+offset_bottom = 88.0
+text = "Save"
+
+[node name="Label" type="Label" parent="MainMenu/player_profile" unique_id=301750676]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Player"
+label_settings = SubResource("LabelSettings_55en2")
+
+[node name="name_change button" type="Button" parent="MainMenu/player_profile" unique_id=499239530]
+layout_mode = 0
+offset_left = 105.0
+offset_top = 9.0
+offset_right = 217.0
+offset_bottom = 40.0
+text = "change name"
+
 [node name="Level" type="Node3D" parent="." unique_id=1808122177]
 
 [node name="testfloor" type="CSGBox3D" parent="Level" unique_id=354373488]
@@ -189,7 +327,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("5_18nlu")
 
 [node name="HostLobby" type="Panel" parent="Lobby" unique_id=1673327797]
@@ -200,13 +338,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
+offset_left = -128.0
 offset_top = -150.0
-offset_right = 150.0
+offset_right = 255.0
 offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_c1pb6")
+theme_override_styles/panel = SubResource("StyleBoxFlat_6wevv")
 
 [node name="RoomCodeDisplay" type="Label" parent="Lobby/HostLobby" unique_id=742707673]
 layout_mode = 1
@@ -220,32 +358,13 @@ grow_horizontal = 2
 text = "Room code"
 label_settings = SubResource("LabelSettings_ktux3")
 
-[node name="RoomCodeCopy" type="Button" parent="Lobby/HostLobby" unique_id=1582953980]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 77.0
-offset_top = 3.0
-offset_right = 124.0
-offset_bottom = 34.0
-grow_horizontal = 2
-text = "Copy"
-
-[node name="JoinButton" type="Button" parent="Lobby/HostLobby" unique_id=200611416]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -43.5
-offset_top = 63.0
-offset_right = 43.5
-offset_bottom = 94.0
-grow_horizontal = 2
-theme_override_styles/normal = ExtResource("2_gubc5")
-theme_override_styles/pressed = ExtResource("3_rt2n2")
-theme_override_styles/hover = ExtResource("4_c16ls")
-text = "Start Game"
+[node name="Label" type="Label" parent="Lobby/HostLobby" unique_id=170188517]
+layout_mode = 0
+offset_top = 121.0
+offset_right = 228.0
+offset_bottom = 144.0
+text = "Waiting For Players.................."
+label_settings = SubResource("LabelSettings_tsotg")
 
 [node name="ClientLobby" type="Panel" parent="Lobby" unique_id=427131122]
 visible = false
@@ -262,6 +381,21 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_c1pb6")
+
+[node name="BackToMenu" type="Button" parent="Lobby/ClientLobby" unique_id=327374028]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.5
+offset_top = 110.0
+offset_right = 58.5
+offset_bottom = 141.0
+grow_horizontal = 2
+theme_override_styles/normal = ExtResource("2_gubc5")
+theme_override_styles/pressed = ExtResource("3_rt2n2")
+theme_override_styles/hover = ExtResource("4_c16ls")
+text = "Back To Menu"
 
 [node name="ClientRoomCode" type="LineEdit" parent="Lobby/ClientLobby" unique_id=1880437148]
 layout_mode = 1
@@ -291,21 +425,6 @@ theme_override_styles/pressed = ExtResource("3_rt2n2")
 theme_override_styles/hover = ExtResource("4_c16ls")
 text = "Join Game"
 
-[node name="BackToMenu" type="Button" parent="Lobby" unique_id=327374028]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -58.5
-offset_top = 284.0
-offset_right = 58.5
-offset_bottom = 315.0
-grow_horizontal = 2
-theme_override_styles/normal = ExtResource("2_gubc5")
-theme_override_styles/pressed = ExtResource("3_rt2n2")
-theme_override_styles/hover = ExtResource("4_c16ls")
-text = "Back To Menu"
-
 [node name="WaitTimer" type="Timer" parent="." unique_id=1990932666]
 wait_time = 0.5
 
@@ -320,7 +439,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+size_flags_vertical = 8
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1323395658]
 _spawnable_scenes = PackedStringArray("uid://5ym40qt2aau8")
@@ -328,19 +449,152 @@ spawn_path = NodePath("..")
 
 [node name="SpawnPoints" type="Node3D" parent="." unique_id=1935870562]
 
+[node name="SpawnPoint2" type="Node3D" parent="SpawnPoints" unique_id=1406535042]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, 18.41209)
+
 [node name="SpawnPoint1" type="Node3D" parent="SpawnPoints" unique_id=1904892197]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, -20.686954)
 
-[node name="SpawnPoint2" type="Node3D" parent="SpawnPoints" unique_id=1406535042]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, 18.41209)
+[node name="UI" type="Control" parent="." unique_id=1251938287]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="score_board" type="CanvasGroup" parent="UI" unique_id=634825433]
+visible = false
+
+[node name="red_team" type="Panel" parent="UI/score_board" unique_id=1413172395]
+offset_left = 787.0
+offset_top = 4.0
+offset_right = 906.0
+offset_bottom = 44.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c16ls")
+
+[node name="red_team_score" type="Label" parent="UI/score_board/red_team" unique_id=854762325]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_o187k")
+
+[node name="blue_team" type="Panel" parent="UI/score_board" unique_id=261339277]
+offset_left = 279.0
+offset_top = 4.0
+offset_right = 397.99997
+offset_bottom = 44.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_18nlu")
+
+[node name="blue_team_score" type="Label" parent="UI/score_board/blue_team" unique_id=1880770394]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_2kjuj")
+
+[node name="Label" type="Label" parent="UI/score_board" unique_id=1632371925]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 528.0
+offset_right = 636.0
+offset_bottom = 49.0
+grow_horizontal = 2
+text = "score"
+label_settings = SubResource("LabelSettings_yu7b5")
+
+[node name="winning_Screen" type="Panel" parent="UI" unique_id=1941406264]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e1cbu")
+
+[node name="looser_prompt" type="Label" parent="UI/winning_Screen" unique_id=1640644628]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.064
+offset_left = -20.0
+offset_top = 135.0
+offset_right = 20.0
+offset_bottom = 116.528
+grow_horizontal = 2
+text = "LOST ..."
+label_settings = SubResource("LabelSettings_smmdo")
+
+[node name="winner_prompt" type="Label" parent="UI/winning_Screen" unique_id=1726158491]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.064
+offset_left = -20.0
+offset_top = 135.0
+offset_right = 20.0
+offset_bottom = 116.528
+grow_horizontal = 2
+text = "WON !!!!!"
+label_settings = SubResource("LabelSettings_mngbo")
+
+[node name="returning_label" type="Label" parent="UI/winning_Screen" unique_id=1443003651]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.5
+offset_top = 39.0
+offset_right = 224.5
+offset_bottom = 92.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Returning to main menu.........."
+label_settings = SubResource("LabelSettings_g1chr")
+
+[node name="lobby_return_timer" type="Timer" parent="." unique_id=487918481]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/HostButton" to="MainMenu" method="_on_host_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/JoinButton" to="MainMenu" method="_on_join_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Lobby/HostLobby/RoomCodeCopy" to="Lobby" method="_on_room_code_copy_pressed"]
-[connection signal="pressed" from="Lobby/HostLobby/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="Lobby/HostLobby/JoinButton" to="Lobby" method="_on_join_button_pressed"]
+[connection signal="pressed" from="MainMenu/player_profile/name_edit/close_button" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="MainMenu/player_profile/name_edit/close_button" to="MainMenu" method="_on_close_button_pressed"]
+[connection signal="pressed" from="MainMenu/player_profile/name_change button" to="MainMenu" method="_on_name_change_button_pressed"]
+[connection signal="pressed" from="Lobby/ClientLobby/BackToMenu" to="Lobby" method="_on_back_to_menu_pressed"]
 [connection signal="pressed" from="Lobby/ClientLobby/ClientJoinbutton" to="Lobby" method="_on_client_joinbutton_pressed"]
-[connection signal="pressed" from="Lobby/BackToMenu" to="Lobby" method="_on_back_to_menu_pressed"]
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="lobby_return_timer" to="." method="_on_lobby_return_timer_timeout"]

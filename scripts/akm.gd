@@ -41,7 +41,8 @@ var current_gun_animation_state : GUN_ANIMATION_STATE = GUN_ANIMATION_STATE.NONE
 
 @export_group("WEAPON JUICE THINGS")
 @export_category("refrences")
-@export var weapon_holder : Node3D
+@onready var weapon_holder: Node3D = $"../.."
+@onready var weapon_juic_rig: Node3D = $".."
 
 @export_category("effects")
 @export var weapon_tilt : bool
@@ -75,7 +76,9 @@ func on_animation_player_finished_playing(anim_name : String)->void:
 	
 	if anim_name == shootin_anim and Input.is_action_pressed("shoot") and autofire:
 		shoot()
-
+	if anim_name == reloading_anim:
+		if is_multiplayer_authority():
+			can_ads = true
 
 
 
@@ -83,9 +86,12 @@ func reload()->void:
 	if current_ammo >= mag_size:
 		return
 	if animation_player.is_playing(): return
+	#if is_multiplayer_authority():
+		#can_ads = false
 	var amt = min(mag_size , mag_size-current_ammo)
 	current_ammo += amt
 	animation_player.play(reloading_anim)
+
 
 func shoot()->void:
 	if animation_player.is_playing(): return
@@ -151,20 +157,23 @@ func show_bullet_traces(_start_point : Vector3 , _end_point : Vector3):
 
 func _process(delta: float) -> void:
 	if !is_multiplayer_authority() : return
-	if Input.is_action_pressed("ADS") and can_ads:
-		position = ads_pos
-	else:
-		position = default_pos
-
-
+	#if Input.is_action_pressed("ADS") and can_ads:
+		#weapon_holder.position = lerp(weapon_holder.position , ads_pos , lerp_speed)
+	#else:
+		#weapon_holder.position = lerp(ads_pos , weapon_holder.position , lerp_speed)
+	weapon_juice(delta)
+	position.x = lerp(position.x , 0.0 , delta*lerp_speed)
+	position.y = lerp(position.y , 0.0 , delta*lerp_speed)
+	rotation.z = lerp(rotation.z , 0.0 , delta*lerp_speed)
+	rotation.x = lerp(rotation.x , 0.0 , delta*lerp_speed)
 
 func _sway(amount: Vector2) -> void :
 	position.x += amount.x * 0.09
 	position.y += amount.y * 0.09 
 	
 	rotation.x += deg_to_rad(amount.x * 0.08)  
-	rotation.y += deg_to_rad (amount.y * 0.05) 
-
+	rotation.z += deg_to_rad (amount.y * 0.05) 
+	
 
 func weapon_juice(delta : float ) -> void:
 	var angles  : Vector3
@@ -173,8 +182,8 @@ func weapon_juice(delta : float ) -> void:
 	var velocity = player_controller.velocity.length()
 	
 	if velocity > 0.01 and weapon_tilt:
-		rotation.x = lerp(rotation.x , (roll_pitch*Input.get_axis("forward","backward"))  , delta*lerp_speed)
-		rotation.z = lerp(rotation.z , -(roll_side_rot*Input.get_axis("left","right"))  , delta*lerp_speed)
+		weapon_holder.rotation.x = lerp(weapon_holder.rotation.x , (roll_pitch*Input.get_axis("forward","backward"))  , delta*lerp_speed)
+		weapon_holder.rotation.z = lerp(weapon_holder.rotation.z , -(roll_side_rot*Input.get_axis("left","right"))  , delta*lerp_speed)
 
 	if velocity > 0.01 and player_controller.is_on_floor() and weapon_bob and _can_headbob():
 		var speed_factor = clamp(velocity/9.5 , 0.0 , 1.0)
@@ -188,8 +197,8 @@ func weapon_juice(delta : float ) -> void:
 		offset = lerp(offset , Vector3.ZERO , delta*8.0)
 		
 	
-	weapon_holder.rotation = angles
-	position = offset
+
+	weapon_juic_rig.position = offset
 
 func _can_headbob() -> bool:
 	var state_name = player_controller.player_statemachine.current_state.name
