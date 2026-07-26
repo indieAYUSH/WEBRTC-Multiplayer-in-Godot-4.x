@@ -7,9 +7,11 @@ class_name  CrouchState  extends PlayerMovementState
 
 @export var toggle_crouch : bool
 
-
+var crouched : bool = false
 
 @onready var crouch_shape_cast = %ShapeCast3D
+@onready var crouch: AudioStreamPlayer3D = $"../../movment_sfx/crouch"
+@onready var uncrouch: AudioStreamPlayer3D = $"../../movment_sfx/uncrouch"
 
 var crouch_depth : float = -0.6
 var lerp_speed : float = 10.0
@@ -17,6 +19,8 @@ var lerp_speed : float = 10.0
 
 func enter()->void:
 	Player.crouch()
+	play_sfx.rpc()
+
 
 
 func _update(delta : float) -> void:
@@ -34,3 +38,13 @@ func physics_update(delta : float)-> void:
 
 func exit()-> void:
 	Player.uncrouch()
+	play_sfx.rpc()
+
+@rpc("call_local")
+func  play_sfx():
+	if crouched:
+		uncrouch.play()
+		crouched = false
+	else:
+		crouch.play()
+		crouched = true

@@ -5,6 +5,9 @@ extends Node3D
 @export var weapon_damage : float = 18.0
 
 
+@export var shoot_sound : AudioStream
+@export var reload_sound : AudioStream
+
 @export var current_ammo : int = 30
 @export var mag_size : int = 30
 @export var animation_player : AnimationPlayer
@@ -12,6 +15,8 @@ extends Node3D
 @export var autofire : bool = true
 
 @onready var muzzle_flash: Node3D = $Barrel_node/MuzzleFlash
+@onready var shoot_sound_player: AudioStreamPlayer3D = $"../../../../../../../../weapon_Sound/shoot_sound"
+@onready var reload_sound_player: AudioStreamPlayer3D = $"../../../../../../../../weapon_Sound/reload_sound"
 
 @export var envo_hit_particles : PackedScene
 @export var blood_splatter_particle : PackedScene
@@ -73,7 +78,6 @@ func _ready() -> void:
 	animation_player.animation_finished.connect(on_animation_player_finished_playing)
 
 func on_animation_player_finished_playing(anim_name : String)->void:
-	
 	if anim_name == shootin_anim and Input.is_action_pressed("shoot") and autofire:
 		shoot()
 	if anim_name == reloading_anim:
@@ -86,11 +90,13 @@ func reload()->void:
 	if current_ammo >= mag_size:
 		return
 	if animation_player.is_playing(): return
+	current_gun_animation_state = GUN_ANIMATION_STATE.RELOADING
 	#if is_multiplayer_authority():
 		#can_ads = false
 	var amt = min(mag_size , mag_size-current_ammo)
 	current_ammo += amt
-	animation_player.play(reloading_anim)
+
+	show_fx.rpc()
 
 
 func shoot()->void:
@@ -116,13 +122,17 @@ func shoot()->void:
 
 @rpc("call_local")
 func show_fx()->void:
-	muzzle_flash._show_muzzle_flash()
 	match current_gun_animation_state:
 		GUN_ANIMATION_STATE.NONE:
 			pass
 		GUN_ANIMATION_STATE.SHOOTING:
 			animation_player.play(shootin_anim)
+			muzzle_flash._show_muzzle_flash()
+			#shoot_sound_player.stream = shoot_sound
+			shoot_sound_player.play()
 		GUN_ANIMATION_STATE.RELOADING:
+			reload_sound_player.stream = reload_sound
+			reload_sound_player.play()
 			animation_player.play(reloading_anim)
 
 @rpc("call_local")

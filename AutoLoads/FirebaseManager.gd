@@ -101,6 +101,7 @@ func handle_recieved_room(_body):
 		return
 	
 	var data = body_json.data
+
 	var fields = data["fields"]
 	var offer_type = fields["offer_type"]["stringValue"]
 	var offer_sdp  = fields["offer_sdp"]["stringValue"]

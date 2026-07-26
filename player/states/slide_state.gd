@@ -12,9 +12,11 @@ var sliding_timer
 @export_category("camera category")
 @export var added_camera_fov :float = 15.0
 
+@onready var slide: AudioStreamPlayer3D = $"../../movment_sfx/slide"
 
 
 func enter()->void:
+	play_sfx.rpc()
 	sliding_timer = sliding_timer_max
 	Player.crouch()
 	Player.CameraJuice_Component.fov_manager(added_camera_fov)
@@ -43,3 +45,10 @@ func exit()-> void:
 	Player.CameraJuice_Component.fov_manager(-added_camera_fov)
 	Player.CameraJuice_Component.rot_pivot_manager(0.0)
 	Player.can_lean = true
+
+@rpc("call_local")
+func play_sfx():
+	if !slide.playing:
+		slide.play()
+	else:
+		slide.stop()

@@ -21,11 +21,15 @@ class_name CameraJuiceComponent extends Node3D
 @export var max_speed : float = 9.0
 
 @export_category("Headbob Vars")
-@export var bob_pitch : float = 0.05
-@export var bob_roll : float = 0.025
-@export var bob_up :float = 0.0005
-@export var bob_frequncy : float = 7.0
-@export var offset_x_frequency : float
+#@export var bob_pitch : float = 0.05
+#@export var bob_roll : float = 0.025
+#@export var bob_up :float = 0.0005
+#@export var bob_frequncy : float = 7.0
+#@export var offset_x_frequency : float
+@export var bob_freq : float
+@export var bob_amplitude : float
+@export var bob_smoothing : float
+
 
 @export_category("camera_shake_vars")
 @export var noise_texture : NoiseTexture2D
@@ -47,6 +51,9 @@ var target_fov : float
 var rot_pivot_amount : float = 0.0
 var rot_pivot_x_rot_amount : float = 0.0
 
+var bob_index  : float
+var bob_current_intensity : float
+var bob_current_ampl  : float
 
 func _ready():
 	target_fov = base_fov
@@ -72,24 +79,34 @@ func camera_effects_manager(delta:float) -> void:
 	#Headbob Things ===============================================================
 	
 	var speed = Vector2(Player.velocity.x , Player.velocity.z).length()
-	if speed > 0.1 and Player.is_on_floor()  :
-		_step_timer += delta*(speed/bob_frequncy)
-		_step_timer = fmod(_step_timer , 1.0)
-	else:
-		_step_timer = 0.0
-	var bob_sin = sin(_step_timer* 2.0 * PI) *0.5
-	
-	if Head_bob and _can_headbob():
-		var pitch_delta = bob_sin * deg_to_rad(bob_pitch) * speed
-		angles.x -= pitch_delta
-		
-		var roll_delta = bob_sin*deg_to_rad(bob_roll) * speed
-		angles.z -= roll_delta
-		
-		var up_delta = bob_sin * speed * bob_up
-		offsets.y += up_delta
-		#var side_delta = bob_sin * speed * offset_x_frequency * 0.5
-		#offsets.x += side_delta 
+	#if speed > 0.1 and Player.is_on_floor()  :
+		#_step_timer += delta*(speed/bob_frequncy)
+		#_step_timer = fmod(_step_timer , 1.0)
+	#else:
+		#_step_timer = 0.0
+	#var bob_sin = sin(_step_timer* 2.0 * PI) *0.5
+	#
+	if speed > 0.5 and  Player.is_on_floor():
+		bob_current_ampl = bob_amplitude * speed 
+		bob_current_intensity += delta*bob_freq*speed
+		var bob_offset : Vector2
+		bob_offset.y = sin(bob_current_intensity)*bob_current_ampl
+		bob_offset.x = sin(bob_current_intensity/2.0)* bob_current_ampl
+		offsets.x = lerp(offsets.x , bob_offset.x, delta*bob_smoothing)
+		offsets.y = lerp(offsets.y , bob_offset.y/2.0, delta*bob_smoothing)
+		if Head_bob and _can_headbob():
+			#var pitch_delta = bob_sin * deg_to_rad(bob_pitch) * speed
+			#angles.x -= pitch_delta
+			#
+			#var roll_delta = bob_sin*deg_to_rad(bob_roll) * speed
+			#angles.z -= roll_delta
+			#
+			#var up_delta = bob_sin * speed * bob_up
+			#offsets.y += up_delta
+			#var side_delta = bob_sin * speed * offset_x_frequency * 0.5
+			#offsets.x += side_delta 
+			offsets.x = lerp(offsets.x , bob_offset.x+0.55 , delta*bob_smoothing)
+			offsets.y = lerp(offsets.y , bob_offset.y/2.0 , delta*bob_smoothing)
 		
 
 	if camera_shake:
