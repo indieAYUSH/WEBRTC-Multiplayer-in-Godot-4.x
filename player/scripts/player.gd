@@ -71,8 +71,8 @@ func _ready():
 	left_lean_collision.add_exception(self)
 	right_lean_collision.add_exception(self)
 	Global.Player = self
-	$head/Player_model.visible = false
-	
+	%Player_model.visible = false
+	$rain_drop.emitting = true
 
 func _physics_process(delta):
 	move_and_slide()
@@ -143,19 +143,23 @@ func _on_ui_game_resumed() -> void:
 
 func death():
 	player_died = true
+	$dead_sound_effect.play()
 	player_statemachine.current_state.change_state.emit("PausedState")
 	death_fx.rpc()
 	head.visible = false
+	
 	respawn_timer.start()
 	died.emit()
 
 @rpc("call_local")
 func death_fx():
 	death_particle.restart()
+	%Player_model.visible = false
 
 
 func respawn_player():
 	health = 200.0
+	%Player_model.visible = true
 	player_died = false
 	head.visible = true
 	position = spawn_point

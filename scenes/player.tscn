@@ -12,12 +12,15 @@
 [ext_resource type="PackedScene" uid="uid://b84i8xno3gjn1" path="res://scenes/player_model.tscn" id="5_qfm1y"]
 [ext_resource type="Script" uid="uid://drihlu2omkt26" path="res://player/states/IdleState.gd" id="5_tblmv"]
 [ext_resource type="PackedScene" uid="uid://ctu02lyorlbmn" path="res://weapons/Vfx/player_hit_particle.tscn" id="6_4ni07"]
-[ext_resource type="PackedScene" uid="uid://dyj1qpfv6i6x1" path="res://weapons/Vfx/muzzle_flash.tscn" id="6_4r5pv"]
 [ext_resource type="Script" uid="uid://lvw0vibdw22k" path="res://player/states/walk_state.gd" id="6_tblmv"]
 [ext_resource type="AudioStream" uid="uid://cqcwvdjpl83cq" path="res://assets/sounds/reload.MP3" id="6_ujl30"]
-[ext_resource type="PackedScene" uid="uid://d1qm30rvruwco" path="res://scenes/bullet_tracer.tscn" id="7_l71n6"]
 [ext_resource type="Script" uid="uid://ddvfv5vhdy10b" path="res://player/states/jump_state.gd" id="9_hu6bb"]
+[ext_resource type="PackedScene" uid="uid://bn8xp53vlcpol" path="res://weapons/Vfx/tracers.tscn" id="10_bj30b"]
 [ext_resource type="Script" uid="uid://crxjj3fe1x0vl" path="res://player/states/slide_state.gd" id="10_nfsas"]
+[ext_resource type="PackedScene" uid="uid://c78smytlh7ei5" path="res://scenes/metal_hit_audio_effect.tscn" id="11_cs1tg"]
+[ext_resource type="PackedScene" uid="uid://jd445dvw7yfp" path="res://weapons/Vfx/concrete_hit_particles.tscn" id="11_md1ol"]
+[ext_resource type="PackedScene" uid="uid://fngrcspk2cmh" path="res://scenes/concrete_hit_sfx.tscn" id="12_2dvfe"]
+[ext_resource type="PackedScene" uid="uid://b5fgl2p53ma0n" path="res://weapons/Vfx/pistol_muzzle_flash.tscn" id="12_487ah"]
 [ext_resource type="Script" uid="uid://dbavcwgvqyiyg" path="res://player/states/sprint_state.gd" id="12_d1ki0"]
 [ext_resource type="Script" uid="uid://c333aph4jx7b3" path="res://player/states/falling_state.gd" id="13_xsu4s"]
 [ext_resource type="Script" uid="uid://clyumisqx0i7s" path="res://player/states/dash_state.gd" id="14_w2vqi"]
@@ -27,10 +30,17 @@
 [ext_resource type="Script" uid="uid://nr0k8pums4yn" path="res://player/states/crouch_state.gd" id="24_d7dwe"]
 [ext_resource type="AudioStream" uid="uid://deqdfnk6tw0hl" path="res://assets/sounds/leaves02.ogg" id="26_31cv2"]
 [ext_resource type="AudioStream" uid="uid://bme2qi1cuvckg" path="res://assets/sounds/sfx_step_grass_r.mp3" id="26_wnwbv"]
+[ext_resource type="Texture2D" uid="uid://bhkykbaal34xc" path="res://weapons/Vfx/crosshair001.png" id="27_bj30b"]
 [ext_resource type="AudioStream" uid="uid://wmpy4qe0vhiv" path="res://assets/sounds/jumpland44100.mp3" id="27_dt7fs"]
 [ext_resource type="AudioStream" uid="uid://fnp8fadj5oxe" path="res://assets/sounds/sfx_step_grass_l.mp3" id="27_gl8cc"]
 [ext_resource type="AudioStream" uid="uid://bf7d4jn7pawwy" path="res://assets/sounds/zapsplat_household_window_sliding_1990s_rough_open_003_113000.mp3" id="27_pf23h"]
+[ext_resource type="Texture2D" uid="uid://ccjqgf5pfj1v5" path="res://scenes/crosshair051.png" id="30_2dvfe"]
+[ext_resource type="AudioStream" uid="uid://el113c8vojw0" path="res://assets/textures/concrete_floor_worn_02_1k/textures/384874__ali_6868__left-gravel-footstep-5.wav" id="30_487ah"]
 [ext_resource type="Script" uid="uid://djavpqr8sowj5" path="res://scripts/sound_effect_manager.gd" id="31_487ah"]
+[ext_resource type="PackedScene" uid="uid://bvfhpnaw3huw" path="res://scenes/rain_drop.tscn" id="32_gl8cc"]
+[ext_resource type="AudioStream" uid="uid://fkqs5rggs235" path="res://assets/sounds/hit marker.MP3" id="38_giy8y"]
+[ext_resource type="AudioStream" uid="uid://dmos5bjb6168d" path="res://assets/sounds/hitmarker2.mp3" id="39_fdfoy"]
+[ext_resource type="AudioStream" uid="uid://djn5e3337oojf" path="res://assets/sounds/deadsound.mp3" id="40_hhpqf"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_fmnqm"]
 frequency = 0.0353
@@ -41,16 +51,19 @@ noise = SubResource("FastNoiseLite_fmnqm")
 seamless = true
 seamless_blend_skirt = 0.89
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1psqm"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wnwbv"]
+load_path = "res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gl8cc"]
 resource_name = "base_color"
-cull_mode = 2
 albedo_texture = ExtResource("4_qfm1y")
 metallic = 1.0
-roughness = 0.5
+metallic_specular = 0.75
+roughness = 0.0
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 emission_operator = 1
-emission_texture = ExtResource("4_qfm1y")
+emission_texture = SubResource("CompressedTexture2D_wnwbv")
 metadata/_gltf_primary_texture_coord = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_r5bk4"]
@@ -77,7 +90,7 @@ _surfaces = [{
 "index_count": 2670,
 "index_data": PackedByteArray("ZQJmAq0AZgJlAq8ArQBnAmUCrwBoAmYCZwKtAGkCsABnAmkCZwKwAK4AaAKvAGoCagKxAGgCsQBqArIAawJsAm0CqwBrAm0CawKrAKkAbAJrAm4CrABsAm4CbAKsAKoAbwLaAHAC2gBvAtwAcAJxAm8CcgLaANwAcQJwAnMCcwLZAHEC2QBzAtsA2gByAnQC3QB0AnICdALdAN4AdQJ2AsoAdgJ1AskAdwLKAHYCeALJAHUCygB3AnkCdwLNAHkCzQB3AswAyQB4AnoCyAB6AngCegLIAMsAewKzAHwCswB7ArUAfAK0AHsCtwB8ArMAtAB8An0CfAK3AH4CfgJ9AnwCfQJ+ArYAuAC5AH8CuQC4ALsAfwKAArgAgAJ/AroAvAC4AIACuAC8AL0AvgC/AMAAvwC+AMEAHwEeAYECggIeAR8BHgGCAoMCggIdAYMCHQGCAoQCHAEdAYQChQLDAMQAwwCFAsUAxADCAIUCwgDEAIYChwKGAsQAhgKHAogCxwCIAocCiALHAMYA0wCJAooC1ACKAokCigLUANUAiQLTANYAiwLWANMA1gCLAowCiwKNAowCjQKLAo4CjgLXAI0C1wCOAtgAjwKQApECkgKRApACkQKSAtAAkAKPAs8AzgDPAI8CzwDOANEA0gDPANEAkwKUApUClAKTApYClQKUApcCmAKVApcCmAIaAZUCGgGYAhkBmQKYApcCmQKaApgCmgKZApsCnAKZApcCnAIYAZkCGAGcAhcBnQKcApcCnQKeApwCngKdAhUBnwKdApcCoAKdAp8CnQKgAqECogKfApcCogIUAZ8CFAGiAhYBlAKiApcCGwGiApQCogIbAaMC3wDgAOEA4ADfAOIApALkAOUA5ACkAuMA5gCkAuUA5wDoAOkA6gDoAOcA6ADqAKUCpQKmAugApgKlAqcC6wCmAqcCpgLrAKgC8wCpAvAAqQLzAKoCqwKpAqoCqQKrAqwC8QCsAqsCrALxAPIA7ADtAO4A7QDsAO8ArQKuAq8CrgKtArACrwKxAgMBsQKvArIC/ACuAv4ArgL8ALMCrwKuArQCsgKvArQCrgKzArQCtQKyArQCtQICAbICAgG1AgEBtgK1ArQCtgK3ArUCtwK2ArgCuQK2ArQCuQIAAbYCAAG5Av8AugK5ArQCswK6ArQCugK7ArkCuwK6Av0AvAK6ArMCugK8Ar0CvgK/AsACvgL5AMEC+QC+AsICwgK+AsAC9AC/Ar4CvwL0AMMCxAK/AvUAvwLEAsUCvwLFAsACxgLCAsACxgLHAsICxwLGAvoAyALGAsACyALJAsYCyQLIAvsAygLIAsACygLLAsgCywLKAvYAzALKAsACxQLMAsACzALNAsoCzQLMAvgA9wDMAsUCzAL3AM4CDAHPAg4BzwIMAdACzwITAdECEwHPAtIC0gLTAtQC0wLSAtUC0gLPAtYCzwLQAtYC1QLSAtYC0ALXAtYC2ALXAtAC1wLYAtkCDwHXAg0B1wIPAdoC1wLaAtYC2wLaAtwC2gLbAt0C2gLdAtYCEQHdAhAB3QIRAd4C3QLeAtYC3gLVAtYC3gISAdUCEgHeAt8CBwHgAgUB4AIHAeEC4gLhAuMC4AIEAeQCBAHgAuUC4QLiAuYC4ALhAucC5QLgAucC4QLmAucCCQHmAggB5gIJAegC5gLoAucCCgHoAukC6AIKAeoC6ALqAucC6gLrAucC7ALrAuoC6wLsAu0C6wLuAucC7gLlAucCCwHuAusC7gILAe8C7gLwAuUC8ALuAgYBAAABAAIAAQAAAAMABAAFAAYABQAEAAcACAAFAAcABQAIAAkACAAKAAkACgAIAAsADAANAA4ADQAMAA8AEAAgARIAIAEQABQAEQASACABEgARABMAFQAWABcAFgAVABgAGQAaABsAGgAZACEBHAAdAB4AHQAcAB8A8QLyAiQB8gLxAiIB8wIiAfEC8gL0AiQBIgHzAvUC9ALyAiMBIwEmAfQCJgEjAScBJAH2AvEC9gLzAvEC9AL3AiQB9gIkAfcCJgH4AvQC9wL0AvgC+AImASgB+QL2AvcC+AL5AvcC+QL4AikBKAEpAfgCKQEoASoB9gL5AiUBJQH6AvYC8wL2AvoC+gIlAfsC/AL6AvsCOgH8AvsC+gL9AvMC+gL8AisB/QL6AisB/AL+AisB/gL9AisB/wLzAv0C8wL/AvUC/wIsAfUCAAP/Av0C/QL+AgADLAH/Ai0B/wIAAwEDAQMtAf8C/gICAwADAgMBAwADAwMsAS0BLAEDAwQDAwMvAQQDLwEDAy4BLgEwAS8BMAEuATEBBQMuAQMDLQEFAwMDBgMxAS4BLgEFAwYDMQEGAzIBNAEyAQYDMgE0ATUBBgMHAzQBBwMGAwUDBQMtATMBMwEHAwUDLQEBAzMBBwMzATYBAQM2ATMBNgEBAwgDAQMCAwgDAgNFAQgDRQECAwkDCgMJAwIDCwNFAQkDRQELAwwDAgP+AgoDCwNEAQwDRAELAw0DDQNHAUQBRwENA0YBDQNDAUYBQwENAw4DCwMOAw0DDgNCAUMBQgEOAw8DDgMLAxADEAMPAw4DCQMQAwsDDwMQAxEDEAMSAxEDEAMJAxMDEgMQAxMDCQMKAxMDCgMSAxMDEgMKAxQDCgM3ARQDNwEKA/4CNwE4ARQD/gL8AjcBOAE3ATsBOwEVAzgBOQE3AfwCNwE5ATsB/AI6ATkBFQM7ARYDOQEWAzsBOgEXAzkBFgM5ARcDFwM6ARgDPQEXAxgDFwM9ATwBPAEWAxcDPgE8AT0BPAE+AT8BFgM8ARkDPwEZAzwBGQMVAxYDGQM/AUABFQMZAxoDQAEaAxkDGgNAAUEBIAAhACIAIQAgABsDGwMkACEAJAAbAyMAJQAkACMAJAAlAEgBSAEnACQAJQBJAUgBJwBIAUoBSgEoACcAKABKASYASQElABwDHAMpAEkBKQAcAyoASwFIAB0DSABLAUUARgAdA0gAHgNFAEsBRQAeA08AHQNNAUsBTQEeA0sBTAFGAEcARgBMAR8DHQNGAB8DSQAfA0wBHwMgAx0DTQEdAyADHwNJACEDIAMfAyEDSgAhA0kAIQNKAEsATAAhA0sAIQNMACADTQAgA0wAIANNAE0BTgBNAU0ATQFOACIDHgNNASIDTgBOASIDTgEeAyIDTgFOAFAAHgNOASMDIwNPAB4DTwAjA1EAUAAkA04BJAMjA04BJANQAFUAJQNRACMDIwMkAyUDUQAlA1IAJQNTAFIAUwAlAyYDJAMmAyUDJgNUAFMAVQAnAyQDJgMkAycDJwNVAFYAVwAnA1YAVAAmAygDJwMoAyYDKANZAFQAJwNXAE8BKAMnA08BWABPAVcAWQAoAykDTwEpAygDTwFYACoDKQNPASoDKQNeAFkAWABQASoDUAEpAyoDUAFYAFsAXgApA1IBKQNQAVIBUgFgAF4AYABSASsDUAErA1IBKwNfAGAAXwArA1EBKwNQASwDLANRASsDWwAsA1ABUQEsA1oALANbAFwAXABaACwDWgBcAF0AKwAsAC0DLQAtAywALAArAC4ALgMwADEAMQAvAC4DLwAxADIALwMwAzEDMAMvA1MBMQMyAy8DMwMwA1MBMgMxAzQDMAMzA1QBNANjADIDVgFUATMDYwA0A1UBVAFWAWIAVQFXAWMAWAFiAFYBVwFVAVkBYgBYAVoBWQE1A1cBNgNaAVgBNQNZATcDNwNlADUDZQA3A2YAWgE2AzgDOQM4AzYDOAM5AzoDOQNkADoDZAA5A2EAaQFoATsDPANoAWkBaAE8A2YBPQNmATwDZgFnAWgBZwFmAWoBagE+A2cBPgM/A2cBPgNqAWsBagFAA2sBWwFcAV0BQQNCA10BQwNdAUIDXQFDA1sBXgFbAUMDXAFbAV8BXwFgAVwBXAFgAUQDYAFfAUUDRQNfAUYDMwA0ADUANAAzADYAYQFiAWMBYgFhAWQBZAFhAWUBNwA4ADkAOAA3AGwBbAFHAzgARwNsAUgDbgFJA0oDSQNLA0oDSQNuAW0BbgE9AG0BPQBuATwASwNJA0wDTAM7AEsDOwBMAzoAPgA/AEAAPwA+AEEAbwFNA04DTQNvAUIAQwBCAG8BQgBDAEQATwNQA1EDbABRA1ADUQNsAG0AUANPA1IDUwNSA08DUgNTA1QDVQNUA1MDVANVA24AawBVA1MDVgNxAFcDVgNXA28AcQBWA1gDVgNZA1gDWQNWA1oDWgNbA1kDWwNaA1wDXANwAFsDcABcA3IAXQNeA18DaABfA14DXwNoAGkAXgNdA2ADYQNgA10DYANhA2IDZwBiA2EDYgNnAGoAdwBjA3kAYwN3AGQDZANlA2MDZQNkA2YDZgNnA2UDZwNmA2gDaAN4AGcDeABoA3oAcwBpA2oDaQNzAHQAdgBqA2kDagN2AHUAawNsA20DbANuA20DbANrA28DawONAG8DjQBrA48AbgNsA3ADkABuA3ADbgOQAI4AewBxA3IDcQN7AH4AfgB8AHEDfAB+AH8AcgOAAHsAgAByA3MDcwOBAIAAgQBzA30AdAOCAIMAggB0A4QAdQOEAHQDhAB1A4UAdgOFAHUDhQB2A4cAhgCHAHYDhwCGAIgAiQCKAIsAigCJAIwAcAGmAKcApgBwAXEBpQBxAXABpQBwAXcDcQGlAKgAcQGoAHgDdAF5A5UAeQN0AXoDegN1AXkDdAF7A3oDewN0AXwDcwF7A3wDdQF6A30DegN+A30DfgN1AX0DfgN6A3sDdQF+A5QAfgOWAJQAewNzAXIBcgF+A3sDfwNyAXMBlgB+A4ADfgNyAYADgQOWAIADlgCBA5EAggOAA3IBgAOCA4EDcgF/A4IDggORAIEDkQCCA5MAfwOTAIIDkwB/A5IAdgGDA3gBdwF4AYMDeAF3AYQDgwOFA3cBeQF4AYQDeAF5AYYDhgN2AXgBeQGHA4YDhwN5AZgAegGGA4cDhgN6AYgDdgGGA4gDmwCIA3oBiAObAHYBmwCJA3YBgwN2AYkDiQObAJwAmQCJA5wAiQOKA4MDhQODA4oDiQOZAIsDigOJA4sDmQCKA4sDigOZAJoAmgCFA4oDhQOaAJcAnQCeAJ8AngCdAKAAewGiAKMAogB7AXwBjAN8AXsBfAGMA40DfQGNA4wDjQN9AX4BjgN+AX0BfgGOA48DoQCPA44DjwOhAKQAfwGAAYEBgAF/AYIBgwGEAYUBhAGDAZADkAORA4QBkQOQA5IDkgOHAZEDhwGSA4YBiQGTA4gBkwOJAZQDlAOVA5MDlQOUA4oBigGLAZUDiwGKAYwBjQGWA48BlgONAZABkQGWA5ABkQGQAZcDlgORAY4BjgGYA5YDkgGTAZQBkwGSAZkDkgGVAZkDmQOVAZoDlQGSAZYBmwOWAZIBlwGYAZkBmAGXAZoBmwGcAZ0BnAGbAZ4BngGfAZwBnwGeAaABoQGiAaMBogGhAaQBnAOjAaIBowGcA50DpgGdA5wDnQOmAaUBngOlAaYBpQGeA58DpwGfA54DnwOnAagBqQGqAasBqwGqAaADqgGpAawBrAGhA6oBoQOsAa0BrQGuAaEDrgGtAa8BsAGxAbIBsQGwAbMBogO1AbYBtQGiA7cBtgG0AaIDtAG2AbgBuQG0AbgBtAG5AboBtAG6AaMDpAO7AbwBuwGkA6UDvgGlA6QDpQO+Ab0BvgGmA70BpgO+AacDvwGmA6cDpgO/AagDqQOoA78BqAOpA6oDqQPAAaoDwAGpA6sDrAPAAasDwAGsA60DwQGtA6wDrQPBAcIBrgOvA7ADxAGwA68DxQGuA7ADrwOuA7EDsQOuA8MBsgOvA7EDxwGzA7QDswO1A7QDtAO1A7YDtQOzA7cDtwOzA8gBtQO3A8YByQHKAcsBygHJAcwBzQHOAc8BzgHNAdAB0QHSAdMB0gHRAdQB0wHVAdEB1QHWAdEB1gHVAdcB2AHZAdoB2QHYAdsB2wHcAdkB3AHbAd0B3gHfAeAB3wHeAeEB4gHfAeEB4wHfAeIB3wHjAeQB5QHmAecB5gHlAegB6QHqAesB6gHpAewB7QHuAe8B7gHtAfAB8QHyAfMB8gHxAfQB9QH2AfcB9gH1AfgB9wH5AfUB+QH3AfoB+wH8Af0B/QH+AfsB/gH9Af8B/AH7AQACAAIBAvwBAQIAAgICAgIDAgECAwICAgQCEgK4AxQCuAMSArkDuQO6A7gDugO5A7sDEwK6A7sDugMTAhECBQIGAgcCBgIFArwDvAO9AwYCvQO8A74DCAK9A74DvQMIAgkCJwK/A8ADwQPAA78DvwMnAigCwAPBA8IDwwMoAicCxAPCA8EDKALDA8UDJQLFA8MDxQMlAiYCwgPEA8YDKQLGA8QDxgMpAioCxwPIA8kDxwPJAwoCyAPHA8oDyQPLAwoCzAPIA8oDywPJA80DzQMOAssDDgLNAw0CyAMMAskDDALIAwsCyAPMA84DDwLOA8wDzgMPAhACFgIVAs8DFQIWAhcC0APPAxUCzwPQAxgC0APRAxgCGQLQAxoC0AMZAtID0QPQA9ID0QPSA9MD0gPUA9MD1APSA9UD1QMbAtQDGwLVAxwCHQIeAh8CHgIdAiACIQIiAiMCIgIhAiQCKwIsAi0CLQIuAisCLgItAi8CLAIrAjACMAIxAiwCMQIwAjICMgIzAjECMwIyAjQCNQIzAjQCMwI1AjYCNQI3AjYCNwI1AjgCOAI5AjcCOQI4AjoCOwI5AjoCOQI7AjwCPQI+Aj8CPgI9AkECQAI/Aj4C1gNBAj0CPwJAAtcDQQLWA0MCRAJDAtYDQwJEAkUCQAJCAtcDQgJAAkYCRgJHAkICRwJGAkgCSALYA0cC2ANIAkkCSQJKAtgDSgJJAksCXALZA1sCXQJbAtkDWgJcAlsCXgJbAl0C2gNaAlsCWQLaA1sC2wNbAl4CXwJbAtsDTQJMAtwDTAJNAk4CUALcA0wCTQJPAk4C3ANQAlICTwJNAlECUALdA1ICUQJTAk8C3QNQAlcCUwJRAt4DVwJWAt0DVAJTAt4DVgJXAlgCUwJUAlUCVgJVAlQCVQJWAlgCYAJhAmICYgJhAt8DYAJiAuADYQJgAuED4QNgAmMCYQLhA2QC"),
 "lods": [0.014606225, PackedByteArray("qQCqAKsAqgCpAKwArQCuAK8AsACuAK0ArwCxAK0AsQCvALIAswC0ALUAtACzALYAswC3ALYAuAC5ALoAuQC4ALsAvAC4ALoAuAC8AL0AvgC/AMAAvwC+AMEAwgDDAMQAwwDCAMUAwgDEAMYAxwDGAMQAyADJAMoAyQDIAMsAzADKAMkAzADNAMoAzgDPANAAzwDOANEA0gDPANEA0wDUANUA1ADTANYA0wDXANYA1wDTANgA2QDaANsA2gDZANwA3QDaANwA2gDdAN4A3wDgAOEA4ADfAOIA4wDkAOUA5gDjAOUA5wDoAOkA6gDoAOcA6ADqAOsA7ADtAO4A7QDsAO8A8ADxAPIA8QDwAPMA9AD1APYA9QD3APYA9wD4APYA+QD0APYA+gD5APYA+wD6APYA/AD9AP4A/QD/AP4A/wAAAf4AAAEBAf4AAQECAf4AAgEDAf4ABAEFAQYBBQEHAQYBBwEIAQYBCAEJAQYBCQEKAQYBCgELAQYBDAENAQ4BDQEPAQ4BDwEQAQ4BEAERAQ4BEQESAQ4BEgETAQ4BFAEVARYBFQEXARYBFwEYARYBGAEZARYBGQEaARYBGgEbARYBHAEdAR4BHAEeAR8BAAABAAIAAQAAAAMABAAFAAYABQAEAAcACAAFAAcABQAIAAkACAAKAAkACgAIAAsADAANAA4ADQAMAA8AEAAgARIAIAEQABQAEQASACABEgARABMAFQAWABcAFgAVABgAGQAaABsAGgAZACEBHAAdAB4AHQAcAB8AIgEjASQBJAElASIBIwEmASQBJgEjAScBJAEmASgBKQElASQBKAEpASQBKQEoASoBJQErASwBLQEsASsBLgEsAS0BLAEuAS8BLgEwAS8BMAEuATEBMgExAS4BLQEyAS4BMwEtASsBMgEtATMBMwE0ATIBMgE0ATUBNAEzATYBNwE2ATMBKwE3ATMBNgE3ATgBOQE3ASsBKwE6ATkBNwE5ATsBOAE3ATsBOgE8ATkBOwE5ATwBPAE6AT0BPgE8AT0BPAE+AT8BPwFAATwBOwE8AUABQAFBATsBOwFBATgBOAFCAUMBQwFEATgBRQE4AUQBRAFDAUYBRwFEAUYBIAAhACIAIQAgACMAIwAkACEAJQAkACMAJAAlAEgBSAEnACQAJQBJAUgBSQElACoAKgApAEkBJwBIAUoBSgEoACcAKABKASYASABLAUUARgBLAUgATwBFAEsBSwFGAEwBTAFGAEcATAFNAUsBTQFPAEsBTQFMAUkATwBNAU4ATgBNAU0ATQBNAUwASQBMAE0BTABJAEsASQBKAEsATgFPAE4ATwBOAVEATgFOAFAAUQBOAVIATgFQAFUATgFTAFIAVQBPAU4BUwBOAU8BTwFVAFYATwFUAFMAVwBPAVYAWABPAVcATwFZAFQAWQBPAVgAUAFZAFgAUAFYAFsAUAFbAFwAXABaAFABWgBcAF0AUQFQAVoAWQBQAVIBUAFRAVIBXgBZAFIBXwBSAVEBUgFgAF4AUgFfAGAAKwAsAC0ALAArAC4ALwAwADEALwAxADIAUwFUAVUBVgFUAVMBVQFjAFMBVAFWAWIAVQFXAWMAWAFiAFYBVwFVAVkBVwFZAWYAZgBlAFcBYgBYAVoBYQBaAVgBWgFhAGQAWwFcAV0BXQFeAVsBXAFbAV8BXwFgAVwBMwA0ADUANAAzADYAYQFiAWMBYgFhAWQBZAFhAWUBZgFnAWgBaAFpAWYBZwFmAWoBagFrAWcBNwA4ADkAOAA3AGwBbQE7AG4BOwBtAToAbgE9AG0BPQBuATwAPgA/AEAAPwA+AEEAQwBCAG8BQgBDAEQAZwBoAGkAaABnAGoAawBsAG0AbABrAG4AbwBwAHEAcABvAHIAcwB0AHUAdgB1AHQAdwB4AHkAeAB3AHoAewB8AH0AfAB7AH4AfAB+AH8AfQCAAHsAfQCBAIAAggCDAIQAhACDAIUAhgCFAIMAhQCGAIcAhwCGAIgAiQCKAIsAigCJAIwAjQCOAI8AjgCNAJAAcAGmAKcApgBwAXEBpQBxAXABcQGlAKgAkQByAZMAcwGTAHIBkwBzAZIAdAFzAXIBdQFyAZEAcgF1AXQBdAF1AZUAlgB1AZEAdQGWAJQAdgF3AXgBeAF3AXkBeQGYAHgBegF4AZgAdgF4AXoBegGbAHYBmwCZAHYBdwF2AZkAmQCbAJwAmQCaAHcBdwGaAJcAnQCeAJ8AngCdAKAAewGiAKMAogB7AXwBfQF8AXsBfAF9AX4BoQB+AX0BfgGhAKQAfwGAAYEBgAF/AYIBgwGEAYUBhAGDAYYBhgGHAYQBiAGJAYoBigGLAYgBiwGKAYwBjQGOAY8BjgGNAZABkQGOAZABkgGTAZQBkwGSAZUBlQGSAZYBlwGYAZkBmAGXAZoBmwGcAZ0BnAGbAZ4BngGfAZwBnwGeAaABoQGiAaMBogGhAaQBowGiAaUBpgGlAaIBpwGlAaYBpQGnAagBqQGqAasBqgGpAawBqgGsAa0BrQGuAaoBrgGtAa8BsAGxAbIBsQGwAbMBtAG1AbYBtQG0AbcBtAG2AbgBuQG0AbgBtAG5AboBuwG8Ab0BvgG9AbwBvQG+Ab8BvQG/AcABwAG/AcEBwAHBAcIBwwHEAcUBxgHHAcgByQHKAcsBygHJAcwBzQHOAc8BzgHNAdAB0QHSAdMB0gHRAdQB0wHVAdEB1QHWAdEB1gHVAdcB2AHZAdoB2QHYAdsB2wHcAdkB3AHbAd0B3gHfAeAB3wHeAeEB4gHfAeEB4wHfAeIB3wHjAeQB5QHmAecB5gHlAegB6QHqAesB6gHpAewB7QHuAe8B7gHtAfAB8QHyAfMB8gHxAfQB9QH2AfcB9gH1AfgB9wH5AfUB+QH3AfoB+wH8Af0B/QH+AfsB/gH9Af8B/AH7AQACAAIBAvwBAQIAAgICAgIDAgECAwICAgQCBQIGAgcCBgIFAggCBgIIAgkCCgILAgwCCgIMAg0CDQIOAgoCDwILAgoCCwIPAhACEQISAhMCEgIRAhQCFQIWAhcCFgIVAhgCGAIVAhkCGQIVAhoCGAIZAhsCGwIZAhwCHQIeAh8CHgIdAiACIQIiAiMCIgIhAiQCJQImAicCKAInAiYCKQInAigCJwIpAioCKwIsAi0CLQIuAisCLgItAi8CLAIrAjACMAIxAiwCMQIwAjICMgIzAjECMwIyAjQCNQIzAjQCMwI1AjYCNQI3AjYCNwI1AjgCOAI5AjcCOQI4AjoCOwI5AjoCOQI7AjwCPQI+Aj8CQAI/Aj4CPgI9AkECQAJCAj8CQQI9AkMCRAJDAj0CQwJEAkUCQgJAAkYCRgJHAkICRwJGAkgCRwJIAkkCSQJKAkcCSgJJAksCTAJNAk4CTQJPAk4CUAJNAkwCTwJNAlECTQJQAlICUQJTAk8CUwJRAlQCUwJUAlUCUAJWAlICVgJVAlQCVgJQAlcCVQJWAlgCVgJXAlgCWQJaAlsCWgJcAlsCXQJbAlwCXgJbAl0CXwJbAl4CYAJhAmICYQJgAmMCYQJjAmQC"), 0.12278219, PackedByteArray("AAABAAIAAQAAAAMABAAFAAYABQAEAAcACAAFAAcABQAIAAkACAAKAAkACgAIAAsADAANAA4ADQAMAA8AEAARABIAEgARABMAEQAQABQAFQAWABcAFgAVABgAGQAaABsAHAAdAB4AHQAcAB8AIAAhACIAIQAgACMAIwAkACEAJQAkACMAJAAlACYAJgAnACQAJgAoACcAJQApACYAKQAlACoAKwAsAC0ALAArAC4ALwAwADEALwAxADIARQBGAEcARgBFAEgARQBHAEkASQBKAEsATABJAEsASQBMAEUATQBFAEwATgBFAE0ATwBFAE4AUABPAE4ATwBQAFEAUQBQAFIAUABTAFIAUwBQAFQAVQBUAFAAVABVAFYAVwBUAFYAWABUAFcAWQBUAFgAWgBZAFgAWgBYAFsAWgBbAFwAWgBcAF0AWQBaAF4AWgBfAF4AXgBfAGAAYQBiAGMAYgBhAGQAYgBlAGMAZQBiAGYAMwA0ADUANAAzADYANwA4ADkAOgA7ADwAPAA9ADoAPgA/AEAAPwA+AEEAQgBDAEQAZwBoAGkAaABnAGoAawBsAG0AbABrAG4AbwBwAHEAcABvAHIAcwB0AHUAdgB1AHQAdwB4AHkAeAB3AHoAewB8AH0AfAB7AH4AfAB+AH8AfQCAAHsAfQCBAIAAggCDAIQAhACDAIUAhgCFAIMAhQCGAIcAhwCGAIgAiQCKAIsAigCJAIwAjQCOAI8AjgCNAJAAkQCSAJMAlACSAJEAkgCUAJUAlgCUAJEAlwCYAJkAmQCaAJcAmwCZAJgAmQCbAJwAnQCeAJ8AngCdAKAAoQCiAKMAogChAKQApQCmAKcApgClAKgA"), 0.18417329, PackedByteArray("AAABAAIAAQAAAAMABAAFAAYABQAEAAcACAAFAAcABQAIAAkACAAKAAkACgAIAAsADAANAA4ADQAMAA8AEAARABIAEgARABMAEQAQABQAFQAWABcAFgAVABgAGQAaABsAHAAdAB4AHQAcAB8AIAAhACIAIQAgACMAIwAkACEAJQAkACMAJAAlACYAJgAnACQAJgAoACcAJQApACYAKQAlACoAKwAsAC0ALAArAC4ALwAwADEALwAxADIAMwA0ADUANAAzADYANwA4ADkAOgA7ADwAPAA9ADoAPgA/AEAAPwA+AEEAQgBDAEQA")],
-"material": SubResource("StandardMaterial3D_1psqm"),
+"material": SubResource("StandardMaterial3D_gl8cc"),
 "name": "base_color",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -121,7 +134,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -133,7 +146,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/3/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -181,7 +194,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
+tracks/7/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -193,7 +206,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
+tracks/8/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -202,6 +215,42 @@ tracks/8/keys = {
 "update": 0,
 "values": [Vector3(0, -1.5707964, 0)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("hit_Effect:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("UI/hit_marker:size")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("UI/hit_marker:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(526, 274)]
+}
 
 [sub_resource type="Animation" id="Animation_4r5pv"]
 resource_name = "akm_reload"
@@ -209,7 +258,7 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -221,7 +270,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -233,7 +282,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -249,7 +298,7 @@ length = 0.08
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:position")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -261,7 +310,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM:rotation")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -273,7 +322,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/2/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -317,7 +366,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -329,7 +378,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -351,13 +400,53 @@ tracks/2/keys = {
 "values": [Color(0.92941177, 0, 0, 0), Color(0.92941177, 0, 0, 1), Color(0.92941177, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_g5jhy"]
+resource_name = "hit_market"
+length = 0.08
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hit_Effect:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/hit_marker:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.08),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, 100), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UI/hit_marker:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.03355586, 0.08),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(576, 324), Vector2(579.00006, 257), Vector2(576, 324)]
+}
+
 [sub_resource type="Animation" id="Animation_w2vqi"]
 resource_name = "jump"
 length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -369,7 +458,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -385,7 +474,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:rotation")
+tracks/0/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -397,7 +486,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D:position")
+tracks/1/path = NodePath("head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -593,6 +682,7 @@ _data = {
 &"akm_shoot": SubResource("Animation_60mlk"),
 &"crouch": SubResource("Animation_nfsas"),
 &"damage": SubResource("Animation_k202j"),
+&"hit_marker": SubResource("Animation_g5jhy"),
 &"jump": SubResource("Animation_w2vqi"),
 &"land": SubResource("Animation_ojh3p"),
 &"lean_left": SubResource("Animation_rhr6c"),
@@ -761,12 +851,6 @@ streams_count = 2
 stream_0/stream = ExtResource("5_ke2ow")
 stream_1/stream = ExtResource("5_ke2ow")
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bg6pd"]
-random_volume_offset_db = 3.0
-streams_count = 2
-stream_0/stream = ExtResource("26_wnwbv")
-stream_1/stream = ExtResource("27_gl8cc")
-
 [sub_resource type="OggPacketSequence" id="OggPacketSequence_4yfuo"]
 packet_data = Array[Array]([[PackedByteArray("AXZvcmJpcwAAAAACRKwAAAAAAAAAcQIAAAAAALgB")], [PackedByteArray("A3ZvcmJpcy0AAABYaXBoLk9yZyBsaWJWb3JiaXMgSSAyMDEwMTEwMSAoU2NoYXVmZW51Z2dldCkEAAAAEwAAAEFMQlVNPVB1YmxpYyBEb21haW4OAAAAVElUTEU9bGVhdmVzMDIRAAAAQVJUSVNUPWtkZGVrYWRlbnoeAAAAQ09NTUVOVFM9RmVlbCBmcmVlIHRvIHVzZSB0aGlzAQ=="), PackedByteArray("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")], [PackedByteArray("ZPWKAGgEExIvqlceAws5EZZ897TJMiIzJxgwCcNBuv+yUYy6WlmUgrKiVY0oYtWqVuXpm6ToUFJVy9ID4FBF0SgivSx5c7OIEpDYUcDCSMIG"), PackedByteArray("fPmKAxMKBNgvXXEAoQEQ8AKsWhijJiBrQeOG+mBGGy3WDcUorZRanizVXskoVleswBp1ysQdLGsQV+zUDXqrmordGLkQVw1aIHY4QizCdXyVEw=="), PackedByteArray("Mja0vMThAYA3NrS8ROEBgPcDABBiTAZFiMjyYpnU+o62laHmJCQzM83sMhNA1CAlIaTeIf1/N7Cb9HdTbG0CqStVL6HeNqWTMkJnVjffkmGPMpiG5ZDhw2lYG1MaiAhGW6RhEDWhF7DCOLQVgYwtYduYoEEODAZSMYBkK3SATaBhcCQQwYpYY4uhDEJQbEMgkAxUZBMgCVS9oGiIUgBFIwEhBBWOWko7coBFYEtYxqElpRJbCMBC4HGIgERxiIoBg8AWjAJiImwptAlACgSAaOFQZaMBJyKUXKKlSrnwtmk6FjBFgI2MU4Qc9Z0yNFtGhOKKLFBHbEoE2JItMsDtIC2DbBU21NjSAwGOCMGgFxWOrJWdWQmBJflPSeTTyC4RUkZth0Vl6q74f+sSCWdHSvcGi9gygNgnC+fVxqt6QI4EQloNYEPk3Uz7RuUJDtsLNwdgAA=="), PackedByteArray("VP12EAyuaQBlslG/nQSbaxpAieUXILgJC2P0JACe1wx4hDEiqKqq1KIpnm8KPVZD0aEBkbSqUQRr1dQLJjBWKiqW2GGIpCW0cQzQXj6fORZXDQ=="), PackedByteArray("dAGvCCAjFqeMhQF3CSAIn5yzdiAAuSBZgowMLQN0ScSF0ggwnJvU1du4jujvj5tjp6hqRaeKIpb7v/9ibESjSBJJekc+8XuH+AE="), PackedByteArray("hP3KADCkd3lTgI39SgEwjHZ5I0g+wIgC5HCJrgF81YiE0vMoo1NREdU6EK0KVsRawVVteRWFOrGmtYrmIRIGJTlUXL2tw0kCB0asQWxbmAgA"), PackedByteArray("GiYMEgbSawLwwoRhgoB9TcCI9w0AkL3HbWmukWDSFSfVdEViMlzxpZhkZmaXJZMoEYDIjDSs7js0fh0z+MI5WVcNqVnh2mzjTYtPMOPtxU7v29holKCcrrYvranIurYTS0vDkMo6ZJt2GtZxreqVoFqxCGLFigpioAruZUsHZ8eGkCpCOyQAEZgwEDblbiQATAzeRHwElDrPmMigGCsqRrWWEJeapAzGigVVrGhBi6omGI8tFpYBGRHQIxtyy9KnPr3BiBUEY9EqqoR5qzQ+uJt5KEsU+5pcLGtkZIFCiaPalAJYAIGFae4zqVxZvkYI7hULMBjbBYGFsCyQFctICtGdKjcGYrTdyf382kC/Pc8TY2nDP3wG1o18NMgUmA7imvu5Q5JJRmQOGJsVjGH9cg2rmM7WZy8IW0oD3JrnJDi8AA=="), PackedByteArray("1iXMFQzYF0SMEvsrC9oNUil7QIbE3t8AAKMfhH2KKiBESxwWTkThQDMzs3hmMSYRoiYSYKMTe7FYYm9jdqoze9XMSwWMhjQM35DoBAu8NRrVJBSaxZEYewa1OurcvRepLPO2qFEyornJkK1rrAiIQVAtLBZjAYvWFkwUpVLlmKqKQVQUY8ABkRFgJIeysWUHCie0jxGwKFpkVAsqKRrmO+6gXUcmtA0EmMBjAmEQtuQV7JFlLEHgVYsFBmNgJD/EHF9/ZoiIwoHCDlDNwFCzlC5LJA6BBwAsgBjAkCTCagFGBNAGCUDEGCbcIRruVRLagkUVVNCAUQnJFJYUZiBRQ3GKdvEdcOSOyu/Q9xNgMcIGGZpkm0DCEgI2nyjFmn0cKwrN98j7/i9WBCP5RQOEsFewoQh2X0gnTfPeujmZEsTQ6w7cAIAC"), PackedByteArray("TO3KQ4DmAJEo3S4MVFOAyAcocwyBQRvAuQU7RNTrFaOKrIxAqyqglYw0QRgMTqygrGjo9BnhIDBc9aE7cQM="), PackedByteArray("POWuYwAAYAn3KgeSACz4BQQ5xxiDTwoQiL9tDHV0qWJWSIgWmxhLLSo1mkT/XiZkIFhMjLSriWP2oA=="), PackedByteArray("jPGKASdBJxAXtiuDsjSk91kk7gPAgElRjFENYJ9pxzTS9QdAYxBFkTaf3kn7YlrKfEQyEos4PRniU7JPLnCN5gU="), PackedByteArray("XO2KOZsHDliw5SuSzGwcxSJeRY0ItuDkGDXCztlaxKpGUQWNRkGwokNRBK0WQVSdCEqqpMbRoIAgAI0uoGypVRG2MT7XDnq2a/Ef"), PackedByteArray("hBnLMxAsyGUSsGu4i4NgTZJlcuoHSCwEQgAtAohooo1gPYZHVFVjVUStKCioikbH/am1AopFVHUUtdQrJsAglIpoCylXD3vBwsjIWlSRVV2rMkIvRgY6AA=="), PackedByteArray("XPGKoZaEhtdQpnplWDNCQ8tQ7tOmUoiwCQoLY1RtCDlbAR1apNasRsWsxRoVNFqrig2isTUmNRLmRDQ6FZBaKNtMyhwiyay5TDyXwAA="), PackedByteArray("2hUcKAywB7QBbhgwVxlgF2gN3E9xStY9SnNF1mQpy9lc7Eq7op1GOK8EqWaJHXwoRRzhqEIIkeIyMzMzA9P8HqbMWT6s9uTvaP2y15MxcQ9d542YTxOuWbOmIkmvlYpa6kBGtKiiWFSN0taqFWxcOJUWUWUyFiHQCoAAtgWMFkRRhQBBBiljBSpsAgOYiQXfLtEitWNiaTWVrbzZd74FDuxFASYIkVUNglVB1GnbjRQAwoQGvaGkCUWzq6eSDhqVj1+Z7UpAo8rlLt4kwv9kDlAnchpjQ7hAIgADAGVCaUmOFonSW1oFBKUCFgNhQwNgFMrIAQPgyBKyMiqk065k3mfcKSVSquSSmrJWQIxYbLGwUeeJADA4AoAYukAR1wzvXTovXsg22WTTuW5yD028NMEivviqmyFX14PlUwQc"), PackedByteArray("fjZUogCZ/wDwzoaKZ0D2A8B7yVqElGTEViGGE++orQXtw2VmZpeZdpmEXzkar0FirpIsSdcBI8NeW1obm832RlaxW5o6erSNCaNGm2qTgBURUWUQvbKyQBiK0LEkhUGEwsAYLLcICEUzFuniiAlxawuUVqzoRAwB4LBsIJQQdGgkybJdU0jfZiMUxQQCFESABTRGCjBkY3eIsTU2hhYBGgMhyFAVYgBjAwAgBKZRSIgxgjHYhCEgbEluWoEBYzRtHUrJWBBiBVm2CCyB0ToCQK6TY4Fud9/gFoCDsZCggxBZMsICGrEiBoyFzWKZwRZojRoiXoRkGGyDgwI3gTtNdfdd8emrT2KM/liA0QGj8bIeCGFMjJDI2GSBM9ovl7iRs802JDW94t8BODJGAAhHAAgBlKsPw1AAAg=="), PackedByteArray("3kZUIgsZNGCAv22oRApkvwEDfHdmIlcgGMNmabEQwktxaJVSMjO7UrJkwJkUG8dUcVpciSfRzq1rqDkGS51pkBrORKlrB9qp0zoU3a2jQ6PGQStkSVurWCV0WgNYDFIgBoMVSWVrOBeNCCQwllKEIUiBWCMGsTVgQTGKVsUWkAIZihQGYqRABhDmru07jLGNkcDiScrXl/T6vbnHWCYgAHqCsNQYiVpHq0KGFYl07rdkJCky2FUqaECwVQMohPNs9Wd4FnuxRAJtEMtQ/2MbEyEwWNqVJnPJzLAuYZBQdebp7OgGfbTzcnSkuhKZufZE4OcQIGDQDr2eeLK+kY8JAQAIE0mLAodmYyHSP9ZLXCKRQlt9r9TrjENbreyBkJYrJMOkAwY="), PackedByteArray("PjbMOhqABgDf1zBvaAACwPsKALCtxA7Eo6WJqRKLFyckMxOwGLN4JkAPAHAjY8YNuQ6Em4/GuIGlitlgYazf5nNJrO8YaywzZG6UpBnQzNmoSSZrmRIQU6tRvCAUOFQUyWgqaoRhWQb2oobBABIZgWJL39dt8vYdt2KRDmidyhmhuYDIV4sr5yGqGKHQKghWHBgchI4AZEBlFEsW2JEtBAIZBSGKDLIUgpADW7GgkCV1Yjmw2jgCy00IqF/N3nxZU2EUCqAMEaEAQADgKARA/uXdrK8SFpORWzwAhVIoAaWw5sWnfEWoYBGwZWTFYBSBgFoSbNXIm68N5ZrfVXg/CMY/1pmAnL2kNOncZ3Mi1CtTuz+O6rCh3uusbDJOgVtAAB/iCAABADIeVAEK"), PackedByteArray("vkbkmgNPPwB8bUSyOvD0gQj8V4QgYxtOHBycNJgWH6ZuGDMzs8vMgG0Si1YNUksGZ71XzWrZPpKF2TbZ7U+0a1Veptq4WodY5oNbYJ/rXFeiQzQZVWsNjLbQUtFoxCb1tuxAwqFxWZIYtwXIgdjHsqKSIzsd9q+qpIjEGsUhr4V5DaxExjJSoNMSDAlIYezQlqRgJEkQSCEoigJAASBkS5al71HmyC5s81rRe7oarRUSAcJS2wbEsTiSUBEiOUAGgQQ4BArxWmKlRARxuw2W2jgUti3JSC0VaHijqFoTQjsQbazN2e01kaEsF0IwCgdQAWJpEBAJAQBZKDhA8bwpRZJ0OPw0/fjmQ/rljNv12eZvnSzsghwLCyw1sIf1z+lIu12fvenTNdBHUQA="), PackedByteArray("nka0xwTwgwqil0a0a4yDoILoe1XUyESRMiO21ZEjAT9SeSeZmjSVzMxhFDMDVgNRwpfvtmb4eTJqbNYOuFrc8WhmvT3DrWNsznxuYY0Ew1Y3EgsGmUIUjw4AVHEmO1zEUlVFSdRwYNsCBinkA3FuKFYQKRFQ9UaytkKMAUJTItaooC5iLSACRtEiBixTpTWQMSEiABYobR2KAloBVVUaGFUcGtlLaEChRaTRwqBVWoSqnhxlZCw5IpTAoTArkABbwyIWDgOL0IjAJflCwiAWN4CNrBAhpKnxGk1aIsmOO62lEkWwgAEAQC4lWwjUu/7oHFA6oGAIhTHQcgMxqqJNlaF/XcmZRGShKVmesEl96DtJYWjwd5yDSAcH+IwcC8ACyBSj2WBVKVFJEAkksOgn7R2NEIUk1C892Mo8cKZBIDgA"), PackedByteArray("nkZUa4tLCABfWlHtNRgEQPy9i5ooIYPMZGNX2FZPR95hbUOj7DIzxUwHgHyyiHj1QdXUrJjR34yZiY12dupG/bYlY6aRsrBqZtWsuej+wZfVUhcaibWgxYtmjBUrI0q2IiqqMhIYWDABSgdYyHIYWVihjRgLxl7ZzmxcJwxkYxGhpBSnMTIGAVGhoKldRRXjmmatrFWwjlVGTMOSbBNTQKFXm8AhXiEkBHBROIASxAiqLRaxxjhYQoUyCiEUTvropgkBQLAiEw4ElqwQbBMiCSFgClk4CBFIboxpY7lkAo8MXjMEC7EADF2yAAQq5DZys5i8H52W1akyESVSk5HgNuAJYQAwWRVhGhsY0tBrm2kA1ABRF3QqeTQyAGAjAQgpe0xfPKobcnv2pCN06fXL7GcgXaFWI4TJqitiSWvYnAHkCGMwALIACWCBciREKQ=="), PackedByteArray("flYkSixlggZ6kH5nRTLFUlo00YH4u/RDMtvwTogdzWE1tz5UMjMz0y4TAE4ccMYhxFt6TnubqO58rE1j9EiG7NG22iwjZWlYmtZFsZ5YdayEFctRrRikLteompWCIqpYw0pQVLGoAuw0gRFLuIC8RrIBg+BFRLQgFotiI9wAOLC2Gv7jbvceIkB5XwW8uwcYRavRKSlWFUuloqBoUbBRLNagGMRYURUDiioYZKWUgooDsyACDGIadKPLcAyWAY1CGRyArFANGOEaGWlxgjYPuhICjyEwYHsZDMhYyqfU0WYRQo0XBQiAFgpwICA0MrjJsdggiShYlYrEBiPCsdYEKZYJypx+EVYNzUyRKi7CcmK7R3Zfz9N137KC0/hI6BEEQqaY80TPP+ao+jm9TR/zROT3EZAXAQACMACKEUCgK7SZfp9NizoA")], [PackedByteArray("XkbEVQcQAL6yIq4yQADw3ZNY2Bmb2/Di6704ptWIoZJZMjPTzEAtLtJ0ZNg0itmftNRne0n2mTMNk7E4o0wYdvHszWXvTD7GStmNUbFTKlqlUawRVRVFDUUrgQJjGWWARW0HlgBsAEIDaRuhIsYY662Ilywi+0COShIOsVAAOFjBxgZbQiFC8kJojN0g4RAlgXFVAAJRyJhQdAhCYkULKAZYFPXwHv1WilNUIyAqTt1DCCjnOgZUxm2knEqjhGpg4UCLAJwNAwjBasGr0S0tVVlCnFYoGAQAWCOt3qWAUKstwsBqK3ElvKE2LkUsFSwD3TgIMWpoaJt2lAZAGwbMGwX/ITEBYYMoYAiIzYTG8rxPCg3YGjnPTdqs2i137V7jZiLmS19fYk9ZwSCMAFN7ddwBQgIA"), PackedByteArray("vlUkk46EKAC+rSIZdYBQAb59G3PQIie0egeTLSVdZnZpZiYA1ppZyNjZamPaZWTREksjs+3YVd/Ralabd1O3Ycxac7/VedjkuWRp3WqmcbW3ar1urehW9SJe2UaQ2l7TKImtSrAgOkKSLRsQUdArImCj2iCioBERrKq2ncgaUTQCFgYiKQiCAPEk8MQgIcBC0BIWVgo2iBawwYXNipCNDEIi4sLP+vFfMg4kgQ2F0FQsm/g3NynLhJhWCQFgE+gRwCNE4n3zVYi8llHWs9DAUogAq900J1kgbZgwaKwCEFihbCEYjcNuEQoxFnRgkDGAiRFk6T4yTKmLplsTdLcTbw/QImzbNoJ/PPYz+NfGXkFNkMDbSuYaAACIBdPFkfMauYIExMgGIQTPop8kOsL4j26ZQV4gAA=="), PackedByteArray("HlbErQQgALwwIq4J4AeA71rAmV3CcNRWvNXoarXSZWaXaWYAUczGaaihpn1fGuz7s5loGtNutkvM9al9sbEx1Jr10QfJnNWxs+U61m2PuZNqrFqU1Fja9iiq6i7EhaVC2CiMbLc1IIQoyJERi1pVxQhoNVpNWSAh41XGVhh4sTAOVpBNthDIxDJAKEtSIoMIANqALaPCgCwHZY6c21dZsUJZWjEQpRWmKHGwCgmsMA1lVgCgHRibCixACMVVHezhZVVaAGlM9t1zAgBizIosBzYDCDBAezFCuEZ7XkkFlGLDTIIECUW2A8usTGAwGMfcsuk0mojAKqUMwiVcDACAFwMAwAAirz8mcT3mHcCKBEaAt2cmt7DKofH1FfN8qDQ3jWfNvRdYLAAAED4jIKDl9BEYZIxlVlFRHyUAyCQB"), PackedByteArray("PlbUvZZANgCvrKinFiAAeHcb2MDI2UZH24pvWyHCJFVmFs/MAKyVnThNtdoa5rg3ObFpP1lVMmsXSwj2W7s4N8F+jb21DCMyjGfCEEm1VArdChpRsuwcVBUsCKi6RVQsnJHlELRKGFrhMsg0xhKycJW1WiKWRkCthngIo1C2jJEN0EYyNISokUwYhIFlMK0wRxbYMkAaK7JNqUvQFvJYdOBAY7CQQq2BHWOHANKMUTsEA4CNpV2ZoNssToEhgbBoAtNgjLTG0IAMJeFkkImgZMmLhQIcC1gLKS3HCR7ZFhjsYLLAQiQULKNJTBNBUsZXaxSH+9qh0IeDNGQ5EWUTjKxU7hI3bu+B3YkmLRrGtKjCu0gywzYPJvYBohkjYIAVZAEGg0GwguBar28bln1p+vpks9qV7/UxIZa2iKAqDEAEGJu+zUE5jyaipAfgBwA="), PackedByteArray("tkWkY38DA8AeI8q5fYEAwuJ+hOtFzGtaJ06WQlETkeUsiCwiKnEmIDpjOmkYFVrfKM0sWUpmAFK5h598LednZvrc8Z1oysTBJdt9mxzGhqPFqGpusLN1XoTCtV4LIqGoChCiVCiQxBAYTCTZGBHBVFQjotiqjaJgVVVRRNM4NEiBhEoiLOwolEoBbBOCVa0tIkypTSOBAQWyCc1IUCEQCltCWSKQZIwUDOACECAYO8QtRHQ6DFkOpwhdgYDVvSDw9J7mEE253UCKXIXwimkQXeXoWx5VGErbkXtiyppEIhYYlABgQBhmUCDskFwEhpaYZTFKVWyrWIK2CZFS8RgClW2koL2uzkhgW1ITYkJ5kVCMkBWDVLAaIWMMERj8bbMvMAYwqzFoCgvTUSTte0FJCxzns/jJmzOJjoZNng6VVrEAWi0L9Ak4EBgA"), PackedByteArray("/PjKkoY1TI1AzvvxlSXFWMPSGOL/+MyqIQM5N8UIfDt4g9oARoTiq5Fduy4q61AGhdJaJZtSXDLO7QhqUhMB"), PackedByteArray("HPkoBhoIRL2in8BBAxlRr599zBlHCNgdLm0TSBNZAx6HwiojFskBIVHmDK4Jhas1yV02ottLsEGKiF4X"), PackedByteArray("JPm8VsZwAgrFo57PCE9UHSfub7VSVMDBKQZA3zyCvoqxbZtQhb3IARJWkCadtYUqKYLVQhJ1TuhQLHJ9ew=="), PackedByteArray("DP2KItmbSkWG09CvMIJBJpBxegDMOcYAFED5yWFCGyGYgEwsWWVBsMpgWarIOnGHcofv1UIaeLVevSY7AA=="), PackedByteArray("PPkKkgmiddkP2SifP1tIeZgyZ4/1lAopyBWjGABcujWawxBb5J9nXesfogDUoerNpAkZVeKz1UvVGw=="), PackedByteArray("JAU1JzcY+UIhlRTUHC+S5IJCxgdIzCERaAAOM1VMSOYonrHotUihKmtUkK9LpxGtpquBKXpRV5KHOCBwDrbSmMUBGhApO9K6YoU5vjsC"), PackedByteArray("LAW9mCm700BYLgW9mCk7afzB6kAAQXLhIBWBAlglLR0V5hDcX0V58/WnWLVoFH7fvP6sOojkEPSywjSOQUEweqVZpeJSo1A="), PackedByteArray("DAn9lnHDlhc60kNCv2XDsOWFmrqVeoVMC7huBDCtG4kq4tARetFaFERVrFiLWAlF2AoDBVRB1TqWHS7LaqvHNnoXJ5UYESsQ6G25Aw=="), PackedByteArray("2kWkZ/tAGgAMXUR61g+kAcBwy8wMLf3Ui9h9OKofxLWgw6jWIYVmdpkEAFhqEp9gJ/2NGC8i+2HftX7WcT5hw4d0eiAyxQEXSdWwOpStFpZWbGwBrCc4ZhmStKH6Uq+oVk0BiIAAwhhsKGLYolwbLW2HAkYlJIQ0IECALBwGGSKsAAsLwKA4RjEoBgmtLWgVRRWLKoCoQPYgkThUUymtjIXkxQOBHIYysGDUgAUxMicb0VICABYABJhGYQELgOgqbNU9Mj0ByIawFQRW4FUgNAgMJBH5BBCimhRGCAgghGfbpQVhOmoNEQTYAJK8hOAQ5BYGAEtMMC5CIXuREQgBgjaEpZ0RDdEKqBaxKGKu1XnIEAghWAEMvXKy0cQ0rcrhly5aAAAMSFu37M/DqzwjOBA="), PackedByteArray("3mWU2/Er6nBXBKDLKC/jlzjsigAcQC+smbiInZiDwxwmRql0JTMzMwkAiKcYoTEWBVt1JuzXoKxaaBKad4ilFc+kma2qQUxRAzUxbeEQBw4MvcoEKiBaxVZUEDu1y5pEfega2Z+oYQqoiGmYpjWr4n4cFasWUGWtQgAmYOB6XYQjBS2fA4SDEKANVLXwIPn7CMT1U9VwVeeRtKJYVASs6lC1ggZbIIwkKBatggJqCCDGGWEYGYER8EIEWE5AtkJFaVaR4SGcO4/niLosKRPXZYnSjNUC8UjhITiyDACAoD1fxHQ+R26+O4p7+cTls18Pyc48zI11jZO3nQTuO2TnPpU1MBk90nzgBA=="), PackedByteArray("3mW8XddvEw6C2wRdxtt1/TbhgNsEhGaJ6yBOW/FGqapJAAAAACAeaeE8I4gEAKzRqUFVzChajVZRxQAADsIglmWFgRMA0oEFfP6cCcRtuQo4MG0AZFlGWCatMChNZATIGfLtrScAEEXKK1VgWQawwsAoDMIgRhZQYFlGoXAQBqGwDEBalpEBy6KCMGIVltsyWOUkm8iAwsAA0HCTURRFWgpgREVhYGSBzy4jAMADzIE9ABbERFEUQWo7Col0TAAibdflHABDgRXKANMAwIiirQA=")]])
 granule_positions = PackedInt64Array(0, 0, 12096, 20916)
@@ -781,6 +865,18 @@ tags = {
 "title": "leaves02"
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bg6pd"]
+random_volume_offset_db = 3.0
+streams_count = 2
+stream_0/stream = ExtResource("26_wnwbv")
+stream_1/stream = ExtResource("27_gl8cc")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ktux3"]
+streams_count = 2
+stream_0/stream = ExtResource("38_giy8y")
+stream_0/weight = 3.0
+stream_1/stream = ExtResource("39_fdfoy")
+
 [node name="Player" type="CharacterBody3D" unique_id=1364051561 node_paths=PackedStringArray("player_statemachine", "CameraJuice_Component", "UiComponent", "left_lean_collision", "right_lean_collision")]
 collision_layer = 2
 script = ExtResource("1_qvlqn")
@@ -789,6 +885,9 @@ CameraJuice_Component = NodePath("head/CameraControllerComponent/CameraJuice")
 UiComponent = NodePath("UI")
 left_lean_collision = NodePath("head/CameraControllerComponent/obstacle_checker/lean_collision_checker_left")
 right_lean_collision = NodePath("head/CameraControllerComponent/obstacle_checker/lean_collision_checker_right")
+
+[node name="Player_model" parent="." unique_id=1250964393 instance=ExtResource("5_qfm1y")]
+unique_name_in_owner = true
 
 [node name="head" type="Node3D" parent="." unique_id=683099968]
 unique_name_in_owner = true
@@ -802,7 +901,7 @@ Player_controller = NodePath("../..")
 
 [node name="CameraJuice" type="Node3D" parent="head/CameraControllerComponent" unique_id=956331218 node_paths=PackedStringArray("camera", "Player")]
 script = ExtResource("3_iqofo")
-camera = NodePath("lean_pivot/screen_shake/Camera3D")
+camera = NodePath("lean_pivot/recoil_pivot/Camera3D")
 Camera_tilt = true
 Head_bob = true
 camer_fov_changes = true
@@ -816,24 +915,33 @@ noise_texture = SubResource("NoiseTexture2D_s4tvy")
 [node name="lean_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice" unique_id=582210401]
 unique_name_in_owner = true
 
-[node name="screen_shake" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot" unique_id=775759092]
+[node name="recoil_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot" unique_id=775759092]
 unique_name_in_owner = true
 
-[node name="Camera3D" type="Camera3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake" unique_id=506334004]
+[node name="Camera3D" type="Camera3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot" unique_id=506334004]
 unique_name_in_owner = true
 
-[node name="RayCast3D" type="RayCast3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D" unique_id=227766159]
+[node name="SpotLight3D" type="SpotLight3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D" unique_id=1946259447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36062956)
+light_color = Color(1, 1, 0.9372549, 1)
+light_energy = 1.5
+spot_range = 30.0
+spot_angle = 42.79
+
+[node name="RayCast3D" type="RayCast3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D" unique_id=227766159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.67370725)
 target_position = Vector3(0, 0, -200)
-collision_mask = 2
+collision_mask = 3
 
-[node name="weapon_holder" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake" unique_id=551316734]
+[node name="weapon_holder" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot" unique_id=551316734]
 transform = Transform3D(0.89, 0, 0, 0, 0.89, 0, 0, 0, 0.89, 0.16, -0.20999998, -0.495)
 
-[node name="weapon_juic_rig" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder" unique_id=1223682224]
+[node name="weapon_juic_rig" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder" unique_id=1223682224]
 
-[node name="AKM" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig" unique_id=1969051408 node_paths=PackedStringArray("animation_player", "weapon_ray_cast", "player_controller")]
+[node name="AKM" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig" unique_id=1969051408 node_paths=PackedStringArray("animation_player", "weapon_ray_cast", "player_controller")]
 unique_name_in_owner = true
-transform = Transform3D(-1.136496e-09, 0, -0.025999997, 0, 0.025999997, 0, 0.025999997, 0, -1.136496e-09, 0, 0, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+visible = false
 script = ExtResource("4_fulsm")
 weapon_damage = 22.0
 shoot_sound = ExtResource("5_ke2ow")
@@ -842,12 +950,15 @@ animation_player = NodePath("../../../../../../../../PlayerAnimation")
 weapon_ray_cast = NodePath("../../../Camera3D/RayCast3D")
 envo_hit_particles = ExtResource("5_a38lo")
 blood_splatter_particle = ExtResource("6_4ni07")
-bullet_tracer = ExtResource("7_l71n6")
+bullet_tracer = ExtResource("10_bj30b")
 shootin_anim = "akm_shoot"
 reloading_anim = "akm_reload"
 ads_pos = Vector3(0, -0.125, -0.28)
 default_pos = Vector3(0.12, -0.17, -0.415)
 player_controller = NodePath("../../../../../../../..")
+metal_bullet_impact_Sfx = ExtResource("11_cs1tg")
+concrete_bullet_impact = ExtResource("12_2dvfe")
+hit_particle_effect_eno = ExtResource("11_md1ol")
 weapon_tilt = true
 weapon_bob = true
 roll_pitch = 0.028
@@ -856,22 +967,31 @@ frequency = 2.0
 amplitude = 0.011
 lerp_speed = 10.0
 
-[node name="sway_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM" unique_id=860187183]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+[node name="world_view_model" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM" unique_id=860187183]
+transform = Transform3D(0.026, 0, 0, 0, -1.1364961e-09, 0.026, 0, -0.026, -1.1364961e-09, 0, 0, 0)
 
-[node name="Collada visual scene group" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot" unique_id=1226796749]
+[node name="Collada visual scene group" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model" unique_id=1226796749]
 transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, -1, 0, 1, -4.3711392e-08, 0, 0, 0)
 
-[node name="automatic_rifle" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot/Collada visual scene group" unique_id=1638153046]
+[node name="automatic_rifle" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model/Collada visual scene group" unique_id=1638153046]
 transform = Transform3D(100, 0, 0, 0, -1.6e-05, 100, 0, -100, -1.6e-05, 0, 0, 0)
 
-[node name="defaultMaterial" type="MeshInstance3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/sway_pivot/Collada visual scene group/automatic_rifle" unique_id=80435628]
+[node name="defaultMaterial" type="MeshInstance3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model/Collada visual scene group/automatic_rifle" unique_id=80435628]
 mesh = SubResource("ArrayMesh_xnaiv")
 
-[node name="Barrel_node" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM" unique_id=914771921]
-transform = Transform3D(0.9999999, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 0.9999999, -29.13869, 1.4400406, 0.16720772)
+[node name="Barrel_node" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM" unique_id=914771921]
+transform = Transform3D(0.9999998, 0, 1.4210855e-14, 0, 1.0000001, 0, -1.4210855e-14, 0, 0.9999998, -0.7143587, 0.027564645, 2.9802322e-08)
 
-[node name="MuzzleFlash" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/weapon_holder/weapon_juic_rig/AKM/Barrel_node" unique_id=219939041 instance=ExtResource("6_4r5pv")]
+[node name="MuzzleFlash" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/Barrel_node" unique_id=1237000921 instance=ExtResource("12_487ah")]
+
+[node name="Local_view_model" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM" unique_id=1272771899]
+
+[node name="Ads_pivot" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/Local_view_model" unique_id=2123843227]
+
+[node name="local_barel_pos" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/Local_view_model" unique_id=346328290]
+
+[node name="gun_model" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig" unique_id=90816764]
+transform = Transform3D(-0.925, 0, -8.0866066e-08, 0, 0.925, 0, 8.0866066e-08, 0, -0.925, -0.1, -0.24, 0.575)
 
 [node name="obstacle_checker" type="Node3D" parent="head/CameraControllerComponent" unique_id=950315987]
 
@@ -893,9 +1013,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27435434, 0)
 shape = SubResource("SphereShape3D_d7dwe")
 target_position = Vector3(0.85, 0, 0)
 collide_with_areas = true
-
-[node name="Player_model" parent="head" unique_id=1250964393 instance=ExtResource("5_qfm1y")]
-transform = Transform3D(-0.012, 0, -1.1364961e-09, 0, 0.011, 0, 1.0490733e-09, 0, -0.013, 0, -0.75757813, 0)
 
 [node name="Components" type="Node" parent="." unique_id=514318104]
 
@@ -927,7 +1044,7 @@ metadata/_custom_type_script = "uid://dbavcwgvqyiyg"
 
 [node name="DashState" type="Node" parent="PlayerStateMachine" unique_id=1651213161 node_paths=PackedStringArray("camera")]
 script = ExtResource("14_w2vqi")
-camera = NodePath("../../head/CameraControllerComponent/CameraJuice/lean_pivot/screen_shake/Camera3D")
+camera = NodePath("../../head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/Camera3D")
 metadata/_custom_type_script = "uid://clyumisqx0i7s"
 
 [node name="SlideState" type="Node" parent="PlayerStateMachine" unique_id=1544521751]
@@ -940,7 +1057,9 @@ metadata/_custom_type_script = "uid://c333aph4jx7b3"
 
 [node name="JumpState" type="Node" parent="PlayerStateMachine" unique_id=1035982876]
 script = ExtResource("9_hu6bb")
-jump_force = 4.4
+jump_force = 5.0
+speed = 7.0
+InputMultiplier = 0.88
 metadata/_custom_type_script = "uid://ddvfv5vhdy10b"
 
 [node name="PausedState" type="Node" parent="PlayerStateMachine" unique_id=315488886]
@@ -1182,6 +1301,41 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Quit"
 
+[node name="TextureRect" type="TextureRect" parent="UI" unique_id=1117345166]
+custom_minimum_size = Vector2(25.31, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -82.5
+offset_right = 70.0
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("27_bj30b")
+
+[node name="hit_marker" type="TextureRect" parent="UI" unique_id=264098792]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.7853982
+mouse_filter = 2
+texture = ExtResource("30_2dvfe")
+expand_mode = 1
+
 [node name="uncrouched_collision_shape" type="CollisionShape3D" parent="." unique_id=485210119]
 shape = SubResource("CapsuleShape3D_mbkfo")
 
@@ -1219,11 +1373,11 @@ stream = SubResource("AudioStreamRandomizer_4ppjc")
 
 [node name="movment_sfx" type="Node3D" parent="." unique_id=195755182]
 
-[node name="walking_foot_step" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=769145233]
-stream = SubResource("AudioStreamRandomizer_bg6pd")
-
 [node name="crouch" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1438786825]
 stream = SubResource("AudioStreamOggVorbis_ke2ow")
+
+[node name="walking_foot_step" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=769145233]
+stream = SubResource("AudioStreamRandomizer_bg6pd")
 
 [node name="uncrouch" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1167315685]
 stream = ExtResource("26_31cv2")
@@ -1232,6 +1386,7 @@ stream = ExtResource("26_31cv2")
 stream = ExtResource("27_dt7fs")
 
 [node name="land" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1183127108]
+stream = ExtResource("30_487ah")
 
 [node name="slide" type="AudioStreamPlayer3D" parent="movment_sfx" unique_id=1754655490]
 stream = ExtResource("27_pf23h")
@@ -1247,6 +1402,20 @@ player = NodePath("..")
 bob_freq = 1.8
 bob_amplitude = 0.1
 bob_smoothing = 12.0
+
+[node name="rain_drop" parent="." unique_id=889041111 instance=ExtResource("32_gl8cc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.6, 0)
+emitting = false
+amount = 800
+
+[node name="proximity_chat_speaker" type="AudioStreamPlayer3D" parent="." unique_id=134535184]
+
+[node name="hit_Effect" type="AudioStreamPlayer" parent="." unique_id=432452932]
+stream = SubResource("AudioStreamRandomizer_ktux3")
+volume_db = -3.628
+
+[node name="dead_sound_effect" type="AudioStreamPlayer" parent="." unique_id=1742020046]
+stream = ExtResource("40_hhpqf")
 
 [connection signal="died" from="." to="UI" method="_on_player_died"]
 [connection signal="recieved_damage" from="." to="UI" method="_on_player_recieved_damage"]

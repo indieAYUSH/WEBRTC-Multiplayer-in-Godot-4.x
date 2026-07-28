@@ -18,7 +18,7 @@ var red_team_score : int = 0
 var blue_team_score : int = 0 
 var max_score : int = 2
 
-
+@onready var menu_camera: Camera3D = $menu_camera
 
 #----============Player profile ----------============#
 @onready var name_field: LineEdit = $MainMenu/player_profile/name_edit/name_field
@@ -28,6 +28,7 @@ var my_name : String
 @onready var winner_prompt: Label = $UI/winning_Screen/winner_prompt
 @onready var returning_label: Label = $UI/winning_Screen/returning_label
 @onready var winning_screen: Panel = $UI/winning_Screen
+@onready var rain_sound_effect: AudioStreamPlayer = $rain_sound_effect
 
 var host_name : String
 var gues_name : String
@@ -67,12 +68,13 @@ func start_game(peer_id):
 	lobby.visible = false
 	score_board.visible = true
 	spawn_player(peer_id)
-
+	menu_camera.queue_free()
 
 func spawn_player(mp_peer_id):
 	if player_scene == null:
 		return
 	
+	rain_sound_effect.play()
 	var p = player_scene.instantiate()
 	p.name = (str(mp_peer_id))
 	p.global_position = current_spawn_node.global_position
@@ -114,6 +116,7 @@ func check_winner():
 
 @rpc("any_peer" , "call_local")
 func declare_host_winner():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$lobby_return_timer.start()
 	winning_screen.visible = true
 	if Network.is_host:
@@ -124,6 +127,7 @@ func declare_host_winner():
 
 @rpc("any_peer" , "call_local")
 func declare_guest_winner():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$lobby_return_timer.start()
 	winning_screen.visible = true
 	if Network.is_host:

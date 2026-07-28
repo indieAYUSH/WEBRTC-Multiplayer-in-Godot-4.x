@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c78smytlh7ei5"]
+
+[ext_resource type="AudioStream" uid="uid://dok0p6c27145f" path="res://assets/sounds/metal impact.mp3" id="1_x3ljf"]
+[ext_resource type="AudioStream" uid="uid://b47v85sfc6p1i" path="res://assets/sounds/metal_impact 2.mp3" id="2_rj52m"]
+[ext_resource type="AudioStream" uid="uid://0om3viqy138s" path="res://assets/sounds/mtal impact 3.mp3" id="3_q0scb"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bg6pd"]
+streams_count = 3
+stream_0/stream = ExtResource("1_x3ljf")
+stream_0/weight = 2.0
+stream_1/stream = ExtResource("2_rj52m")
+stream_2/stream = ExtResource("3_q0scb")
+
+[node name="metal_hit_audio_effect" type="AudioStreamPlayer3D" unique_id=1507213093]
+stream = SubResource("AudioStreamRandomizer_bg6pd")
+volume_db = -6.0

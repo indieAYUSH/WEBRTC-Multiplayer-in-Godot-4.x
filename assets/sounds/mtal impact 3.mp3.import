@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://0om3viqy138s"
+path="res://.godot/imported/mtal impact 3.mp3-078e7a7b1e65a89735db22963540b057.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/mtal impact 3.mp3"
+dest_files=["res://.godot/imported/mtal impact 3.mp3-078e7a7b1e65a89735db22963540b057.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

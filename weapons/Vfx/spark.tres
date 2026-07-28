@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://egus1c5j00yb"]
+
+[resource]
+blend_mode = 1
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+emission_enabled = true
+emission = Color(0.8352941, 0.11764706, 0, 1)
+emission_energy_multiplier = 9.94
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false

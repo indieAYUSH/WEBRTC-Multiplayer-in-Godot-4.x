@@ -27,7 +27,8 @@ extends Node3D
 @export var shootin_anim : String
 @export var reloading_anim : String
 
-@onready var barrel_node: Node3D = $Barrel_node
+
+@onready var barrel_node: Node3D = $Local_view_model/local_barel_pos
 
 @export var ads_pos : Vector3 
 @export var default_pos : Vector3
@@ -48,10 +49,18 @@ var current_gun_animation_state : GUN_ANIMATION_STATE = GUN_ANIMATION_STATE.NONE
 @export_category("refrences")
 @onready var weapon_holder: Node3D = $"../.."
 @onready var weapon_juic_rig: Node3D = $".."
+@export var metal_bullet_impact_Sfx : PackedScene
+@export var concrete_bullet_impact : PackedScene
+@export var hit_particle_effect_eno : PackedScene
 
 @export_category("effects")
 @export var weapon_tilt : bool
 @export  var weapon_bob : bool
+
+@export_group("reocil_vars")
+@export var horizonatal_recoil : float = -1.0
+@export var vertical_recoil : float  = 2.0
+
 
 @export_category("weapon_tilt")
 @export var roll_pitch : float 
@@ -62,9 +71,12 @@ var current_gun_animation_state : GUN_ANIMATION_STATE = GUN_ANIMATION_STATE.NONE
 @export var amplitude : float
 var bob_phase : float
 var bob_intensity : float
+@onready var recoil_pivot: Node3D = %recoil_pivot
 
 @export_category("others")
 @export var lerp_speed : float = 15.0
+@onready var world_view_model: Node3D = $world_view_model
+@onready var local_view_model: Node3D = $Local_view_model
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !is_multiplayer_authority(): return
@@ -76,6 +88,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready() -> void:
 	if !is_multiplayer_authority(): return
 	animation_player.animation_finished.connect(on_animation_player_finished_playing)
+	local_view_model.visible = false
+	world_view_model.visible = true
 
 func on_animation_player_finished_playing(anim_name : String)->void:
 	if anim_name == shootin_anim and Input.is_action_pressed("shoot") and autofire:
@@ -111,14 +125,20 @@ func shoot()->void:
 	if weapon_ray_cast.is_colliding():
 		var collider = weapon_ray_cast.get_collider()
 		var pos = weapon_ray_cast.get_collision_point()
-		show_bullet_traces.rpc(barrel_node.global_position , pos)
+		spawn_bullet_trails.rpc(pos , bullet_tracer , barrel_node.global_position)
 		if collider.has_method("damage"):
+			if collider.player_died : return
+			animation_player.play("hit_marker")
 			collider.damage.rpc_id(collider.get_multiplayer_authority()  , weapon_damage)
-			show_player_hit_particle.rpc(pos)
+			spawn_hit_particles.rpc(blood_splatter_particle , barrel_node.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
 		else:
-			show_eno_hit_particle.rpc(pos)
+			if collider.is_in_group("metal"):
+				spawn_hit_sfx(metal_bullet_impact_Sfx , pos)
+			else:
+				spawn_hit_sfx(concrete_bullet_impact , pos)
+			spawn_hit_particles.rpc(hit_particle_effect_eno , barrel_node.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
 	else:
-		show_bullet_traces.rpc(barrel_node.global_position , weapon_ray_cast.target_position)
+		spawn_bullet_trails.rpc(weapon_ray_cast.target_position  , bullet_tracer , barrel_node.global_position)
 
 @rpc("call_local")
 func show_fx()->void:
@@ -135,35 +155,12 @@ func show_fx()->void:
 			reload_sound_player.play()
 			animation_player.play(reloading_anim)
 
-@rpc("call_local")
-func show_eno_hit_particle(position , _normal : Vector3):
-	var h_p :GPUParticles3D   = envo_hit_particles.instantiate()
-	add_child(h_p)
-	h_p.global_position = position
-	h_p.emitting = true
-	await get_tree().create_timer(0.09).timeout
-	h_p.queue_free()
 
 
-@rpc("call_local")
-func show_player_hit_particle(position):
-	var h_p   =  blood_splatter_particle.instantiate()
-	add_child(h_p)
-	h_p.global_position = position
-	h_p.emitting = true
-	await get_tree().create_timer(0.09).timeout
-	h_p.queue_free()
+func _local_view_model_fx():
+	pass
 
 
-@rpc("call_local")
-func show_bullet_traces(_start_point : Vector3 , _end_point : Vector3):
-	var b_t : = bullet_tracer.instantiate()
-	add_child(b_t)
-	b_t.global_position = _start_point
-	
-	var tween = get_tree().create_tween()
-	tween.tween_property(b_t , "global_position" , _end_point , 0.08)
-	tween.tween_callback(b_t.queue_free)
 
 func _process(delta: float) -> void:
 	if !is_multiplayer_authority() : return
@@ -176,6 +173,9 @@ func _process(delta: float) -> void:
 	position.y = lerp(position.y , 0.0 , delta*lerp_speed)
 	rotation.z = lerp(rotation.z , 0.0 , delta*lerp_speed)
 	rotation.x = lerp(rotation.x , 0.0 , delta*lerp_speed)
+	
+	recoil_pivot.rotation.z = lerp(recoil_pivot.rotation.z , 0.0 , 13.0)
+	recoil_pivot.rotation.x = lerp(recoil_pivot.rotation.x , 0.0 , 13.0)
 
 func _sway(amount: Vector2) -> void :
 	position.x += amount.x * 0.09
@@ -214,3 +214,31 @@ func _can_headbob() -> bool:
 	var state_name = player_controller.player_statemachine.current_state.name
 	# Headbob is allowed if the player is NOT sliding or dashing
 	return state_name != "SlideState" and state_name != "DashState"
+
+
+@rpc("call_local")
+func spawn_hit_sfx(_hit_sound : PackedScene , _postion : Vector3) -> void:
+	var audio_player = _hit_sound.instantiate()
+	get_tree().current_scene.add_child(audio_player)
+	audio_player.global_position = _postion
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()
+
+
+@rpc("call_local")
+func spawn_hit_particles(_particles : PackedScene , _barrelpos : Vector3 , _postion : Vector3 , _normal:Vector3 , _owner) -> void:
+	var particle_instance  = _particles.instantiate()
+	get_tree().current_scene.add_child(particle_instance)
+	var pos = _postion
+	particle_instance.global_position = pos
+	particle_instance._emit_par(_postion ,_barrelpos )
+
+@rpc("call_local")
+func spawn_bullet_trails(hit_point : Vector3, tracer_Scene : PackedScene , spawn_pos : Vector3) -> void:
+	var trc = tracer_Scene.instantiate()
+	get_tree().current_scene.add_child(trc)
+	trc.global_position = spawn_pos
+	trc.look_at(hit_point , Vector3.UP)
+	var tween = get_tree().create_tween()
+	tween.tween_property(trc , "global_position" , hit_point , 0.08)
+	tween.tween_callback(trc.queue_free)

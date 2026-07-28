@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bvfhpnaw3huw"]
+
+[ext_resource type="Texture2D" uid="uid://jw6iihcanbd2" path="res://assets/textures/concrete_floor_worn_02_1k/textures/trace_01_a.png" id="1_jcopc"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o187k"]
+emission_shape_scale = Vector3(20, 7, 20)
+emission_shape = 3
+emission_box_extents = Vector3(1.645, 1, 1)
+direction = Vector3(0, -1, 0)
+spread = 12.03
+initial_velocity_min = 20.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ktux3"]
+transparency = 1
+albedo_color = Color(0.9088109, 0.9088109, 0.9088109, 1)
+albedo_texture = ExtResource("1_jcopc")
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_bg6pd"]
+material = SubResource("StandardMaterial3D_ktux3")
+size = Vector2(0.2, 1)
+
+[node name="rain_drop" type="GPUParticles3D" unique_id=889041111]
+cast_shadow = 0
+amount = 500
+visibility_aabb = AABB(-36.47062, -28.310713, -24.678215, 73.04462, 36.007553, 48.54403)
+process_material = SubResource("ParticleProcessMaterial_o187k")
+draw_pass_1 = SubResource("QuadMesh_bg6pd")

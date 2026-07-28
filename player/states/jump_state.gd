@@ -5,8 +5,11 @@ class_name JumpState  extends PlayerMovementState
 @export var acceleration : float = 0.15
 @export var deacceleration : float  = 0.25
 @export var InputMultiplier : float = 0.85
+@onready var jump: AudioStreamPlayer3D = $"../../movment_sfx/jump"
+@onready var land: AudioStreamPlayer3D = $"../../movment_sfx/land"
 
 func enter()->void:
+	_play_jump_sfx.rpc()
 	Player.velocity.y += jump_force
 	Player.can_lean = false
 
@@ -24,5 +27,14 @@ func physics_update(delta : float)-> void:
 	Player.update_movement(speed*InputMultiplier , acceleration , deacceleration)
 
 func exit()-> void:
+	_play_land_sfx.rpc()
 	PlayerAnimation.play("land")
 	Player.can_lean = true
+
+@rpc("call_local")
+func _play_jump_sfx():
+	jump.play()
+
+@rpc("call_local")
+func _play_land_sfx():
+	land.play()

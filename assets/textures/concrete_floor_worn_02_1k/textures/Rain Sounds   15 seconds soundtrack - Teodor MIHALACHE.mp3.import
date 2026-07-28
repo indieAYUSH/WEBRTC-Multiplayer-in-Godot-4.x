@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cy8aiul37cc4t"
+path="res://.godot/imported/Rain Sounds   15 seconds soundtrack - Teodor MIHALACHE.mp3-26c3d1ff0205af12e74a83fe0b96fc61.mp3str"
+
+[deps]
+
+source_file="res://assets/textures/concrete_floor_worn_02_1k/textures/Rain Sounds   15 seconds soundtrack - Teodor MIHALACHE.mp3"
+dest_files=["res://.godot/imported/Rain Sounds   15 seconds soundtrack - Teodor MIHALACHE.mp3-26c3d1ff0205af12e74a83fe0b96fc61.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

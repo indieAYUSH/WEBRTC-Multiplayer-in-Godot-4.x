@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bn8xp53vlcpol"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j62p0"]
+albedo_color = Color(0.87058824, 0.7490196, 0.02745098, 1)
+emission_enabled = true
+emission = Color(0.99215686, 0.98039216, 0.49411765, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_k5oe5"]
+material = SubResource("StandardMaterial3D_j62p0")
+top_radius = 0.045
+bottom_radius = 0.0
+height = 1.2
+radial_segments = 30
+
+[node name="Tracers" type="Node3D" unique_id=953162950]
+
+[node name="Tracers" type="MeshInstance3D" parent="." unique_id=171215259]
+transform = Transform3D(1, 0, 0, 0, -4.371138e-08, 0.9999998, 0, -0.9999998, -4.371138e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_k5oe5")

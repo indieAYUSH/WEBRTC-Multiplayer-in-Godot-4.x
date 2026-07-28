@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://ctu02lyorlbmn"]
 
+[ext_resource type="Script" uid="uid://d23el8kdpmawc" path="res://weapons/Vfx/ObjeHitParticle.gd" id="1_dp03m"]
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5nemf"]
 angle_min = 234.60002
 angle_max = 234.60002
@@ -22,7 +24,12 @@ height = 0.027
 radial_segments = 5
 rings = 6
 
-[node name="player_hit_particle" type="GPUParticles3D" unique_id=1312103136]
+[node name="ObjeHitParticle" type="Node3D" unique_id=646271142 node_paths=PackedStringArray("particle_node")]
+script = ExtResource("1_dp03m")
+particle_node = NodePath("player_hit_particle")
+metadata/_custom_type_script = "uid://d23el8kdpmawc"
+
+[node name="player_hit_particle" type="GPUParticles3D" parent="." unique_id=1312103136]
 cast_shadow = 0
 emitting = false
 amount = 14

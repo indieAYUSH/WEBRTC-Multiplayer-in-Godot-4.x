@@ -15,6 +15,10 @@ run/main_scene="uid://qx48mjewu30k"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+driver/enable_input=true
+
 [autoload]
 
 Network="*uid://ctnrycfvw7n8q"
@@ -25,6 +29,10 @@ FirebaseManager="*uid://carbxmsmf1ven"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[global_group]
+
+metal=""
 
 [input]
 
@@ -117,3 +125,4 @@ menu={
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+occlusion_culling/use_occlusion_culling=true

@@ -2,7 +2,6 @@ class_name CameraJuiceComponent extends Node3D
 
 @export_category("Reffrences")
 @export var camera : Camera3D
-@onready var screen_shake = %screen_shake
 
 
 @export_category("Camera Effects")
@@ -86,7 +85,7 @@ func camera_effects_manager(delta:float) -> void:
 		#_step_timer = 0.0
 	#var bob_sin = sin(_step_timer* 2.0 * PI) *0.5
 	#
-	if speed > 0.5 and  Player.is_on_floor():
+	if speed > 0.5 and  Player.is_on_floor() and  _can_headbob():
 		bob_current_ampl = bob_amplitude * speed 
 		bob_current_intensity += delta*bob_freq*speed
 		var bob_offset : Vector2
@@ -113,19 +112,7 @@ func camera_effects_manager(delta:float) -> void:
 		time += delta
 		trauma = max(trauma - delta * fade_out_speed, 0.0)
 	
-	if trauma > 0 and noise_texture:
-		var noise = noise_texture.noise
-		var amount = trauma * trauma
-		
-		# Direct shake (no smoothing)
-		#screen_shake.position.x = noise.get_noise_1d(time * noise_speed) * max_offset * amount *2.0
-		#screen_shake.position.y = noise.get_noise_1d(time * noise_speed + 100.0) * max_offset * amount * 2.0
-		screen_shake.rotation.z = noise.get_noise_1d(time * noise_speed + 0.0) * deg_to_rad(max_rotaion) * amount *100.5
-		
-	else:
-		screen_shake.position = Vector3.ZERO
-		screen_shake.rotation.z = 0.0
-	
+
 	rotation = angles
 	position = offsets
 	

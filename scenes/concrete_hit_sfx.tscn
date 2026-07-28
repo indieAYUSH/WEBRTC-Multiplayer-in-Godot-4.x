@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://fngrcspk2cmh"]
+
+[ext_resource type="AudioStream" uid="uid://blglhjyag7s18" path="res://assets/sounds/concrete1.mp3" id="1_mpwe5"]
+[ext_resource type="AudioStream" uid="uid://c6ynr48p4cgf8" path="res://assets/sounds/concrete2.mp3" id="2_tvof3"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l4a1f"]
+streams_count = 2
+stream_0/stream = ExtResource("1_mpwe5")
+stream_1/stream = ExtResource("2_tvof3")
+
+[node name="concrete_hit_sfx" type="AudioStreamPlayer3D" unique_id=2070216121]
+stream = SubResource("AudioStreamRandomizer_l4a1f")
+volume_db = -6.0
