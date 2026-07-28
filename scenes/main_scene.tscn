@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://uqp7hqdkw7tt" path="res://assets/UI/styles/button_presses.tres" id="3_rt2n2"]
 [ext_resource type="StyleBox" uid="uid://dalv5jygmefjm" path="res://assets/UI/styles/button_hovered.tres" id="4_c16ls"]
 [ext_resource type="Script" uid="uid://c2d6o5j6anxhx" path="res://scripts/lobby.gd" id="5_18nlu"]
+[ext_resource type="PackedScene" uid="uid://ctjyekiuxyp2p" path="res://assets/3d models/GLB format/block-snow-overhang-hexagon.glb" id="8_18nlu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_c16ls"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -179,6 +180,7 @@ player_scene = ExtResource("2_c16ls")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1830182950]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.385
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=615054340]
@@ -315,9 +317,9 @@ text = "change name"
 [node name="Level" type="Node3D" parent="." unique_id=1808122177]
 
 [node name="testfloor" type="CSGBox3D" parent="Level" unique_id=354373488]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17672825, -0.048294067, 0.00961113)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18035221, -0.36837006, -0.3127346)
 use_collision = true
-size = Vector3(50, 1, 50)
+size = Vector3(200, 1, 200)
 
 [node name="Lobby" type="Control" parent="." unique_id=1303273016]
 visible = false
@@ -586,6 +588,9 @@ label_settings = SubResource("LabelSettings_g1chr")
 [node name="lobby_return_timer" type="Timer" parent="." unique_id=487918481]
 wait_time = 3.0
 one_shot = true
+
+[node name="block-snow-overhang-hexagon2" parent="." unique_id=1501042099 instance=ExtResource("8_18nlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.04711, 1, 4.867)
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/HostButton" to="MainMenu" method="_on_host_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/JoinButton" to="MainMenu" method="_on_join_button_pressed"]
