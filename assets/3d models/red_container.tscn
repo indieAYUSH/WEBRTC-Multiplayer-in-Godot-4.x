@@ -10,7 +10,7 @@ load_path = "res://.godot/imported/Untitled_Image_1.png-f7981bf361ec7db4e5ac730e
 resource_name = "ShippingContainer_mat"
 cull_mode = 2
 albedo_texture = SubResource("CompressedTexture2D_rld64")
-metallic = 0.7
+metallic = 0.15
 metallic_specular = 0.76
 roughness = 0.29
 normal_enabled = true
@@ -58,6 +58,7 @@ points = PackedVector3Array(-125, 1.4210855e-14, -293.45883, 125, 250, 289.98242
 
 [node name="Shipping_container_ShippingContainer_mat_0" type="MeshInstance3D" parent="." unique_id=404106697]
 transform = Transform3D(0.014, 0, 0, 0, 0.014, 0, 0, 0, 0.014, 0, -2.1156533, 0)
+lod_bias = 0.2
 mesh = SubResource("ArrayMesh_rld64")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Shipping_container_ShippingContainer_mat_0" unique_id=1017181204 groups=["metal"]]

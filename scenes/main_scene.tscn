@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://d1j35qtdnu5b8" path="res://scenes/main_scene.gd" id="1_rt2n2"]
 [ext_resource type="Script" uid="uid://dn0is7wn483bm" path="res://scripts/main_menu.gd" id="1_w2twt"]
-[ext_resource type="PackedScene" uid="uid://5ym40qt2aau8" path="res://scenes/player.tscn" id="2_c16ls"]
 [ext_resource type="StyleBox" uid="uid://b1n8m862a3s5g" path="res://assets/UI/styles/button_normal.tres" id="2_gubc5"]
 [ext_resource type="Texture2D" uid="uid://ckxjtbjnot0eq" path="res://assets/3d models/overcast_soil_puresky_1k.exr" id="3_e1cbu"]
 [ext_resource type="StyleBox" uid="uid://uqp7hqdkw7tt" path="res://assets/UI/styles/button_presses.tres" id="3_rt2n2"]
@@ -36,18 +35,27 @@ sky_material = SubResource("PanoramaSkyMaterial_e1cbu")
 
 [sub_resource type="Environment" id="Environment_c1pb6"]
 background_mode = 2
-background_energy_multiplier = 0.25
+background_energy_multiplier = 0.35
 sky = SubResource("Sky_6wevv")
 tonemap_mode = 3
+ssr_enabled = true
+ssr_fade_in = 0.20490594
 glow_enabled = true
+glow_normalized = true
 glow_intensity = 0.47
 glow_bloom = 0.37
-fog_enabled = true
 fog_light_color = Color(0.48747307, 0.52270687, 0.5775158, 1)
 fog_light_energy = 0.35
-fog_sun_scatter = 0.24
-fog_density = 0.012
-fog_sky_affect = 0.0
+fog_sun_scatter = 0.25
+fog_density = 0.015
+fog_sky_affect = 0.297
+fog_height = 97.1
+fog_height_density = -0.1379
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1
+volumetric_fog_albedo = Color(0.53224254, 0.5322423, 0.53224236, 1)
+volumetric_fog_anisotropy = 0.13
+volumetric_fog_sky_affect = 0.848
 adjustment_enabled = true
 adjustment_brightness = 0.97
 adjustment_contrast = 1.07
@@ -62,9 +70,6 @@ content_margin_top = 0.0
 content_margin_right = 4.0
 content_margin_bottom = 0.0
 color = Color(1, 1, 1, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_55en2"]
-font_size = 32
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7a5l"]
 albedo_color = Color(0.8810723, 0.8810722, 0.8810722, 1)
@@ -374,12 +379,11 @@ loop_offset = 2.66
 
 [node name="MainScene" type="Node3D" unique_id=159987791]
 script = ExtResource("1_rt2n2")
-player_scene = ExtResource("2_c16ls")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1830182950]
 transform = Transform3D(-0.1773358, -0.8626046, -0.4737778, 0.09645081, -0.4943236, 0.8639106, -0.97941273, 0.107506014, 0.17086019, 0, 14.640359, 0)
 light_color = Color(0.9367016, 0.9367016, 0.93670154, 1)
-light_energy = 0.34
+light_energy = 0.395
 light_bake_mode = 1
 shadow_enabled = true
 
@@ -454,65 +458,12 @@ label_settings = SubResource("LabelSettings_bg6pd")
 
 [node name="HSeparator" type="HSeparator" parent="MainMenu" unique_id=1067377011]
 layout_mode = 0
-offset_left = 335.0
-offset_top = 133.0
-offset_right = 910.0
-offset_bottom = 257.0
+offset_left = 727.0
+offset_top = 352.0
+offset_right = 1302.0
+offset_bottom = 476.0
 theme_override_constants/separation = 121
 theme_override_styles/separator = SubResource("StyleBoxLine_und3l")
-
-[node name="player_profile" type="Control" parent="MainMenu" unique_id=72226289]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 1
-
-[node name="name_edit" type="Panel" parent="MainMenu/player_profile" unique_id=1029080534]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 52.0
-offset_right = 235.0
-offset_bottom = 212.0
-
-[node name="name_field" type="LineEdit" parent="MainMenu/player_profile/name_edit" unique_id=514853320]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 6.0
-offset_right = 232.0
-offset_bottom = 37.0
-placeholder_text = "ENTER YOUR NAME"
-
-[node name="Button" type="Button" parent="MainMenu/player_profile/name_edit" unique_id=352660560]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 57.0
-offset_right = 151.0
-offset_bottom = 88.0
-text = "Save"
-
-[node name="close_button" type="Button" parent="MainMenu/player_profile/name_edit" unique_id=1597274304]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 57.0
-offset_right = 151.0
-offset_bottom = 88.0
-text = "Save"
-
-[node name="Label" type="Label" parent="MainMenu/player_profile" unique_id=301750676]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Player"
-label_settings = SubResource("LabelSettings_55en2")
-
-[node name="name_change button" type="Button" parent="MainMenu/player_profile" unique_id=499239530]
-layout_mode = 0
-offset_left = 105.0
-offset_top = 9.0
-offset_right = 217.0
-offset_bottom = 40.0
-text = "change name"
 
 [node name="Level" type="Node3D" parent="." unique_id=1808122177]
 transform = Transform3D(0.735, 0, 0, 0, 0.735, 0, 0, 0, 0.735, 0, 0, 0)
@@ -527,7 +478,7 @@ transform = Transform3D(1.3210706, 0, 0.32535082, 0, 1.3605442, 0, -0.32535082, 
 transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 26.984037, 7.771972, -3.5881536)
 
 [node name="grey_hollow_container" parent="Level" unique_id=156418184 instance=ExtResource("12_6p3nn")]
-transform = Transform3D(-0.19094928, 0, 1.3555834, 0, 1.4693878, 0, -2.2299347, 0, -0.116078585, 9.687659, 0.13163044, 33.8232)
+transform = Transform3D(-0.19094928, 0, 1.3555834, 0, 1.4693878, 0, -2.2299347, 0, -0.116078585, 9.688, -0.458, 33.823)
 
 [node name="red_container26" parent="Level" unique_id=1151407950 instance=ExtResource("9_e1cbu")]
 transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 11.774356, 3.0100696, 35.510414)
@@ -536,16 +487,16 @@ transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 11.77
 transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 13.0309925, 4.8935347, 44.43603)
 
 [node name="read_hoolow" parent="Level" unique_id=460582609 instance=ExtResource("14_k3g67")]
-transform = Transform3D(-0.19984719, 0, 1.3457866, 0, 1.3605442, 0, -1.3457866, 0, -0.19984719, 6.922207, 2.369019, -37.478012)
+transform = Transform3D(-0.19984713, 0, 1.3457867, 0, 1.3605442, 0, -1.3457867, 0, -0.19984713, 6.922, 1.826, -37.478)
 
 [node name="read_hoolow2" parent="Level" unique_id=877198409 instance=ExtResource("14_k3g67")]
-transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 8.316975, 2.369016, -12.793821)
+transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, 8.316975, 1.8427552, -12.793821)
 
 [node name="scends4" parent="Level" unique_id=1394811135 instance=ExtResource("15_si52b")]
-transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, -24.505106, 2.3690186, -2.0782132)
+transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, -24.505, 1.813, -2.078)
 
 [node name="hollow_container2" parent="Level" unique_id=1283900650 instance=ExtResource("13_k67gn")]
-transform = Transform3D(2.3533838, 0, 0.26843515, 0, 1.4761906, 0, -0.31332394, 0, 2.0162227, 34.410248, 0.13163044, 11.486967)
+transform = Transform3D(2.3533838, 0, 0.26843515, 0, 1.4761906, 0, -0.31332394, 0, 2.0162227, 34.41, -0.431, 11.487)
 
 [node name="red_container27" parent="Level" unique_id=1283792588 instance=ExtResource("9_e1cbu")]
 transform = Transform3D(1.3605442, 0, 0, 0, 1.3605442, 0, 0, 0, 1.3605442, -28.489382, 7.2759886, -2.4923415)
@@ -752,7 +703,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.74
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6.571753, 2.2699006, 18.148836)
 
 [node name="floor" type="MeshInstance3D" parent="Level" unique_id=1043923413]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.18035221, -0.36837006, -0.3127346)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.42620558, -0.7854903, -0.14668368)
 mesh = SubResource("ArrayMesh_6p3nn")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Level/floor" unique_id=1705086179]
@@ -939,7 +890,7 @@ theme_override_styles/hover = ExtResource("4_c16ls")
 text = "Join Game"
 
 [node name="WaitTimer" type="Timer" parent="." unique_id=1990932666]
-wait_time = 0.5
+wait_time = 0.2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1929703283]
 libraries/ = SubResource("AnimationLibrary_18nlu")
@@ -969,6 +920,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, 18.41209)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6822548, -20.686954)
 
 [node name="UI" type="Control" parent="." unique_id=1251938287]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -978,18 +930,16 @@ grow_vertical = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="score_board" type="CanvasGroup" parent="UI" unique_id=634825433]
-visible = false
-
-[node name="red_team" type="Panel" parent="UI/score_board" unique_id=1413172395]
-offset_left = 787.0
+[node name="red_team" type="Panel" parent="UI" unique_id=1413172395]
+layout_mode = 0
+offset_left = 880.0
 offset_top = 4.0
-offset_right = 906.0
+offset_right = 999.0
 offset_bottom = 44.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_c16ls")
 
-[node name="red_team_score" type="Label" parent="UI/score_board/red_team" unique_id=854762325]
+[node name="red_team_score" type="Label" parent="UI/red_team" unique_id=854762325]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1005,40 +955,50 @@ grow_vertical = 2
 text = "0"
 label_settings = SubResource("LabelSettings_o187k")
 
-[node name="blue_team" type="Panel" parent="UI/score_board" unique_id=261339277]
-offset_left = 279.0
+[node name="blue_team" type="Panel" parent="UI" unique_id=261339277]
+layout_mode = 0
+offset_left = 375.0
 offset_top = 4.0
-offset_right = 397.99997
+offset_right = 494.0
 offset_bottom = 44.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_18nlu")
 
-[node name="blue_team_score" type="Label" parent="UI/score_board/blue_team" unique_id=1880770394]
+[node name="blue_team_score" type="Label" parent="UI/blue_team" unique_id=1880770394]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -20.000015
+offset_top = -24.5
+offset_right = 19.99997
+offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "0"
 label_settings = SubResource("LabelSettings_2kjuj")
 
-[node name="Label" type="Label" parent="UI/score_board" unique_id=1632371925]
+[node name="Label" type="Label" parent="UI" unique_id=1632371925]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 528.0
-offset_right = 636.0
+offset_left = -10.0
+offset_right = 98.0
 offset_bottom = 49.0
 grow_horizontal = 2
-text = "score"
+text = "-:score(30):-"
 label_settings = SubResource("LabelSettings_yu7b5")
+
+[node name="score_board" type="CanvasGroup" parent="UI" unique_id=634825433]
+
+[node name="Control" type="Control" parent="UI/score_board" unique_id=1525801584]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="winning_Screen" type="Panel" parent="UI" unique_id=1941406264]
 visible = false
@@ -1100,24 +1060,20 @@ label_settings = SubResource("LabelSettings_g1chr")
 wait_time = 3.0
 one_shot = true
 
-[node name="LightmapGI" type="LightmapGI" parent="." unique_id=843227474]
-
 [node name="rain_sound_effect" type="AudioStreamPlayer" parent="." unique_id=1956512123]
 stream = SubResource("AudioStreamMP3_6p3nn")
 volume_db = 3.416
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=922749330]
+visible = false
 occluder = ExtResource("27_k67gn")
 
 [node name="menu_camera" type="Camera3D" parent="." unique_id=1591581699]
-transform = Transform3D(0.9705065, 0.20422003, -0.12810685, 0, 0.5313981, 0.8471221, 0.24107508, -0.8221375, 0.5157253, 0, 15.295044, 0)
+transform = Transform3D(0.9705065, 0.20422001, -0.12810683, 0, 0.53139806, 0.84712195, 0.24107508, -0.8221374, 0.51572526, 0, 15.295044, 0)
 
 [connection signal="pressed" from="MainMenu/VBoxContainer/HostButton" to="MainMenu" method="_on_host_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/JoinButton" to="MainMenu" method="_on_join_button_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/ExitButton" to="MainMenu" method="_on_exit_button_pressed"]
-[connection signal="pressed" from="MainMenu/player_profile/name_edit/close_button" to="." method="_on_close_button_pressed"]
-[connection signal="pressed" from="MainMenu/player_profile/name_edit/close_button" to="MainMenu" method="_on_close_button_pressed"]
-[connection signal="pressed" from="MainMenu/player_profile/name_change button" to="MainMenu" method="_on_name_change_button_pressed"]
 [connection signal="pressed" from="Lobby/ClientLobby/BackToMenu" to="Lobby" method="_on_back_to_menu_pressed"]
 [connection signal="pressed" from="Lobby/ClientLobby/ClientJoinbutton" to="Lobby" method="_on_client_joinbutton_pressed"]
 [connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]

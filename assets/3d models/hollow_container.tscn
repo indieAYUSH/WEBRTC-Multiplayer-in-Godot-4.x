@@ -73,6 +73,7 @@ data = PackedVector3Array(-0.8875, -12.288799, -2.5, -0.9249, -12.215799, -2.5, 
 
 [node name="Object_4" type="MeshInstance3D" parent="." unique_id=1619179199]
 transform = Transform3D(1, 0, 0, 0, -2.5789719e-08, -1, 0, 0.59, -4.371139e-08, 0, 0, -2.8505595)
+lod_bias = 0.2
 mesh = SubResource("ArrayMesh_cslw6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Object_4" unique_id=1172159492 groups=["metal"]]

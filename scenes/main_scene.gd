@@ -5,24 +5,24 @@ extends Node3D
 @onready var lobby: Control = $Lobby
 @onready var spawn_point_1: Node3D = $SpawnPoints/SpawnPoint1
 @onready var spawn_point_2: Node3D = $SpawnPoints/SpawnPoint2
-@onready var red_team_score_label: Label = $UI/score_board/red_team/red_team_score
-@onready var blue_team_score_label: Label = $UI/score_board/blue_team/blue_team_score
-@onready var score_board: CanvasGroup = $UI/score_board
+@onready var red_team_score_label: Label = $UI/red_team/red_team_score
+@onready var blue_team_score_label: Label = $UI/blue_team/blue_team_score
+@onready var score_board = $UI
 
-@export var player_scene : PackedScene
+
+
+const PLAYER = preload("uid://5ym40qt2aau8")
+
 var spawn_count : int = 0     # u can use more scalable way like sending role direct from netwrok manager i am using this just for speed
 
 var current_spawn_node : Node3D
 
 var red_team_score : int = 0
 var blue_team_score : int = 0 
-var max_score : int = 2
+var max_score : int = 30
 
 @onready var menu_camera: Camera3D = $menu_camera
-
-#----============Player profile ----------============#
-@onready var name_field: LineEdit = $MainMenu/player_profile/name_edit/name_field
-@onready var button: Button = $MainMenu/player_profile/name_edit/Button
+var player_ref  : PlayerController
 var my_name : String
 @onready var looser_prompt: Label = $UI/winning_Screen/looser_prompt
 @onready var winner_prompt: Label = $UI/winning_Screen/winner_prompt
@@ -41,8 +41,8 @@ func _ready() -> void:
 	Network.start_game.connect(start_game)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	if player_ref == null : return
+	if !player_ref.is_multiplayer_authority(): return
 
 func _on_wait_timer_timeout() -> void:
 	if Network.my_roll == "guest":
@@ -68,17 +68,17 @@ func start_game(peer_id):
 	lobby.visible = false
 	score_board.visible = true
 	spawn_player(peer_id)
-	menu_camera.queue_free()
+
 
 func spawn_player(mp_peer_id):
-	if player_scene == null:
+	if PLAYER == null:
 		return
-	
 	rain_sound_effect.play()
-	var p = player_scene.instantiate()
+	var p = PLAYER.instantiate()
 	p.name = (str(mp_peer_id))
 	p.global_position = current_spawn_node.global_position
 	add_child(p) 
+	
 
 func set_spawn_point():
 	if spawn_count == 0:

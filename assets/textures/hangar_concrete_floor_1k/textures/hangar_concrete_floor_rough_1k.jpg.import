@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://vc7lfcnur1fm"
 path.s3tc="res://.godot/imported/hangar_concrete_floor_rough_1k.jpg-6342e7423a93981616dea697815bb82e.s3tc.ctex"
+path.etc2="res://.godot/imported/hangar_concrete_floor_rough_1k.jpg-6342e7423a93981616dea697815bb82e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/hangar_concrete_floor_1k/textures/hangar_concrete_floor_rough_1k.jpg"
-dest_files=["res://.godot/imported/hangar_concrete_floor_rough_1k.jpg-6342e7423a93981616dea697815bb82e.s3tc.ctex"]
+dest_files=["res://.godot/imported/hangar_concrete_floor_rough_1k.jpg-6342e7423a93981616dea697815bb82e.s3tc.ctex", "res://.godot/imported/hangar_concrete_floor_rough_1k.jpg-6342e7423a93981616dea697815bb82e.etc2.ctex"]
 
 [params]
 

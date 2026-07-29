@@ -1,9 +1,34 @@
 class_name NetworkManager
 extends Node
 
-const STUN_SERVER = {
-	"urls" : ["stun:stun.l.google.com:19302"]
-}
+const STUN_SERVER = [
+	{
+		"urls": ["stun:stun.l.google.com:19302"]
+	},
+	{
+		"urls": ["stun:stun.relay.metered.ca:80"]
+	},
+	{
+		"urls": ["turn:global.relay.metered.ca:80"],
+		"username": "6870845c40603b797cced840",
+		"credential": "uBkAqgkehJZwc9WQ"
+	},
+	{
+		"urls": ["turn:global.relay.metered.ca:80?transport=tcp"],
+		"username": "6870845c40603b797cced840",
+		"credential": "uBkAqgkehJZwc9WQ"
+	},
+	{
+		"urls": ["turn:global.relay.metered.ca:443"],
+		"username": "6870845c40603b797cced840",
+		"credential": "uBkAqgkehJZwc9WQ"
+	},
+	{
+		"urls": ["turns:global.relay.metered.ca:443?transport=tcp"],
+		"username": "6870845c40603b797cced840",
+		"credential": "uBkAqgkehJZwc9WQ"
+	}
+]
 
 var room_code : String = ""
 var max_player : int = 4
@@ -77,7 +102,7 @@ func create_new_peer_connection(peer_id:int) -> WebRTCPeerConnection:
 	var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
 	
 	var error = peer.initialize({
-		"iceServers":[STUN_SERVER]
+	"iceServers": STUN_SERVER
 	})
 	
 	if error != OK:
@@ -138,7 +163,6 @@ func create_host_multiplayer_peer():
 	var mp = WebRTCMultiplayerPeer.new()
 	mp.create_server()
 	var err = mp.add_peer(peers[1], 2)
-	print("add_peer:", err)
 	multiplayer.multiplayer_peer = mp
 	_start_game(multiplayer.get_unique_id())
 	mp.peer_connected.connect(_start_game , multiplayer.get_unique_id())
@@ -147,7 +171,6 @@ func create_client_multiplayer_peer():
 	var mp = WebRTCMultiplayerPeer.new()
 	mp.create_client(2)
 	var err = mp.add_peer(peers[1], 1)
-	print("add_peer:", err)
 	multiplayer.multiplayer_peer = mp
 
 func _start_game(_peer_id):

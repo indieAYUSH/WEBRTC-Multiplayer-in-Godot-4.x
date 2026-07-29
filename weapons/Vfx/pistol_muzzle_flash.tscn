@@ -127,11 +127,10 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_qv5sv")
 size = Vector2(0.1, 0.1)
 
-[node name="MuzzleFlash" type="Node3D" unique_id=1237000921 node_paths=PackedStringArray("Muzzleflash", "ember", "smoke", "LightFlash")]
+[node name="MuzzleFlash" type="Node3D" unique_id=1237000921 node_paths=PackedStringArray("Muzzleflash", "smoke", "LightFlash")]
 script = ExtResource("1_vwlh5")
 FlashTimer = 0.09
 Muzzleflash = NodePath("PistolMuzzleFlash")
-ember = NodePath("Ember2")
 smoke = NodePath("Smoke")
 LightFlash = NodePath("OmniLight3D")
 
@@ -163,7 +162,7 @@ draw_pass_1 = SubResource("QuadMesh_am6wy")
 [node name="Smoke" type="GPUParticles3D" parent="." unique_id=1695845377]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.13394275)
 emitting = false
-amount = 60
+amount = 25
 lifetime = 0.61
 one_shot = true
 explosiveness = 1.0

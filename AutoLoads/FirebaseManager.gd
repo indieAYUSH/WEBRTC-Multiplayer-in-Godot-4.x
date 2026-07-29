@@ -35,6 +35,7 @@ signal offer_answered(type:String , sdp : String)
 signal offer_answer_unavailable
 signal ice_candidate_recieved(sender, media, index, candidate)
 
+var room_requested : bool = false
 func _ready() -> void:
 	http = HTTPRequest.new()
 	add_child(http)
@@ -49,6 +50,7 @@ func _on_request_completed(result, response_code, headers, body):
 		RequestTYPE.NONE:
 			return
 		RequestTYPE.GET_ROOM:
+			room_requested = true
 			handle_recieved_room(body)
 		RequestTYPE.UPLOAD_OFFER:
 			offer_uploaded = true
@@ -90,9 +92,12 @@ func upload_offer(_room_code : String , type : String , sdp : String):
 	var err = http.request(url , headers , HTTPClient.METHOD_PATCH , body_json)
 
 func get_room(room_code : String):
+	if room_requested : return
 	var url = BASE_URL + "/rooms/" + room_code
 	current_request_type = RequestTYPE.GET_ROOM
 	var err = http.request(url)
+	room_requested = true
+
 
 func handle_recieved_room(_body):
 	var body_json = JSON.new()
@@ -101,7 +106,9 @@ func handle_recieved_room(_body):
 		return
 	
 	var data = body_json.data
-
+	#if !data.has("fields"): 
+		#print("field not available")
+	#return
 	var fields = data["fields"]
 	var offer_type = fields["offer_type"]["stringValue"]
 	var offer_sdp  = fields["offer_sdp"]["stringValue"]
@@ -147,6 +154,7 @@ func handle_recieved_answer(_body):
 	var body_json = JSON.new()
 	var err = body_json.parse(_body.get_string_from_utf8())
 	var data = body_json.data
+	if data == null : return
 	var fields = data["fields"]
 	
 	if !fields.has("answer_type"):

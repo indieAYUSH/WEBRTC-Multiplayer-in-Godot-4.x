@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://j717r7e8drdw"
 path.s3tc="res://.godot/imported/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png-0cf03d8a7e13b0035a60a28d419fe533.s3tc.ctex"
+path.etc2="res://.godot/imported/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png-0cf03d8a7e13b0035a60a28d419fe533.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/concrete_floor_worn_02_1k/textures/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png"
-dest_files=["res://.godot/imported/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png-0cf03d8a7e13b0035a60a28d419fe533.s3tc.ctex"]
+dest_files=["res://.godot/imported/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png-0cf03d8a7e13b0035a60a28d419fe533.s3tc.ctex", "res://.godot/imported/ChatGPT Image Jul 28, 2026, 06_32_35 PM.png-0cf03d8a7e13b0035a60a28d419fe533.etc2.ctex"]
 
 [params]
 

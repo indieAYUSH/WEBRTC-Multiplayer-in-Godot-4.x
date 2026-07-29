@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://dsdjmd08a4wud"]
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" unique_id=1333976316]
+size = Vector3(20, 0.82, 20)

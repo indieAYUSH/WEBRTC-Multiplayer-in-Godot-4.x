@@ -32,6 +32,7 @@ func _on_player_update_health(amount: float) -> void:
 
 func _on_resume_button_pressed() -> void:
 	pause_menu.visible = false
+	resume_game()
 
 
 func _on_quit_button_pressed() -> void:
@@ -70,4 +71,6 @@ func _on_player_respawned() -> void:
 
 
 func  _process(delta: float) -> void:
+	if !is_multiplayer_authority(): return
 	spawn_timer_label.text = str(round(respawn_timer.time_left))
+	$fps_label.text = str(Engine.get_frames_per_second())

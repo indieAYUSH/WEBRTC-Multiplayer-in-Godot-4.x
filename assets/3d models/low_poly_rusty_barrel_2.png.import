@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://45piar7mdo0k"
 path.s3tc="res://.godot/imported/low_poly_rusty_barrel_2.png-591983484941b79a0d6ab14b5d276fd1.s3tc.ctex"
+path.etc2="res://.godot/imported/low_poly_rusty_barrel_2.png-591983484941b79a0d6ab14b5d276fd1.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d models/low_poly_rusty_barrel_2.png"
-dest_files=["res://.godot/imported/low_poly_rusty_barrel_2.png-591983484941b79a0d6ab14b5d276fd1.s3tc.ctex"]
+dest_files=["res://.godot/imported/low_poly_rusty_barrel_2.png-591983484941b79a0d6ab14b5d276fd1.s3tc.ctex", "res://.godot/imported/low_poly_rusty_barrel_2.png-591983484941b79a0d6ab14b5d276fd1.etc2.ctex"]
 
 [params]
 

@@ -10,13 +10,14 @@ config_version=5
 
 [application]
 
-config/name="MultiplayerDemoProject"
+config/name="Kill Sync"
 run/main_scene="uid://qx48mjewu30k"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [audio]
 
+buses/default_bus_layout="uid://c4oecmcjgc0vu"
 driver/enable_input=true
 
 [autoload]
@@ -27,7 +28,10 @@ FirebaseManager="*uid://carbxmsmf1ven"
 
 [display]
 
-window/stretch/mode="canvas_items"
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=3
+window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
 [global_group]
@@ -123,6 +127,9 @@ menu={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
+textures/vram_compression/import_etc2_astc=true
 occlusion_culling/use_occlusion_culling=true
+mesh_lod/lod_change/threshold_pixels=0.4
+scaling_3d/stretch/mode="canvas_items"

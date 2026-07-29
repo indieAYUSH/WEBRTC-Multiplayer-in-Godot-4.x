@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bc6bsir5ug20e"]
+
+[resource]
+resource_name = "aks74u.wood"
+cull_mode = 2
+albedo_color = Color(0.33645836, 0.09603082, 0, 1)
+roughness = 0.35747612

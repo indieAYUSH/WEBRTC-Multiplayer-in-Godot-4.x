@@ -11,9 +11,9 @@ resource_name = "ShippingContainer_mat"
 cull_mode = 2
 albedo_color = Color(0, 0.5734742, 0.9754799, 1)
 albedo_texture = SubResource("CompressedTexture2D_b7a5l")
-metallic = 0.37
 metallic_specular = 1.0
-roughness = 0.38
+roughness = 0.23
+roughness_texture_channel = 4
 normal_enabled = true
 normal_texture = SubResource("CompressedTexture2D_wlal2")
 metadata/_gltf_primary_texture_coord = 0
@@ -58,6 +58,7 @@ points = PackedVector3Array(-125, 1.4210855e-14, -293.45883, 125, 250, 289.98242
 
 [node name="Shipping_container_ShippingContainer_mat_0" type="MeshInstance3D" parent="." unique_id=404106697]
 transform = Transform3D(0.014, 0, 0, 0, 0.014, 0, 0, 0, 0.014, 0, -2.1156533, 0)
+lod_bias = 0.1
 mesh = SubResource("ArrayMesh_b7a5l")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Shipping_container_ShippingContainer_mat_0" unique_id=946536590 groups=["metal"]]

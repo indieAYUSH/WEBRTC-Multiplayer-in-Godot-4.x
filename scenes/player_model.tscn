@@ -7,10 +7,13 @@ emission = Color(0.69803923, 0, 0, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_bg6pd"]
 material = SubResource("StandardMaterial3D_bg6pd")
+radial_segments = 9
+rings = 5
 
 [node name="Player_model" type="Node3D" unique_id=1250964393]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=345966435]
 cast_shadow = 0
+lod_bias = 0.5
 mesh = SubResource("CapsuleMesh_bg6pd")

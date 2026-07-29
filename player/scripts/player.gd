@@ -67,6 +67,7 @@ func _ready():
 	spawn_point = position
 	camera.current= true
 	parent = get_parent()
+	#parent._remove_ui_cam.rpc()
 	obstacle_checker.add_exception(self)
 	left_lean_collision.add_exception(self)
 	right_lean_collision.add_exception(self)
@@ -147,7 +148,6 @@ func death():
 	player_statemachine.current_state.change_state.emit("PausedState")
 	death_fx.rpc()
 	head.visible = false
-	
 	respawn_timer.start()
 	died.emit()
 
@@ -159,7 +159,7 @@ func death_fx():
 
 func respawn_player():
 	health = 200.0
-	%Player_model.visible = true
+	_change_player_model_visibility.rpc(true)
 	player_died = false
 	head.visible = true
 	position = spawn_point
@@ -170,3 +170,7 @@ func respawn_player():
 
 func _on_respawn_timer_timeout() -> void:
 	respawn_player()
+
+@rpc()
+func _change_player_model_visibility(_visible ):
+	%Player_model.visible = _visible

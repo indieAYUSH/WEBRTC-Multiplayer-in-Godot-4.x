@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://boirw3esmifjy"
 path.s3tc="res://.godot/imported/hangar_concrete_floor_diff_1k.jpg-1804ae259132ccb77951b1e79fb7ca62.s3tc.ctex"
+path.etc2="res://.godot/imported/hangar_concrete_floor_diff_1k.jpg-1804ae259132ccb77951b1e79fb7ca62.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/hangar_concrete_floor_1k/textures/hangar_concrete_floor_diff_1k.jpg"
-dest_files=["res://.godot/imported/hangar_concrete_floor_diff_1k.jpg-1804ae259132ccb77951b1e79fb7ca62.s3tc.ctex"]
+dest_files=["res://.godot/imported/hangar_concrete_floor_diff_1k.jpg-1804ae259132ccb77951b1e79fb7ca62.s3tc.ctex", "res://.godot/imported/hangar_concrete_floor_diff_1k.jpg-1804ae259132ccb77951b1e79fb7ca62.etc2.ctex"]
 
 [params]
 

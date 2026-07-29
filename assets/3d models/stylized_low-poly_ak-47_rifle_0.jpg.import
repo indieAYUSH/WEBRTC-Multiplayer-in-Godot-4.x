@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://h4wi61iym1gq"
 path.s3tc="res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.s3tc.ctex"
+path.etc2="res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/3d models/stylized_low-poly_ak-47_rifle_0.jpg"
-dest_files=["res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.s3tc.ctex"]
+dest_files=["res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.s3tc.ctex", "res://.godot/imported/stylized_low-poly_ak-47_rifle_0.jpg-2447f04b68208fb4d49b4e0c5b392e16.etc2.ctex"]
 
 [params]
 

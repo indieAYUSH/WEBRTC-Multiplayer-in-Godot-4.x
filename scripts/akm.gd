@@ -11,10 +11,16 @@ extends Node3D
 @export var current_ammo : int = 30
 @export var mag_size : int = 30
 @export var animation_player : AnimationPlayer
+@export var player_animation : AnimationPlayer
 @export var weapon_ray_cast : RayCast3D
 @export var autofire : bool = true
 
-@onready var muzzle_flash: Node3D = $Barrel_node/MuzzleFlash
+@onready var muzzle_flash: Node3D = $world_view_model/Barrel_node/MuzzleFlash
+
+@onready var local_barel_pos: Node3D = %local_barel_pos
+
+@onready var ads_pivot: Node3D = $Local_view_model/Ads_pivot
+
 @onready var shoot_sound_player: AudioStreamPlayer3D = $"../../../../../../../../weapon_Sound/shoot_sound"
 @onready var reload_sound_player: AudioStreamPlayer3D = $"../../../../../../../../weapon_Sound/reload_sound"
 
@@ -28,7 +34,7 @@ extends Node3D
 @export var reloading_anim : String
 
 
-@onready var barrel_node: Node3D = $Local_view_model/local_barel_pos
+@onready var barrel_node: Node3D =  %local_barel_pos
 
 @export var ads_pos : Vector3 
 @export var default_pos : Vector3
@@ -88,8 +94,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready() -> void:
 	if !is_multiplayer_authority(): return
 	animation_player.animation_finished.connect(on_animation_player_finished_playing)
-	local_view_model.visible = false
-	world_view_model.visible = true
+	local_view_model.visible = true
+	world_view_model.visible = false
 
 func on_animation_player_finished_playing(anim_name : String)->void:
 	if anim_name == shootin_anim and Input.is_action_pressed("shoot") and autofire:
@@ -105,6 +111,7 @@ func reload()->void:
 		return
 	if animation_player.is_playing(): return
 	current_gun_animation_state = GUN_ANIMATION_STATE.RELOADING
+	animation_player.play(reloading_anim , -1.0 , 3.0 , false)
 	#if is_multiplayer_authority():
 		#can_ads = false
 	var amt = min(mag_size , mag_size-current_ammo)
@@ -114,31 +121,34 @@ func reload()->void:
 
 
 func shoot()->void:
+	var barrel_pos = local_barel_pos.global_position
 	if animation_player.is_playing(): return
 	
 	if current_ammo <= 0:
 		reload()
 		return
 	current_gun_animation_state = GUN_ANIMATION_STATE.SHOOTING
+	animation_player.play(shootin_anim , -1.0 , 3.7 , false)
 	show_fx.rpc()
+	%MuzzleFlash._show_muzzle_flash()
 	current_ammo -= 1
 	if weapon_ray_cast.is_colliding():
 		var collider = weapon_ray_cast.get_collider()
 		var pos = weapon_ray_cast.get_collision_point()
-		spawn_bullet_trails.rpc(pos , bullet_tracer , barrel_node.global_position)
+		spawn_bullet_trails.rpc(pos ,   local_barel_pos.global_position)
 		if collider.has_method("damage"):
 			if collider.player_died : return
-			animation_player.play("hit_marker")
+			player_animation.play("hit_marker")
 			collider.damage.rpc_id(collider.get_multiplayer_authority()  , weapon_damage)
-			spawn_hit_particles.rpc(blood_splatter_particle , barrel_node.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
+			spawn_hit_particles.rpc(true ,  local_barel_pos.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
 		else:
 			if collider.is_in_group("metal"):
 				spawn_hit_sfx(metal_bullet_impact_Sfx , pos)
 			else:
 				spawn_hit_sfx(concrete_bullet_impact , pos)
-			spawn_hit_particles.rpc(hit_particle_effect_eno , barrel_node.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
+			spawn_hit_particles.rpc(false ,  local_barel_pos.global_position , weapon_ray_cast.get_collision_point() , weapon_ray_cast.get_collision_normal() , weapon_ray_cast.get_collider())
 	else:
-		spawn_bullet_trails.rpc(weapon_ray_cast.target_position  , bullet_tracer , barrel_node.global_position)
+		spawn_bullet_trails.rpc(weapon_ray_cast.target_position  , local_barel_pos.global_position)
 
 @rpc("call_local")
 func show_fx()->void:
@@ -146,13 +156,13 @@ func show_fx()->void:
 		GUN_ANIMATION_STATE.NONE:
 			pass
 		GUN_ANIMATION_STATE.SHOOTING:
-			animation_player.play(shootin_anim)
+			#animation_player.play(shootin_anim)
 			muzzle_flash._show_muzzle_flash()
 			#shoot_sound_player.stream = shoot_sound
 			shoot_sound_player.play()
 		GUN_ANIMATION_STATE.RELOADING:
 			reload_sound_player.stream = reload_sound
-			reload_sound_player.play()
+			#reload_sound_player.play()
 			animation_player.play(reloading_anim)
 
 
@@ -176,6 +186,18 @@ func _process(delta: float) -> void:
 	
 	recoil_pivot.rotation.z = lerp(recoil_pivot.rotation.z , 0.0 , 13.0)
 	recoil_pivot.rotation.x = lerp(recoil_pivot.rotation.x , 0.0 , 13.0)
+	if _can_Ads() and Input.is_action_pressed("ADS"):
+		ads_pivot.position = lerp(ads_pivot.position , ads_pos , delta*10.0)
+		ads_pivot.rotation.x = lerp(ads_pivot.rotation.x , deg_to_rad(-5.0) , delta*10.0)
+		%Camera3D.fov = lerp(%Camera3D.fov , 65.0 , lerp_speed*delta)
+	else :
+		if ads_pivot.position == default_pos : return
+		%Camera3D.fov = lerp(%Camera3D.fov , 80.0 , lerp_speed*delta)
+		ads_pivot.position = lerp(ads_pivot.position , default_pos , delta*10.0)
+		ads_pivot.rotation.x = deg_to_rad(0.0)
+
+func _can_Ads() -> bool:
+	return player_controller.player_statemachine.current_state.name == "WalkState" or player_controller.player_statemachine.current_state.name  == "IdleState" or player_controller.player_statemachine.current_state.name  == "CrouchState" 
 
 func _sway(amount: Vector2) -> void :
 	position.x += amount.x * 0.09
@@ -226,7 +248,12 @@ func spawn_hit_sfx(_hit_sound : PackedScene , _postion : Vector3) -> void:
 
 
 @rpc("call_local")
-func spawn_hit_particles(_particles : PackedScene , _barrelpos : Vector3 , _postion : Vector3 , _normal:Vector3 , _owner) -> void:
+func spawn_hit_particles(is_enemy : bool , _barrelpos : Vector3 , _postion : Vector3 , _normal:Vector3 , _owner) -> void:
+	var _particles : PackedScene
+	if is_enemy:
+		_particles = blood_splatter_particle
+	else:
+		_particles = hit_particle_effect_eno
 	var particle_instance  = _particles.instantiate()
 	get_tree().current_scene.add_child(particle_instance)
 	var pos = _postion
@@ -234,7 +261,8 @@ func spawn_hit_particles(_particles : PackedScene , _barrelpos : Vector3 , _post
 	particle_instance._emit_par(_postion ,_barrelpos )
 
 @rpc("call_local")
-func spawn_bullet_trails(hit_point : Vector3, tracer_Scene : PackedScene , spawn_pos : Vector3) -> void:
+func spawn_bullet_trails(hit_point : Vector3,  spawn_pos : Vector3) -> void:
+	var tracer_Scene = bullet_tracer
 	var trc = tracer_Scene.instantiate()
 	get_tree().current_scene.add_child(trc)
 	trc.global_position = spawn_pos
