@@ -1583,10 +1583,13 @@ transform = Transform3D(38.46153, 7.426947e-21, 0, 0, -1.6812074e-06, -38.46153,
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 
 [node name="PistolMuzzleFlash" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model/Barrel_node/MuzzleFlash" index="1" unique_id=1798136156]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -0.06282818, 0, 0.090161845)
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999998, -0.04001032, 0, -0.08747506)
 
 [node name="Smoke" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model/Barrel_node/MuzzleFlash" index="2" unique_id=1695845377]
-transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0.062827945, 0, 0.04378082)
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999998, 0.08564581, 0, -0.13385606)
+
+[node name="OmniLight3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model/Barrel_node/MuzzleFlash" index="3" unique_id=2108782147]
+visible = true
 
 [node name="Collada visual scene group" type="Node3D" parent="head/CameraControllerComponent/CameraJuice/lean_pivot/recoil_pivot/weapon_holder/weapon_juic_rig/AKM/world_view_model" unique_id=1226796749]
 transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, -1, 0, 1, -4.3711392e-08, 0, 0, 0)
@@ -2852,10 +2855,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = -50.0
-offset_bottom = -50.0
+offset_left = -114.0
+offset_top = -86.0
+offset_right = -114.0
+offset_bottom = -86.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

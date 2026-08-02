@@ -890,7 +890,7 @@ theme_override_styles/hover = ExtResource("4_c16ls")
 text = "Join Game"
 
 [node name="WaitTimer" type="Timer" parent="." unique_id=1990932666]
-wait_time = 0.2
+wait_time = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1929703283]
 libraries/ = SubResource("AnimationLibrary_18nlu")

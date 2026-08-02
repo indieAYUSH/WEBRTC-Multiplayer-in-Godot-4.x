@@ -196,8 +196,6 @@ func upload_ice_candidates(_room_code : String , _media : String , _candidates :
 
 func get_ice_candidates(room_code : String):
 	if ic_http_requested: return
-	if !ice_uploaded:
-		return
 	var url = BASE_URL + "/rooms/" + room_code + "/candidates"
 	current_ic_request_type = ICRequestTYPE.GET_ICE
 	var err = http_ic.request(url , [] , HTTPClient.METHOD_GET)

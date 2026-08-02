@@ -130,6 +130,7 @@ func shoot()->void:
 	current_gun_animation_state = GUN_ANIMATION_STATE.SHOOTING
 	animation_player.play(shootin_anim , -1.0 , 3.7 , false)
 	show_fx.rpc()
+	shoot_sound_player.play()
 	%MuzzleFlash._show_muzzle_flash()
 	current_ammo -= 1
 	if weapon_ray_cast.is_colliding():
@@ -150,7 +151,7 @@ func shoot()->void:
 	else:
 		spawn_bullet_trails.rpc(weapon_ray_cast.target_position  , local_barel_pos.global_position)
 
-@rpc("call_local")
+@rpc()
 func show_fx()->void:
 	match current_gun_animation_state:
 		GUN_ANIMATION_STATE.NONE:
@@ -158,6 +159,7 @@ func show_fx()->void:
 		GUN_ANIMATION_STATE.SHOOTING:
 			#animation_player.play(shootin_anim)
 			muzzle_flash._show_muzzle_flash()
+			print(Network.my_roll , " spwannign muzzle")
 			#shoot_sound_player.stream = shoot_sound
 			shoot_sound_player.play()
 		GUN_ANIMATION_STATE.RELOADING:

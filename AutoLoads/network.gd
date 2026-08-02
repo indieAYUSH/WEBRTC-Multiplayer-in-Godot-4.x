@@ -3,30 +3,14 @@ extends Node
 
 const STUN_SERVER = [
 	{
-		"urls": ["stun:stun.l.google.com:19302"]
+		"urls": [
+			"stun:stun.l.google.com:19302"
+		]
 	},
 	{
-		"urls": ["stun:stun.relay.metered.ca:80"]
-	},
-	{
-		"urls": ["turn:global.relay.metered.ca:80"],
-		"username": "6870845c40603b797cced840",
-		"credential": "uBkAqgkehJZwc9WQ"
-	},
-	{
-		"urls": ["turn:global.relay.metered.ca:80?transport=tcp"],
-		"username": "6870845c40603b797cced840",
-		"credential": "uBkAqgkehJZwc9WQ"
-	},
-	{
-		"urls": ["turn:global.relay.metered.ca:443"],
-		"username": "6870845c40603b797cced840",
-		"credential": "uBkAqgkehJZwc9WQ"
-	},
-	{
-		"urls": ["turns:global.relay.metered.ca:443?transport=tcp"],
-		"username": "6870845c40603b797cced840",
-		"credential": "uBkAqgkehJZwc9WQ"
+		"urls": [
+			"stun:stun.relay.metered.ca:80"
+		]
 	}
 ]
 
